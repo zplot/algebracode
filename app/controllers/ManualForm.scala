@@ -20,7 +20,7 @@ object ManualForm extends Controller {
 
   def create() = Action { implicit request =>
     treeForm.bindFromRequest.fold(
-      formWithErrors => Forbidden("Oh noes, invalid submission!"),
+      formWithErrors => Forbidden("Invalid submission!"),
       value => Ok("created: " + value))
   }
 }
