@@ -21,7 +21,14 @@ object ManualForm extends Controller {
   def create() = Action { implicit request =>
     treeForm.bindFromRequest.fold(
       formWithErrors => Forbidden("Invalid submission!"),
-      value => Ok("created: " + value))
+      value => Ok("created: " + process(value)))
   }
+
+  def process(value: TwoTrees): String = {
+
+    value.tree1 + " * " + value.tree2
+  }
+
+
 }
 
