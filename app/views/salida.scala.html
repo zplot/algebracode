@@ -1,0 +1,27 @@
+@(parameters: (String, String, PrintableDraw))
+@main(title = parameters._1) {
+
+
+
+    <h2>Results page</h2>
+    <br \><br \>
+    <h3>The tree represented is: @parameters._2</h3>
+
+    <div>
+
+
+        <svg width="800" height="600">
+
+            @for(node <- parameters._3.nodes) {
+                @*<circle cx=@node.pos.x cy=@node.pos.y r="5" stroke="black" stroke-width="1" fill="red" />*@
+                <circle cx=@node.pos.x cy=@node.pos.y r=@DrawSettings.r stroke=@DrawSettings.stroke stroke-width=@DrawSettings.strokeWidth fill=@DrawSettings.fill />
+            }
+
+            @for(line <- parameters._3.edges) {
+                @*<line x1=@line.pos1.pos.x y1=@line.pos1.pos.y x2=@line.pos2.pos.x y2=@line.pos2.pos.y style="stroke:rgb(40,40,40);stroke-width:1" />*@
+                <line x1=@line.pos1.pos.x y1=@line.pos1.pos.y x2=@line.pos2.pos.x y2=@line.pos2.pos.y style=@DrawSettings.lineStyle />
+            }
+
+        </svg>
+    </div>
+}

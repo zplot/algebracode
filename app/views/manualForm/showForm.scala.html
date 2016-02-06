@@ -1,0 +1,25 @@
+@(parameters: (String))
+@main(title = parameters) {
+
+
+
+    <h2>Form to enter Trees</h2>
+    <form class="form-horizontal" action="@routes.ManualForm.create()" method="post">
+        <div>
+            <label for="name">Tree 1</label>
+            <div>
+                <input type="text" name="tree1" id="tree1">
+            </div>
+        </div>
+        <div>
+            <label for="name">Tree 1</label>
+            <div>
+                <input type="text" name="tree1" id="tree1">
+            </div>
+        </div>
+
+        <div>
+            <button type="submit">Operate with these trees</button>
+        </div>
+    </form>
+}
