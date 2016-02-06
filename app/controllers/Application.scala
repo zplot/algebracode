@@ -22,6 +22,12 @@ object Application extends Controller {
 
   }
 
+  def static = Action {
+
+    Ok(views.html.static())
+
+  }
+
 
 
   def salida = Action {

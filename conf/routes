@@ -5,6 +5,8 @@
 # Home page
 GET     /                           controllers.Application.index
 
+GET     /static                     controllers.Application.static
+
 GET		/manualform/createform      controllers.ManualForm.createForm()
 POST    /manualform/create          controllers.ManualForm.create()
 
