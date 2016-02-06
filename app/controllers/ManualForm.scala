@@ -18,10 +18,16 @@ object ManualForm extends Controller {
     "tree1" -> nonEmptyText,
     "tree2" -> nonEmptyText)(TwoTrees.apply)(TwoTrees.unapply))
 
-  def create() = Action { implicit request =>
+/*  def create() = Action { implicit request =>
     treeForm.bindFromRequest.fold(
       formWithErrors => Forbidden("Invalid submission!"),
       value => Ok("created: " + process(value)))
+  }*/
+
+  def create() = Action { implicit request =>
+    treeForm.bindFromRequest.fold(
+      formWithErrors => Forbidden("Invalid submission!"),
+      value => Ok(views.html.salidaSimple(("Estamos en la salida", process(value)))))
   }
 
   def process(value: TwoTrees): String = {
