@@ -63,9 +63,23 @@ jQuery(document).ready(function() {
 
 	$(window).load(function() {
 		$('.flexslider').flexslider({
-			animation : 'slide'
+			animation : 'slide',
+		    controlNav: false,
+		    directionNav: true,
+		    prevText: "",
+		    nextText: ""
 		});
 	});
+
+    $('.testimonials-slider').flexslider({
+        animation: "fade",
+        controlsContainer: $(".custom-controls-container"),
+        customDirectionNav: $(".custom-navigation a"),
+	    controlNav: true,
+	    directionNav: false,
+	    prevText: "",
+	    nextText: ""
+    });
 
 
 /*----------------------------------------------------*/

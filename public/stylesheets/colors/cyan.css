@@ -12,6 +12,7 @@ input[type="button"] {
 	background: #37b6bd;
 }
 
+.infobox,
 .flex-direction-nav .flex-prev:hover, 
 .flex-direction-nav .flex-next:hover, 
 .ls-nav-prev:hover,

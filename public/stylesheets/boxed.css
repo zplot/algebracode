@@ -4,7 +4,7 @@
 
 	body {
 		background-color: #e9e9e9;
-		font: 14px "Open Sans", sans-serif;
+		font: 14px "proxima-nova", "Open Sans", sans-serif;
 		color: #777;
 		-webkit-font-smoothing: antialiased; /* Fix for webkit rendering */
 		-webkit-text-size-adjust: 100%;
@@ -47,7 +47,18 @@
 		padding: 15px 0 0 0;
 		width: 100% !important;
 	}
+
+	.infobox,
+	#testimonials {
+		width: 100%;
+		margin-left: auto;
+		margin-right: auto;
+		left: 0;
+	}
 	
+	.infobox {
+		margin: 45px auto -40x auto
+	}
 }
 	
 /* Tablet Portrait (devices and browsers)

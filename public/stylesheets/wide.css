@@ -27,6 +27,17 @@
 		padding: 15px 0 0 0;
 		margin: 0 auto;
 	}
+
+	.infobox,
+	#testimonials {
+		width: 100%;
+		margin: 0 auto;
+		left: 0;
+	}
+
+	.infobox {
+		margin: 45px auto -35px auto
+	}
 	
 
 /* Smaller than standard 1029 (devices and browsers)
@@ -49,6 +60,19 @@
 		margin: 0 auto;
 		padding: 15px 0 0 0;
 		width: 100% !important;
+	}
+
+
+	.infobox,
+	#testimonials {
+		width: 100%;
+		margin-left: auto;
+		margin-right: auto;
+		left: 0;
+	}
+	
+	.infobox {
+		margin: 45px auto -40px auto
 	}
 	
 }
