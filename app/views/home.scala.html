@@ -1,6 +1,3 @@
-@(title: String)(content: Html)
-
-
 <!DOCTYPE html>
 <!--[if IE 7 ]><html class="ie ie7" lang="en"><![endif]-->
 <!--[if IE 8 ]><html class="ie ie8" lang="en"><![endif]-->
@@ -15,7 +12,7 @@
 <!-- Basic Page Needs
 ================================================== -->
 <meta charset="utf-8">
-<title>@title</title>
+<title>Algebra CODE</title>
 
 <!-- Mobile Specific
 ================================================== -->
@@ -71,7 +68,7 @@
 		<div class="eight columns">
 			<div id="logo">
 				<a href="#"><img src='@routes.Assets.at("images/logo2.png")' alt="logo" /></a>
-				<div id="tagline">Algebra & Functional Code</div>
+				<div id="tagline">Algebra & Code</div>
 				<div class="clear"></div>
 			</div>
 		</div>
@@ -214,13 +211,45 @@
         <!-- LayerSlider Container -->
     <div class="layerslider-container">
 
-    @content
+            <!-- LayerSlider / Start -->
+        <div id="layerslider" style="width: 1180px; height: 500px; margin: 0 auto;">
 
+                <!-- Slide #1 -->
+            <div class="ls-slide" style="transition2d: 67; timeshift: -1000; slidedelay: 7000;">
 
+                    <!-- Background -->
+                <img class="ls-bg" src="images/slider-img-01.jpg" alt="" >
 
+                <div class="slide-caption ls-s1" style="left: 30px; width: 29%; slidedirection: bottom; slideoutdirection: bottom; durationin: 800; durationout: 800; delayin: 0; delayout: 0;">
+                    <h3>This is a caption</h3>
+                    <p>Donec scelerisque aliquet mi, non venenatis urnas iaculis. Utea id nila ante. Cras est massa, interdum  ateal imperdiet etean, gravida volutpat hendrerit quame. Aeneana volutpat hendrerit posuere.</p>
+                </div>
 
+            </div>
 
+                <!-- Slide #2 -->
+            <div class="ls-slide" style="transition2d: 3; timeshift: -500; slidedelay: 7000;">
 
+                    <!-- Background -->
+                <img class="ls-bg" src="images/slider-img-02.jpg" alt="">
+
+                <div class="slide-caption alt ls-s1" style="left: 0; top: 0; height: 100%; width: 27%; slidedirection: left; slideoutdirection: left; durationin: 800; durationout: 800; delayin: 0; delayout: 0;">
+                    <h3>New LayerSlider <br /> With Awesome Features</h3>
+                    <p>Donec scelerisque aliquet mi, non venenatis urnas iaculis. Utea id nila ante. Cras est massa, interdum ateal imperdiet etean, gravida eu quame. Aeneana volutpat hendrerit posuere. Aliquam rutrum mattis mollis.</p>
+                </div>
+
+            </div>
+
+                <!-- Slide #3 -->
+            <div class="ls-slide" style="transition2d: 5; slidedelay: 7000;">
+
+                    <!-- Background -->
+                <img class="ls-bg" src="images/slider-img-03.jpg" alt="">
+
+            </div>
+
+        </div>
+            <!-- LayerSlider / End -->
 
     </div>
         <!-- LayerSlider Container / End -->
@@ -284,32 +313,18 @@
                 <div class="testimonials-slider">
                     <ul class="slides">
                         <li>
-                            <p>Physics is becoming too difficult for the physicists.
-
-                                <span>David Hilbert</span></p>
-                        </li>
-                        <li>
-                            <p>It is not knowledge, but the act of learning, which grants the greatest enjoyment.
-
-
-                                <span>Carl Friedrich Gauss</span></p>
+                            <p>A clean looking and slick working template - helpful support received before and after buying from the author. I found Vasterad to be a class act when it comes to providing customer service.
+                                <span>MickF</span></p>
                         </li>
 
                         <li>
-                            <p>If I were to awaken after having slept for a thousand years, my first question would be: Has the Riemann hypothesis been proven?
-
-                                <span>David Hilbert</span></p>
+                            <p>This template is very easy to work with and the visuals work well with pcs, tablets, and phones. This is a very modern and clean template. Very well worth the price. It's easy to customize as well. Major thumbs up!
+                                <span>bwood84</span></p>
                         </li>
 
                         <li>
-                            <p>In formal logic, a contradiction is the signal of defeat, but in the evolution of real knowledge it marks the first step in progress toward a victory.
-
-                                <span>Alfred North Whitehead</span></p>
-                        </li>
-                        <li>
-                            <p>Not ignorance, but ignorance of ignorance, is the death of knowledge.
-
-                                <span>Alfred North Whitehead</span></p>
+                            <p>Did get very quick responses on the bugs I did notice for. That kind of service deserves full rating!!!
+                                <span>DonQuicky</span></p>
                         </li>
 
                     </ul>
@@ -329,9 +344,7 @@
 
             <!-- Project -->
         <div class="four columns">
-            <div class="picture">
-                <a href="#"><img src='@routes.Assets.at("images/portfolio/portoflio-01.jpg")' alt=""/><div class="image-overlay-link"></div></a>
-            </div>
+            <div class="picture"><a href="single_project.html"><img src="images/portfolio/portoflio-09.jpg" alt=""/><div class="image-overlay-link"></div></a></div>
             <div class="item-description">
                 <h5><a href="#">Touch Gestures</a></h5>
                 <p>Mauris sit amet ligula est, eget conseact etur lectus maecenas hendrerit suscipit.</p>
@@ -340,7 +353,7 @@
 
             <!-- Project -->
         <div class="four columns">
-            <div class="picture"><a href='@routes.Assets.at("images/portfolio/portoflio-01.jpg")' rel="image" title="Coffee Time"><img src='@routes.Assets.at("images/portfolio/portoflio-01.jpg")' alt=""/><div class="image-overlay-zoom"></div></a></div>
+            <div class="picture"><a href="images/portfolio/portoflio-08-large.jpg" rel="image" title="Coffee Time"><img src="images/portfolio/portoflio-08.jpg" alt=""/><div class="image-overlay-zoom"></div></a></div>
             <div class="item-description">
                 <h5><a href="#">Coffee Time</a></h5>
                 <p>Amet sit lorem ligula est, eget conseact etur lectus hendrerit suscipit maecenas.</p>
@@ -349,7 +362,7 @@
 
             <!-- Project -->
         <div class="four columns">
-            <div class="picture"><a href="single_project.html"><img src='@routes.Assets.at("images/portfolio/portoflio-01.jpg")' alt=""/><div class="image-overlay-link"></div></a></div>
+            <div class="picture"><a href="single_project.html"><img src="images/portfolio/portoflio-10.jpg" alt=""/><div class="image-overlay-link"></div></a></div>
             <div class="item-description">
                 <h5><a href="#">Surfing The Web</a></h5>
                 <p>Lorem sit amet ligula est, eget conseact etur lectus maecenas hendrerit suscipit.</p>
@@ -358,7 +371,7 @@
 
             <!-- Project -->
         <div class="four columns">
-            <div class="picture"><a href="single_project.html"><img src='@routes.Assets.at("images/portfolio/portoflio-01.jpg")' alt=""/><div class="image-overlay-link"></div></a></div>
+            <div class="picture"><a href="single_project.html"><img src="images/portfolio/portoflio-07.jpg" alt=""/><div class="image-overlay-link"></div></a></div>
             <div class="item-description">
                 <h5><a href="#">Wireless Keyboard</a></h5>
                 <p>Ligula mauris sit amet est eget consat etur lectus maecenas hendrerit suscipit.</p>
@@ -374,14 +387,14 @@
         <div class="sixteen columns">
 
                 <!-- Headline -->
-            <div class="headline no-margin"><h3>More Math</h3></div>
+            <div class="headline no-margin"><h3>Our Clients</h3></div>
 
             <ul class="client-list">
-                <li><img src='@routes.Assets.at("images/logo-01.png")' alt=""/></li>
-                <li><img src='@routes.Assets.at("images/logo-02.png")' alt=""/></li>
-                <li><img src='@routes.Assets.at("images/logo-03.png")' alt=""/></li>
-                <li><img src='@routes.Assets.at("images/logo-04.png")' alt=""/></li>
-                <li><img src='@routes.Assets.at("images/logo-05.png")' alt=""/></li>
+                <li><img src="images/logo-01.png" alt=""/></li>
+                <li><img src="images/logo-02.png" alt=""/></li>
+                <li><img src="images/logo-03.png" alt=""/></li>
+                <li><img src="images/logo-04.png" alt=""/></li>
+                <li><img src="images/logo-05.png" alt=""/></li>
             </ul>
 
         </div>
@@ -391,7 +404,7 @@
         <!-- Infobox -->
     <div class="infobox">
         <div class="container">
-            <div class="sixteen columns">Start learning algebra and functional programming <a href="my-account.html">Go!</a></div>
+            <div class="sixteen columns">Start Building Your Site With Centum <a href="my-account.html">Buy Now</a></div>
         </div>
     </div>
 
@@ -453,7 +466,7 @@
                 <!-- Footer / Bottom -->
             <div class="sixteen columns">
                 <div id="footer-bottom">
-				© Web design and content by <a href="#">Luis Fontes</a>. No rights reserved.
+				© Copyright 2015 by <a href="#">Vasterad</a>. All rights reserved.
                     <div id="scroll-top-top"><a href="#"></a></div>
 			</div>
             </div>
