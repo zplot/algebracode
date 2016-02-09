@@ -133,7 +133,7 @@
 	display: inline-block;
 	color: #fff;
 	text-decoration: none;
-	font-size: 16px;
+	font-size: 14px;
 	font-weight: 400;
 	padding: 17px 25px;
 }
@@ -1332,7 +1332,7 @@ html[xmlns] .slides {display: block;}
 
 /* LayerSlider Caption Styles */
 .slide-caption.alt h3 {
-	font-size: 30px;
+	font-size: 26px;
 	line-height: 34px;
 	margin-bottom: 10px;
 }
