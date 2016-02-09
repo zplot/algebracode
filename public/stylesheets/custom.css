@@ -1,0 +1,24 @@
+.university {
+    color: #aea0aa !important;
+    font-weight: normal !important;;
+    font-style: normal !important;;
+    padding-bottom: 10px !important;
+    line-height: 20px !important;
+}
+
+.fields {
+    color: #756c72 !important;
+    font-weight: normal !important;;
+    font-style: normal !important;;
+    padding-bottom: 10px !important;
+    line-height: 20px !important;
+}
+
+.mathquote {
+    color: #d2c4ce !important;
+    font-weight: normal !important;;
+    font-style: italic !important;;
+    padding-top: 100px !important;
+    padding-bottom: 10px !important;
+    line-height: 20px !important;
+}
