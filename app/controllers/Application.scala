@@ -13,7 +13,7 @@ object Application extends Controller {
 
   def index = Action {
 
-    Ok(views.html.home())
+    Ok(views.html.index("Algebra & Functional Code"))
 
   }
 
@@ -24,7 +24,7 @@ object Application extends Controller {
     val draw3 = Tree.scaleDraw(Tree.string2Draw(arbol.toString))
     val texto = arbol.toString
     val parameters = (title, texto, draw3)
-    Ok(views.html.index(parameters))
+    Ok(views.html.trees(parameters))
 
   }
 
