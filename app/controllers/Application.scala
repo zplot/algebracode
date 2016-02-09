@@ -13,7 +13,7 @@ object Application extends Controller {
 
   def index = Action {
 
-    Ok(views.html.static())
+    Ok(views.html.home())
 
   }
 
