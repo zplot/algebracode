@@ -45,14 +45,13 @@ jQuery(document).ready(function() {
 			skin                    : '',
 			responsive              : true,
 			navPrevNext             : true,
-			autoPlayVideos          : false,
-			animateFirstLayer       : false,
 			showBarTimer            : false,
-			showCircleTimer         : false,
+			showCircleTimer         : true,
 			navButtons              : false,
 			navStartStop            : false,
 			hoverPrevNext           : false,
-			autostart				: true
+			autostart                : true,
+			firstlayer                : 1
 		});
 	});
 
