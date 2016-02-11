@@ -124,7 +124,33 @@
 					delayin: 2000;
 					rotateyin: 60;
 				">
-                    @par.content
+
+
+
+
+                    <div>
+
+                    @for(paragraph <- par.content) {
+
+
+                        <p class="mathonblackboard">@paragraph._2</p>
+
+
+                    }
+
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
                 </div>
 
             </div>
@@ -210,41 +236,41 @@
 
 	<div class="sixteen columns">
 		<!-- Headline -->
-		<div class="headline" style="margin-top: 5px;"><h3>Related Work</h3></div>
+		<div class="headline" style="margin-top: 5px;"><h3>Other topics</h3></div>
 	</div>
 
 	<!-- 1/4 Column -->
 	<div class="four columns">
-		<div class="picture"><a href="single_project.html"><img src="images/portfolio/portoflio-01.jpg" alt=""/><div class="image-overlay-link"></div></a></div>
+		<div class="picture"><a href="single_project.html"><img src='@routes.Assets.at("images/460x290/groups.jpg")' alt="Groups"/><div class="image-overlay-link"></div></a></div>
 		<div class="item-description related">
-			<h5><a href="single_project.html">Maritime Details</a></h5>
+			<h5><a href="single_project.html">Permutation Groups</a></h5>
 			<p>Mauris sit amet ligula est, eget conseact etur lectus maecenas hendrerit suscipit</p>
 		</div>
 	</div>
 
 	<!-- 1/4 Column -->
 	<div class="four columns">
-		<div class="picture"><a href="single_project.html"><img src="images/portfolio/portoflio-02.jpg" alt=""/><div class="image-overlay-link"></div></a></div>
+		<div class="picture"><a href="single_project.html"><img src='@routes.Assets.at("images/460x290/group_rings.jpg")' alt="Group Rings"/><div class="image-overlay-link"></div></a></div>
 		<div class="item-description related">
-			<h5><a href="single_project.html">Grand Canyon</a></h5>
+			<h5><a href="single_project.html">Group Rings</a></h5>
 			<p>Mauris sit amet ligula est, eget conseact etur lectus maecenas hendrerit suscipit</p>
 		</div>
 	</div>
 
 	<!-- 1/4 Column -->
 	<div class="four columns">
-		<div class="picture"><a href="single_project.html"><img src="images/portfolio/portoflio-03.jpg" alt=""/><div class="image-overlay-link"></div></a></div>
+		<div class="picture"><a href="single_project.html"><img src='@routes.Assets.at("images/460x290/finite_fields.jpg")' alt="Finite Fields"/><div class="image-overlay-link"></div></a></div>
 		<div class="item-description related">
-			<h5><a href="single_project.html">Pine Tree Near Water</a></h5>
+			<h5><a href="single_project.html">Finite Fields</a></h5>
 			<p>Mauris sit amet ligula est, eget conseact etur lectus maecenas hendrerit suscipit</p>
 		</div>
 	</div>
 
 	<!-- 1/4 Column -->
 	<div class="four columns">
-		<div class="picture"><a href="single_project.html"><img src="images/portfolio/portoflio-04.jpg" alt=""/><div class="image-overlay-link"></div></a></div>
+		<div class="picture"><a href="single_project.html"><img src='@routes.Assets.at("images/460x290/polynomials.jpg")' alt="Polynomials"/><div class="image-overlay-link"></div></a></div>
 		<div class="item-description related">
-			<h5><a href="single_project.html">Seeds to the Earth</a></h5>
+			<h5><a href="single_project.html">Polynomials</a></h5>
 			<p>Mauris sit amet ligula est, eget conseact etur lectus maecenas hendrerit suscipit</p>
 		</div>
 	</div>

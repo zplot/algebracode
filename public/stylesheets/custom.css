@@ -29,3 +29,15 @@
     line-height: 28px !important;
 
 }
+
+.mathonblackboard {
+
+    font: 15px "Open Sans", sans-serif !important;
+    color: #fff !important;
+    font-weight: normal !important;;
+    font-style: italic !important;;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    line-height: 15px !important;
+
+}
