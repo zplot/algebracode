@@ -1882,7 +1882,7 @@ html[xmlns] .slides {display: block;}
 
 .item-description h5 {
 	font-size: 14px;
-    font-family: "proxima-nova", "Open Sans", sans-serif;
+    font-family: "Open Sans", sans-serif;
 	font-weight: bold;
 	line-height: 16px;
 	padding: 15px 0 10px 0;
@@ -2808,7 +2808,7 @@ input[type="button"] {
 	padding: 9px 12px;
 	display: inline-block;
 	border: 0px;
-    font-family: "proxima-nova", "Open Sans", sans-serif;
+    font-family: "Open Sans", sans-serif;
 	font-weight: bold;
 	cursor: pointer;
 	width: auto;
@@ -2959,7 +2959,7 @@ input[type="button"]:hover {background:#aaa}
 /* Alert Boxes
 ====================================*/
 .notification {
-    font-family: "proxima-nova", "Open Sans", sans-serif;
+    font-family: "Open Sans", sans-serif;
 	font-size: 14px;
 	line-height: 18px;
 	margin-bottom: 15px;
