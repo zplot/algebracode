@@ -1,4 +1,4 @@
-@(title: String)(content: Html)
+@(par: Blackboard.Blackboard)
 
 
 <!DOCTYPE html>
@@ -15,7 +15,7 @@
 <!-- Basic Page Needs
 ================================================== -->
 <meta charset="utf-8">
-<title>@title</title>
+<title>@par.title</title>
 
 <!-- Mobile Specific
 ================================================== -->
@@ -80,7 +80,7 @@
 
 		<!-- Page Title -->
 		<div id="page-title">
-			<h2>Maritime Details <span>/ Single Project</span></h2>
+			<h2>Notebook @par.notebook <span>/ Page @par.page</span></h2>
 
 			<!-- Portfolio Navi -->
 			<div id="portfolio-navi">
@@ -124,7 +124,7 @@
 					delayin: 2000;
 					rotateyin: 60;
 				">
-                    @content
+                    @par.content
                 </div>
 
             </div>
@@ -190,15 +190,15 @@
 
 	<div class="four columns">
 		<ul class="project-info">
-			<li><strong>Client:</strong> Google</li>
-			<li><strong>Date:</strong> August 2012</li>
+			<li><strong>Subject:</strong> @par.subject</li>
+			<li><strong>Project:</strong> @par.project</li>
 		</ul>
-		<a href="#" class="button color launch">Launch Project</a>
+		<a href="@par.references" class="button color launch">References</a>
 	</div>
 
 	<div class="twelve columns tooltips">
-		<div class="six columns alpha"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id ligula felis euismod semper. Donec ullamcorper nulla non metus auctor fringilla. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Vestibulum id ligula porta felis euismod semper. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.Nullam quis risus eget urna mollis ornare.</p></div>
-		<div class="six columns alpha"><p>Donec sed odio dui. Nulla vitae elit libero, a pharetra augue. Nullam id dolor id ultricies vehicula ut id elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur. Cras mattis consectetur purus sit amet fermentum. Donec id elit non mi porta gravida at eget metus. Duis mollis, est non commodo luctus, nisi erat porttitor.</p></div>
+		<div class="six columns alpha"><p>@par.text1.</p></div>
+		<div class="six columns alpha"><p>@par.text2.</p></div>
 	</div>
 
 </div>
