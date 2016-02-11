@@ -107,10 +107,8 @@
 
 /* #Typography
 ================================================== */
-
-
 	h1, h2, h3, h4, h5, h6 {
-		color: #b63626;
+		color: #404040;
 		font-family: "Open Sans", sans-serif;
 		font-weight: 600;
 	}
