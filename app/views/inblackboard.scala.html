@@ -1,0 +1,18 @@
+@(parameters: (String, List[(String, String)]))
+@blackboard(title = parameters._1) {
+
+
+    <div>
+
+        @for(paragraph <- parameters._2) {
+
+
+            <p>@paragraph._2</p>
+
+
+        }
+
+    </div>
+
+}
+

@@ -9,6 +9,10 @@ GET     /tree                       controllers.Application.treeExample
 
 GET     /static                     controllers.Application.static
 
+GET     /blackboard                 controllers.Application.blackboard
+
+
+
 
 GET		/manualform/createform      controllers.ManualForm.createForm()
 POST    /manualform/create          controllers.ManualForm.create()

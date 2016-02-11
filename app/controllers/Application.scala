@@ -28,6 +28,17 @@ object Application extends Controller {
 
   }
 
+  def blackboard = Action {
+
+    val title = "Blackboard"
+    val texto1 = ("p","When \\(a \\ne 0\\), there are two solutions to \\(ax^2 + bx + c = 0\\) and they are")
+    val texto2 = ("p", "\\(x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.\\)")
+    val texto3 = ("p", "\\[x \\otimes x + 1 \\otimes x\\]")
+    val parameters: (String, List[(String, String)]) = (title, List(texto1, texto2, texto3))
+    Ok(views.html.inblackboard(parameters))
+
+  }
+
   def static = Action {
 
     Ok(views.html.static())

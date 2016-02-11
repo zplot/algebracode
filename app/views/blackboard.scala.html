@@ -1,0 +1,102 @@
+@(title: String)(content: Html)
+
+
+<!DOCTYPE html>
+<!--[if IE 7 ]><html class="ie ie7" lang="en"><![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"><![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"><!--<![endif]-->
+<head>
+
+<!-- Typekit fonts
+================================================== -->
+    <script src="https://use.typekit.net/cju7woz.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+<!-- Basic Page Needs
+================================================== -->
+<meta charset="utf-8">
+<title>@title</title>
+
+<!-- Mobile Specific
+================================================== -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<!-- CSS
+================================================== -->
+	<link rel="stylesheet" type="text/css" href='@routes.Assets.at("stylesheets/style.css")'>
+	<link rel="stylesheet" type="text/css" href='@routes.Assets.at("stylesheets/boxed.css")'>
+	<link rel="stylesheet" type="text/css" href='@routes.Assets.at("stylesheets/colors/green.css")'>
+    <link rel="stylesheet" type="text/css" href='@routes.Assets.at("stylesheets/custom.css")'>
+
+
+<!-- Java Script
+================================================== -->
+
+
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src='@routes.Assets.at("javascripts/custom.js")'></script>
+	<script src='@routes.Assets.at("javascripts/selectnav.js")'></script>
+	<script src='@routes.Assets.at("javascripts/flexslider.js")'></script>
+	<script src='@routes.Assets.at("javascripts/twitter.js")'></script>
+	<script src='@routes.Assets.at("javascripts/tooltip.js")'></script>
+	<script src='@routes.Assets.at("javascripts/effects.js")'></script>
+	<script src='@routes.Assets.at("javascripts/fancybox.js")'></script>
+	<script src='@routes.Assets.at("javascripts/carousel.js")'></script>
+	<script src='@routes.Assets.at("javascripts/isotope.js")'></script>
+	<script src='@routes.Assets.at("javascripts/jquery-easing-1.3.js")'></script>
+	<script src='@routes.Assets.at("javascripts/jquery-transit-modified.js")'></script>
+	<script src='@routes.Assets.at("javascripts/layerslider.transitions.js")'></script>
+	<script src='@routes.Assets.at("javascripts/layerslider.kreaturamedia.jquery.js")'></script>
+	<script src='@routes.Assets.at("javascripts/greensock.js")'></script>
+
+
+        <!-- MathJax Script
+================================================== -->
+
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+    <script type="text/javascript" async
+    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+    </script>
+
+
+</head>
+<body>
+
+<!-- Wrapper Start -->
+<div id="wrapper">
+
+
+    @headernav()
+
+        <!-- Content
+================================================== -->
+
+
+    <div class="container">
+
+        <div class="sixteen columns">
+                <!-- Headline -->
+            <div class="headline no-margin"><h3>Blackboard</h3></div>
+        </div>
+        <div class="sixteen columns">
+                <!-- Blackboard -->
+
+
+                @content
+
+        </div>
+
+
+
+    </div>
+
+
+</div>
+
+    @footer1()
+
+</body>
+</html>
