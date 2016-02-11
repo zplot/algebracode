@@ -11,6 +11,10 @@ GET     /static                     controllers.Application.static
 
 GET     /blackboard                 controllers.Application.blackboard
 
+GET     /previous                   controllers.Application.static
+
+GET     /next                    controllers.Application.static
+
 
 
 

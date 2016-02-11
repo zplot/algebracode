@@ -9,6 +9,8 @@ object Blackboard {
                          title: String,
                          notebook: String,
                          page: String,
+                         next: String,
+                         previous: String,
                          content: List[(String, String)],
                          subject: String,
                          project: String,

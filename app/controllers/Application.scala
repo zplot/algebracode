@@ -35,6 +35,8 @@ object Application extends Controller {
     val title = "Hello Hopf"
     val notebook = "Hopf algebras"
     val page = "1"
+    val next = "next"
+    val previous = "previous"
     val t1 = ("p","When \\(a \\ne 0\\), there are two solutions to \\(ax^2 + bx + c = 0\\) and they are")
     val t2 = ("p", "\\(x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.\\)")
     val t3 = ("p", "\\[x \\otimes x + 1 \\otimes x\\]")
@@ -46,16 +48,18 @@ object Application extends Controller {
     val text2 = "Amet sit lorem ligula est, eget conseact etur lectus hendrerit suscipit maecenas."
 
     val parameters: Blackboard = Blackboard(
-      title,
-      notebook,
-      page,
-      content,
-      subject,
-      project,
-      references,
-      text1,
-      text2
-    )
+                                            title,
+                                            notebook,
+                                            page,
+                                            next,
+                                            previous,
+                                            content,
+                                            subject,
+                                            project,
+                                            references,
+                                            text1,
+                                            text2
+                                            )
 
     Ok(views.html.blackboard(parameters))
 
