@@ -33,6 +33,23 @@ object EntryForm {
 
                       )
 
+
+  case class EntryForm1(
+
+                        title: String,
+                        title5fields: String,
+                        label1: String,
+                        subject: String,
+                        project: String,
+                        references: String,
+                        text1: String,
+                        text2: String
+
+                      )
+
+  case class EntryFields1(input1: String)
+
+
 }
 
 
