@@ -74,7 +74,7 @@ object Form1 extends Controller {
       //formWithErrors => Forbidden("Invalid submission!"),
       formWithErrors => Ok(views.html.form1(tmp)),
 
-      value => Ok(views.html.blackboard(Blackboard.Blackboard("a","b","c","d","e",List[(String,String)](("p","g")),"h","i","j","k","l"))))
+      value => Ok(views.html.blackboard(Blackboard.Blackboard("a","b","c","d","e",List[(String,String)](("p", models.algebra.FiniteGroupExamples.S(3).cayleyTable2)),"h","i","j","k","l"))))
   }
 
   def process5(value: EntryForm.EntryForm): String = {
