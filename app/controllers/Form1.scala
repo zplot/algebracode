@@ -63,23 +63,18 @@ object Form1 extends Controller {
     Ok(views.html.form1(par))
   }
 
-  val treeForm5fields = Form(mapping(
+  val input1fields = Form(mapping(
 
-
-    "input1" -> nonEmptyText,
-    "input2" -> nonEmptyText,
-    "input3" -> nonEmptyText,
-    "input4" -> nonEmptyText,
-    "input5" -> nonEmptyText)(EntryForm.EntryFields.apply)(EntryForm.EntryFields.unapply))
+    "input1" -> nonEmptyText)(EntryForm.EntryFields1.apply)(EntryForm.EntryFields1.unapply))
 
 
 
-  def create5fields() = Action { implicit request =>
-    treeForm5fields.bindFromRequest.fold(
+  def createone() = Action { implicit request =>
+    input1fields.bindFromRequest.fold(
       //formWithErrors => Forbidden("Invalid submission!"),
-      formWithErrors => Ok(views.html.form(tmp)),
+      formWithErrors => Ok(views.html.form1(tmp)),
 
-      value => Ok(views.html.blackboard(Blackboard.Blackboard("a","b","c","d","e",List[(String,String)](("f","g")),"h","i","j","k","l"))))
+      value => Ok(views.html.blackboard(Blackboard.Blackboard("a","b","c","d","e",List[(String,String)](("p","g")),"h","i","j","k","l"))))
   }
 
   def process5(value: EntryForm.EntryForm): String = {
