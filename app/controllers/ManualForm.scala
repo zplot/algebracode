@@ -37,7 +37,7 @@ object ManualForm extends Controller {
     val text1: String = "Test"
     val text2: String = "Test"
 
-    val parameter = EntryForm.EntryForm(
+    val par = EntryForm.EntryForm(
                               title,
                               title5fields,
                               label1,
@@ -52,7 +52,7 @@ object ManualForm extends Controller {
                               text2
                               )
 
-    Ok(views.html.form(parameter))
+    Ok(views.html.form(par))
   }
 
   val treeForm5fields = Form(mapping(
