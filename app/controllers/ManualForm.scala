@@ -22,57 +22,6 @@ object ManualForm extends Controller {
 
 
 
-  def createForm5fields() = Action {
-
-    val title: String = "Test"
-    val title5fields: String = "Test"
-    val label1: String = "Test"
-    val label2: String = "Test"
-    val label3: String = "Test"
-    val label4: String = "Test"
-    val label5: String = "Test"
-    val subject: String = "Test"
-    val project: String = "Test"
-    val references: String = "Test"
-    val text1: String = "Test"
-    val text2: String = "Test"
-
-    val par = EntryForm.EntryForm(
-                              title,
-                              title5fields,
-                              label1,
-                              label2,
-                              label3,
-                              label4,
-                              label5,
-                              subject,
-                              project,
-                              references,
-                              text1,
-                              text2
-                              )
-
-    Ok(views.html.form(par))
-  }
-
-  val treeForm5fields = Form(mapping(
-
-    "title" -> nonEmptyText,
-    "title5fields" -> nonEmptyText,
-    "label1" -> nonEmptyText,
-    "label2" -> nonEmptyText,
-    "label3" -> nonEmptyText,
-    "label4" -> nonEmptyText,
-    "label5" -> nonEmptyText,
-    "subject" -> nonEmptyText,
-    "project" -> nonEmptyText,
-    "references" -> nonEmptyText,
-    "text1" -> nonEmptyText,
-    "text2" -> nonEmptyText)(EntryForm.EntryForm.apply)(EntryForm.EntryForm.unapply))
-
-
-
-
 
 /*  def create() = Action { implicit request =>
     treeForm.bindFromRequest.fold(
@@ -86,11 +35,6 @@ object ManualForm extends Controller {
       value => Ok(views.html.salidaSimple(("Estamos en la salida", process(value)))))
   }
 
-  def create5fields() = Action { implicit request =>
-    treeForm5fields.bindFromRequest.fold(
-      formWithErrors => Forbidden("Invalid submission!"),
-      value => Ok(views.html.form(EntryForm.EntryForm("","","","","","","","","","","",""))))
-  }
 
   def process(value: TwoTrees): String = {
 
