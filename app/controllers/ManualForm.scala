@@ -52,7 +52,7 @@ object ManualForm extends Controller {
                               text2
                               )
 
-    Ok(views.html.blackboard(Blackboard.Blackboard("","","","","",List[(String, String)](),"","","","","")))
+    Ok(views.html.form(par))
   }
 
   val treeForm5fields = Form(mapping(
@@ -89,7 +89,7 @@ object ManualForm extends Controller {
   def create5fields() = Action { implicit request =>
     treeForm5fields.bindFromRequest.fold(
       formWithErrors => Forbidden("Invalid submission!"),
-      value => Ok(views.html.blackboard(Blackboard.Blackboard("","","","","",List[(String, String)](),"","","","",""))))
+      value => Ok(views.html.form(EntryForm.EntryForm("","","","","","","","","","","",""))))
   }
 
   def process(value: TwoTrees): String = {
