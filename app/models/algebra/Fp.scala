@@ -1,4 +1,5 @@
 package models.algebra
+import models.algebra.Utils._
 
 case class Fp(p: Int) extends Field {
   require(isPrime(p), p + " is not a prime number")

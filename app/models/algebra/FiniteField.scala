@@ -1,4 +1,5 @@
 package models.algebra
+import models.algebra.Utils._
 
 
 
