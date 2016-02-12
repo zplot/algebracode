@@ -21,8 +21,8 @@ GET     /next                       controllers.Application.static
 GET		/manualform/createform      controllers.ManualForm.createForm()
 POST    /manualform/create          controllers.ManualForm.create()
 
-GET		/manualform/create5form      controllers.ManualForm.createForm5fields()
-POST    /manualform/create5          controllers.ManualForm.create5fields()
+GET		/form5/create5form      controllers.Form5.createForm5fields()
+POST    /form5/create5          controllers.Form5.create5fields()
 
 
 # Map static resources from the /public folder to the /assets URL path

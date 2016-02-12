@@ -43,23 +43,17 @@ object Form5 extends Controller {
                               text2
                               )
 
-    Ok(views.html.form5.form(par))
+    Ok(views.html.form(par))
   }
 
   val treeForm5fields = Form(mapping(
 
-    "title" -> nonEmptyText,
-    "title5fields" -> nonEmptyText,
-    "label1" -> nonEmptyText,
-    "label2" -> nonEmptyText,
-    "label3" -> nonEmptyText,
-    "label4" -> nonEmptyText,
-    "label5" -> nonEmptyText,
-    "subject" -> nonEmptyText,
-    "project" -> nonEmptyText,
-    "references" -> nonEmptyText,
-    "text1" -> nonEmptyText,
-    "text2" -> nonEmptyText)(EntryForm.EntryForm.apply)(EntryForm.EntryForm.unapply))
+
+    "input1" -> nonEmptyText,
+    "input2" -> nonEmptyText,
+    "input3" -> nonEmptyText,
+    "input4" -> nonEmptyText,
+    "input5" -> nonEmptyText)(EntryForm.EntryFields.apply)(EntryForm.EntryFields.unapply))
 
 
 

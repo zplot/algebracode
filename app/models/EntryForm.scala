@@ -21,6 +21,18 @@ object EntryForm {
 
                        )
 
+  case class EntryFields(
+
+
+                        input1: String,
+                        input2: String,
+                        input3: String,
+                        input4: String,
+                        input5: String
+
+
+                      )
+
 }
 
 
