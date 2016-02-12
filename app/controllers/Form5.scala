@@ -11,6 +11,39 @@ import play.api.data.Forms._
 
 object Form5 extends Controller {
 
+  val tmp = {
+
+    val title: String = "Test"
+    val title5fields: String = "Test"
+    val label1: String = "Please review"
+    val label2: String = "Please review"
+    val label3: String = "Please review"
+    val label4: String = "Please review"
+    val label5: String = "Please review"
+    val subject: String = "Test"
+    val project: String = "Test"
+    val references: String = "Test"
+    val text1: String = "Test"
+    val text2: String = "Test"
+
+    EntryForm.EntryForm(
+      title,
+      title5fields,
+      label1,
+      label2,
+      label3,
+      label4,
+      label5,
+      subject,
+      project,
+      references,
+      text1,
+      text2
+    )
+
+
+  }
+
 
 
   def createForm5fields() = Action {
@@ -59,7 +92,9 @@ object Form5 extends Controller {
 
   def create5fields() = Action { implicit request =>
     treeForm5fields.bindFromRequest.fold(
-      formWithErrors => Forbidden("Invalid submission!"),
+      //formWithErrors => Forbidden("Invalid submission!"),
+      formWithErrors => Ok(views.html.form(tmp)),
+
       value => Ok(views.html.blackboard(Blackboard.Blackboard("a","b","c","d","e",List[(String,String)](("f","g")),"h","i","j","k","l"))))
   }
 
