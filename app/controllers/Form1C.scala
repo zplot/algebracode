@@ -1,7 +1,7 @@
 package controllers
 
-import models.Cayley._
-import models.EntryForm
+import models.Blackboard
+import models.EntryFormC
 import models.MyHTML._
 import models.MyClass._
 
@@ -11,9 +11,9 @@ import play.api.data.{ Form }
 import play.api.data.Forms._
 
 
-object CayleyTable extends Controller {
+object Form1C extends Controller {
 
-  def theTable(x: List[String]): List[List[String]] = {
+  def paragraph(x: List[String]): List[Trio] = {
 
     x.map(z => Trio(P, class1, z))
 
@@ -30,7 +30,7 @@ object CayleyTable extends Controller {
     val text1: String = "Test"
     val text2: String = "Test"
 
-    EntryForm.EntryForm1(
+    EntryFormC.EntryForm1C(
       title,
       title5fields,
       label1,
@@ -46,7 +46,7 @@ object CayleyTable extends Controller {
 
 
 
-  def createForm1fields() = Action {
+  def createForm1fieldsC() = Action {
 
     val title: String = "Test"
     val title5fields: String = "Test"
@@ -57,7 +57,7 @@ object CayleyTable extends Controller {
     val text1: String = "Test"
     val text2: String = "Test"
 
-    val par = EntryForm.EntryForm1(
+    val par = EntryFormC.EntryForm1C(
       title,
       title5fields,
       label1,
@@ -68,24 +68,24 @@ object CayleyTable extends Controller {
       text2
     )
 
-    Ok(views.html.form1(par))
+    Ok(views.html.form1c(par))
   }
 
   val input1fields = Form(mapping(
 
-    "input1" -> nonEmptyText)(EntryForm.EntryFields1.apply)(EntryForm.EntryFields1.unapply))
+    "input1" -> nonEmptyText)(EntryFormC.EntryFields1C.apply)(EntryFormC.EntryFields1C.unapply))
 
 
 
-  def createone() = Action { implicit request =>
+  def createoneC() = Action { implicit request =>
     input1fields.bindFromRequest.fold(
       //formWithErrors => Forbidden("Invalid submission!"),
-      formWithErrors => Ok(views.html.form1(tmp)),
+      formWithErrors => Ok(views.html.form1c(tmp)),
 
-      value => Ok(views.html.cayleytable(CayleyTable(theTable(process(value).cayleyTableOK)))))
+      value => Ok(views.html.blackboardmath(Blackboard.Blackboard("a","b","c","d","e", paragraph(process(value).cayleyTableListString),"h","i","j","k","l"))))
   }
 
-  def process(value: EntryForm.EntryFields1): models.algebra.PermutationGroup = value.input1 match {
+  def process(value: EntryFormC.EntryFields1C): models.algebra.PermutationGroup = value.input1 match {
 
     case "S(3)" => models.algebra.FiniteGroupExamples.S(3)
     case "S(4)" => models.algebra.FiniteGroupExamples.S(4)
@@ -97,6 +97,24 @@ object CayleyTable extends Controller {
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
