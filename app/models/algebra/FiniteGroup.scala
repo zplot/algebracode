@@ -38,7 +38,60 @@ trait FiniteGroup extends Group {
     println()
   }
 
-  def cayleyTable2: String = { // TODO
+  def cayleyTableString: String = {
+
+    val list1 = (1 to cardinal).toList // Enumeración de los elementos
+    val traductor = (list1 zip elementsOrdered).toMap
+    val traductorInverso = (list1 zip elementsOrdered).toMap.map(_.swap)
+
+    val tmp1 = ""
+    val cr = "\n"
+
+    def concat(x: String, y: String): String = y + x
+
+    val tmp2 = tmp1 + cr
+    val tmp3 = tmp2 + "Cayley table of " + this.structureId + ":"
+    var tmp4 = tmp3 + cr + cr
+
+    for (i <- 1 to cardinal) {
+      for (j <- 1 to cardinal) {
+        tmp4 = tmp4 + traductorInverso(traductor(i).multiply(traductor(j))) + " "
+      }
+      tmp4 = tmp4 + cr
+    }
+    tmp4 = tmp4 + cr
+    tmp4
+  }
+
+  def cayleyTableListString: List[String] = {
+
+    val list1 = (1 to cardinal).toList // Enumeración de los elementos
+    val traductor = (list1 zip elementsOrdered).toMap
+    val traductorInverso = (list1 zip elementsOrdered).toMap.map(_.swap)
+
+    val tmp1 = List[String]()
+    val cr = "\n"
+
+    def concat(x: String, xs: List[String]): List[String] = (x :: xs.reverse).reverse
+
+    val tmp2 = concat(cr, tmp1)
+    val tmp3 = concat("Cayley table of " + this.structureId + ":", tmp2)
+    var tmp4 = concat(cr + cr, tmp3)
+
+    for (i <- 1 to cardinal) {
+      for (j <- 1 to cardinal) {
+        var paraSumar = tmp4.reverse.head
+        paraSumar = paraSumar + traductorInverso(traductor(i).multiply(traductor(j))) + " "
+        tmp4 = (paraSumar :: tmp4.reverse.tail).reverse
+      }
+
+      tmp4 = concat(cr, tmp4)
+    }
+    tmp4 = concat(cr, tmp4)
+    tmp4
+  }
+
+  def cayleyTable2: String = { // TODO Posiblemente borrarlo
     val list1 = (1 to cardinal).toList // Enumeración de los elementos
     val traductor = (list1 zip elementsOrdered).toMap
     val traductorInverso = (list1 zip elementsOrdered).toMap.map(_.swap)

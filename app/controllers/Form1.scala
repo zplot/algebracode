@@ -11,6 +11,12 @@ import play.api.data.Forms._
 
 object Form1 extends Controller {
 
+  def paragraph(x: List[String]): List[(String, String)] = {
+
+    x.map(z => ("p", z))
+
+  }
+
   val tmp = {
 
     val title: String = "Test"
@@ -74,7 +80,7 @@ object Form1 extends Controller {
       //formWithErrors => Forbidden("Invalid submission!"),
       formWithErrors => Ok(views.html.form1(tmp)),
 
-      value => Ok(views.html.blackboard(Blackboard.Blackboard("a","b","c","d","e",List[(String,String)](("p", models.algebra.FiniteGroupExamples.S(3).cayleyTable2)),"h","i","j","k","l"))))
+      value => Ok(views.html.blackboard(Blackboard.Blackboard("a","b","c","d","e", paragraph(models.algebra.FiniteGroupExamples.S(3).cayleyTableListString),"h","i","j","k","l"))))
   }
 
   def process5(value: EntryForm.EntryForm): String = {
