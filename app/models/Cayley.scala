@@ -4,11 +4,11 @@ import MyHTML._
 
 import scala.language.implicitConversions
 
-object CayleyTable {
+object Cayley {
 
-  case class CayleyTable(
+  case class Cayley(
 
-                        table: List[String]
+                        table: List[List[String]]
 
                        )
 

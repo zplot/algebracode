@@ -1,6 +1,6 @@
 package controllers
 
-import models.CayleyTable._
+import models.Cayley._
 import models.EntryForm
 import models.MyHTML._
 import models.MyClass._

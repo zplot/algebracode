@@ -1,4 +1,4 @@
-@(table: CayleyTable)
+@(data: Cayley.Cayley)
 
 import MyHtml._
 import MyClass._
@@ -20,7 +20,7 @@ import MyHtml.Tag._
 <!-- Basic Page Needs
 ================================================== -->
 <meta charset="utf-8">
-<title>@par.title</title>
+<title>Cayley TAble of Finite Groups</title>
 
 <!-- Mobile Specific
 ================================================== -->
@@ -85,14 +85,11 @@ import MyHtml.Tag._
 
 		<!-- Page Title -->
 		<div id="page-title">
-			<h2>@par.notebook <span>/ page @par.page</span></h2>
+			<h2>Cayley Table of Finite Groups <span>/ outcome</span></h2>
 
 			<!-- Portfolio Navi -->
 			<div id="portfolio-navi">
-				<ul>
-					<li><a class="prev" href="/@par.previous"></a></li>
-					<li><a class="next" href="/@par.next"></a></li>
-				</ul>
+
 			</div>
 			<div class="clear"></div>
 
@@ -116,7 +113,7 @@ import MyHtml.Tag._
             <div class="ls-slide" style="transition2d: 2; timeshift: -1000; slidedelay: 15000;">
 
                     <!-- Background -->
-                <img class="ls-bg" src='@routes.Assets.at("images/portfolio/blackboard11.jpg")' alt="John Horton Conway">
+                <img class="ls-bg" src='@routes.Assets.at("images/portfolio/blackboard11.jpg")' alt="">
 
 
                 <div class="slide-caption alt ls-s1" style="up: 0px; width: 1108px; slidedirection: left; slideoutdirection: left; durationin: 1000; durationout: 800; delayin: 1000; delayout: 0;" data-ls="
@@ -139,7 +136,7 @@ import MyHtml.Tag._
 
 
 
-                    @for(trio <- par.content) {
+                    @for(trio <- data.) {
 
 
                         @println(trio)
