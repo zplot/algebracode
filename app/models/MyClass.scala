@@ -7,7 +7,7 @@ object MyClass extends Enumeration {
   type MyClass = Value
   val class1, class2, class3 = Value
 
-  def classInTag(x: MyClass): String = "." + x.toString
+  def classInTag(x: MyClass): String = x.toString
 
 }
 

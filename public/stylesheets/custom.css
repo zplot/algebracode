@@ -47,7 +47,8 @@
 .class1 {
 
     font: 13px "Open Sans", sans-serif !important;
-    color: #a6d7ff !important;
+    /*color: #a6d7ff !important;*/
+    color: #bbb !important;
     font-weight: normal !important;;
     font-style: italic !important;;
     padding-top: 10px !important;

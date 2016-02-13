@@ -139,7 +139,10 @@ import MyHtml.Tag
 
                     @for(trio <- par.content) {
 
+                        @println(trio)
+
                         @trio match {
+
 
                             case MyHTML.Trio(_, c, t) =>  {
                                     <p class="@MyClass.classInTag(c)">@t</p>
