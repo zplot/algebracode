@@ -130,10 +130,26 @@
 
                     <div>
 
+
+
+
+
                     @for(paragraph <- par.content) {
 
-
-                        <p class="mathonblackboard">@paragraph._2</p>
+                        @paragraph match {
+                            case ("p", x) =>  {
+                                    <p class="mathonblackboard">@paragraph._2</p>
+                                }
+                            case ("br", x) =>  {
+                                    <br />
+                                }
+                            case ("h1", x) => {
+                                    <h1>@paragraph._2</h1>
+                                }
+                            case _ => {
+                                <p class="mathonblackboard">Not matching!!!</p>
+                                }
+                        }
 
 
                     }

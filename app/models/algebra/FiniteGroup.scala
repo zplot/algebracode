@@ -74,9 +74,10 @@ trait FiniteGroup extends Group {
 
     def concat(x: String, xs: List[String]): List[String] = (x :: xs.reverse).reverse
 
-    val tmp2 = concat(cr, tmp1)
-    val tmp3 = concat("Cayley table of " + this.structureId + ":", tmp2)
-    var tmp4 = concat(cr + cr, tmp3)
+
+    val tmp3 = concat("Cayley table of " + this.structureId + ":", tmp1)
+    var tmp4 = tmp3
+    tmp4 = concat("\n" + cr, tmp4)
 
     for (i <- 1 to cardinal) {
       for (j <- 1 to cardinal) {
