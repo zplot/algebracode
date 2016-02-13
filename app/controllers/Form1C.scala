@@ -1,6 +1,6 @@
 package controllers
 
-import models.Blackboard
+import models.BlackboardTable
 import models.EntryFormC
 import models.MyHTML._
 import models.MyClass._
@@ -84,7 +84,7 @@ object Form1C extends Controller {
       formWithErrors => Ok(views.html.form1c(tmp)),
 
       // No hay errores
-      value => Ok(views.html.blackboardmath(Blackboard.Blackboard("a","b","c","d","e", paragraph(process(value).cayleyTableListString),"h","i","j","k","l"))))
+      value => Ok(views.html.blackboardmath(BlackboardTable.BlackboardTable("a","b","c","d","e", paragraph(process(value).cayleyTableListString),"h","i","j","k","l"))))
   }
 
   def process(value: EntryFormC.EntryFields1C): models.algebra.PermutationGroup = value.input1 match {
