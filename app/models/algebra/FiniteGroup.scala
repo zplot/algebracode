@@ -110,7 +110,7 @@ trait FiniteGroup extends Group {
     for (i <- 1 to cardinal) {
       for (j <- 1 to cardinal) {
 
-        (traductorInverso(traductor(i).multiply(traductor(j))) + " ") :: tmp4(i)
+        traductorInverso(traductor(i).multiply(traductor(j))) :: tmp4(i)
 
       }
 

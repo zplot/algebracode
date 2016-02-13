@@ -1,4 +1,4 @@
-@(par: Blackboard.Blackboard)
+@(par: List[List[String]])
 
 
 
@@ -16,7 +16,7 @@
             <!-- Basic Page Needs
 ================================================== -->
         <meta charset="utf-8">
-        <title>@par.title</title>
+        <title>Cayley Table of a finite Group</title>
 
             <!-- Mobile Specific
 ================================================== -->
@@ -81,14 +81,11 @@
 
                         <!-- Page Title -->
                     <div id="page-title">
-                        <h2>@par.notebook <span>/ page @par.page</span></h2>
+                        <h2>Permutation Groups<span>/ Finite Groups</span></h2>
 
                             <!-- Portfolio Navi -->
                         <div id="portfolio-navi">
-                            <ul>
-                                <li><a class="prev" href="/@par.previous"></a></li>
-                                <li><a class="next" href="/@par.next"></a></li>
-                            </ul>
+
                         </div>
                         <div class="clear"></div>
 
@@ -132,74 +129,41 @@
                             <div>
 
 
-
-
-
-                            @for(trio <- par.content) {
-
-
-                                @println(trio)
-
-                                @trio match {
-
-
-
-                                    case MyHTML.Trio(MyHTML.P, c, t) =>  {
-                                        <p class="@MyClass.classInTag(c)">@t</p>
+                            <table>
+                                @for(row <- par) {
+                                    <tr>
+                                    @for(element <- row) {
+                                        <td>element</td>
                                     }
-
-                                    case MyHTML.Trio(MyHTML.H1, c, t) =>  {
-                                        <h1 class="@MyClass.classInTag(c)">@t</h1>
-                                    }
-
-                                    case _ => {
-                                        <p class="mathonblackboard">Not matching!!!</p>
-                                    }
+                                    </tr>
                                 }
+                            </table>
 
 
-                            }
 
                             </div>
-
-
-
-
-
-
-
-
-
-
-
 
                         </div>
 
                     </div>
 
-
                 </div>
-                    <!-- LayerSlider / End -->
 
             </div>
-                <!-- LayerSlider Container / End -->
-                <!-- End 960 Container -->
 
-
-                <!-- 960 Container -->
             <div class="container" style="margin-top: 30px;">
 
                 <div class="four columns">
                     <ul class="project-info">
-                        <li><strong>Subject:</strong> @par.subject</li>
-                        <li><strong>Project:</strong> @par.project</li>
+                        <li><strong>Subject:</strong>Cayley Table</li>
+                        <li><strong>Project:</strong>Permutation Groups</li>
                     </ul>
-                    <a href="@par.references" class="button color launch">References</a>
+                    <a href="#" class="button color launch">References</a>
                 </div>
 
                 <div class="twelve columns tooltips">
-                    <div class="six columns alpha"><p>@par.text1.</p></div>
-                    <div class="six columns alpha"><p>@par.text2.</p></div>
+                    <div class="six columns alpha"><p>Text on Permutation groups 1</p></div>
+                    <div class="six columns alpha"><p>Text on Permutation groups 2</p></div>
                 </div>
 
             </div>

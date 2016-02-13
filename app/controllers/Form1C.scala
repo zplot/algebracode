@@ -84,7 +84,7 @@ object Form1C extends Controller {
       formWithErrors => Ok(views.html.form1c(tmp)),
 
       // No hay errores
-      value => Ok(views.html.blackboardmath(BlackboardTable.BlackboardTable("a","b","c","d","e", paragraph(process(value).cayleyTableListString),"h","i","j","k","l"))))
+      value => Ok(views.html.blackboardtable(process(value).cayleyTableOK)))
   }
 
   def process(value: EntryFormC.EntryFields1C): models.algebra.PermutationGroup = value.input1 match {
