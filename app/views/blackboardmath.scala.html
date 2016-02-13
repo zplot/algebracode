@@ -142,7 +142,7 @@ import MyHtml.Tag
                         @trio match {
 
                             case MyHTML.Trio(_, c, t) =>  {
-                                    <p class="@MyClass.classInTag(c)">t</p>
+                                    <p class="@MyClass.classInTag(c)">@t</p>
                                 }
 
                             case _ => {
