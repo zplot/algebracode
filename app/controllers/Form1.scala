@@ -80,12 +80,14 @@ object Form1 extends Controller {
       //formWithErrors => Forbidden("Invalid submission!"),
       formWithErrors => Ok(views.html.form1(tmp)),
 
-      value => Ok(views.html.blackboard(Blackboard.Blackboard("a","b","c","d","e", paragraph(process(value).cayleyTableListString),"h","i","j","k","l"))))
+      value => Ok(views.html.blackboardmath(Blackboard.Blackboard("a","b","c","d","e", paragraph(process(value).cayleyTableListString),"h","i","j","k","l"))))
   }
 
   def process(value: EntryForm.EntryFields1): models.algebra.PermutationGroup = value.input1 match {
 
     case "S(3)" => models.algebra.FiniteGroupExamples.S(3)
+    case "S(4)" => models.algebra.FiniteGroupExamples.S(4)
+    case "S(5)" => models.algebra.FiniteGroupExamples.S(5)
     case _ => models.algebra.FiniteGroupExamples.Q8
 
 
