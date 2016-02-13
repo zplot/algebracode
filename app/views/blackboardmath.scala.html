@@ -2,6 +2,7 @@
 import MyHtml._
 import MyClass._
 import MyHtml.Tag
+import MyHtml.Tag._
 
 
 <!DOCTYPE html>
@@ -139,14 +140,20 @@ import MyHtml.Tag
 
                     @for(trio <- par.content) {
 
+
                         @println(trio)
 
                         @trio match {
 
 
-                            case MyHTML.Trio(_, c, t) =>  {
+
+                            case MyHTML.Trio(MyHTML.P, c, t) =>  {
                                     <p class="@MyClass.classInTag(c)">@t</p>
                                 }
+
+                            case MyHTML.Trio(MyHTML.H1, c, t) =>  {
+                                <h1 class="@MyClass.classInTag(c)">@t</h1>
+                            }
 
                             case _ => {
                                 <p class="mathonblackboard">Not matching!!!</p>
