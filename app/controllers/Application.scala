@@ -2,6 +2,8 @@ package controllers
 
 // Imports de los árboles
 import models.Blackboard.Blackboard
+import models.MyHTML._
+import models.MyClass._
 
 import scala.language.implicitConversions
 import models.Tree
@@ -37,9 +39,9 @@ object Application extends Controller {
     val page = "1"
     val next = "next"
     val previous = "previous"
-    val t1 = ("p","When \\(a \\ne 0\\), there are two solutions to \\(ax^2 + bx + c = 0\\) and they are")
-    val t2 = ("p", "\\(x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.\\)")
-    val t3 = ("p", "\\[x \\otimes x + 1 \\otimes x\\]")
+    val t1 = Trio(P,class1,"When \\(a \\ne 0\\), there are two solutions to \\(ax^2 + bx + c = 0\\) and they are")
+    val t2 = Trio(P,class1,"\\(x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.\\)")
+    val t3 = Trio(P,class1,"\\[x \\otimes x + 1 \\otimes x\\]")
     val content = List(t1, t2, t3)
     val subject = "Hopf algebras"
     val project = "Computational algebra"

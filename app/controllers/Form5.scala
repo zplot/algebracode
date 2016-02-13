@@ -2,6 +2,8 @@ package controllers
 
 import models.Blackboard
 import models.EntryForm
+import models.MyHTML._
+import models.MyClass._
 
 import play.api._
 import play.api.mvc._
@@ -95,7 +97,7 @@ object Form5 extends Controller {
       //formWithErrors => Forbidden("Invalid submission!"),
       formWithErrors => Ok(views.html.form(tmp)),
 
-      value => Ok(views.html.blackboard(Blackboard.Blackboard("a","b","c","d","e",List[(String,String)](("f","g")),"h","i","j","k","l"))))
+      value => Ok(views.html.blackboard(Blackboard.Blackboard("a","b","c","d","e",List[Trio](Trio(P,class1,"g")),"h","i","j","k","l"))))
   }
 
   def process5(value: EntryForm.EntryForm): String = {

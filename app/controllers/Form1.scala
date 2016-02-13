@@ -2,6 +2,8 @@ package controllers
 
 import models.Blackboard
 import models.EntryForm
+import models.MyHTML._
+import models.MyClass._
 
 import play.api._
 import play.api.mvc._
@@ -11,9 +13,9 @@ import play.api.data.Forms._
 
 object Form1 extends Controller {
 
-  def paragraph(x: List[String]): List[(String, String)] = {
+  def paragraph(x: List[String]): List[Trio] = {
 
-    x.map(z => ("p", z))
+    x.map(z => Trio(P, class1, z))
 
   }
 

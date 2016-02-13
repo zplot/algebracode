@@ -1,5 +1,7 @@
 package models
 
+import MyHTML._
+
 import scala.language.implicitConversions
 
 object Blackboard {
@@ -11,7 +13,7 @@ object Blackboard {
                          page: String,
                          next: String,
                          previous: String,
-                         content: List[(String, String)],
+                         content: List[Trio],
                          subject: String,
                          project: String,
                          references: String,

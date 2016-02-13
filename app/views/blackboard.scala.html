@@ -130,13 +130,22 @@
 
                     <div>
 
-                    @for(paragraph <- par.content) {
+						@for(trio <- par.content) {
+
+							@trio match {
+
+								case MyHTML.Trio(_, c, t) =>  {
+									<p class="@MyClass.classInTag(c)">t</p>
+								}
+
+								case _ => {
+									<p class="mathonblackboard">Not matching!!!</p>
+								}
+							}
 
 
-                        <p class="mathonblackboard">@paragraph._2</p>
-
-
-                    }
+						}
+						
 
                     </div>
 

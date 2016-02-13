@@ -1,4 +1,7 @@
 @(par: Blackboard.Blackboard)
+import MyHtml._
+import MyClass._
+import MyHtml.Tag
 
 
 <!DOCTYPE html>
@@ -134,18 +137,14 @@
 
 
 
-                    @for(paragraph <- par.content) {
+                    @for(trio <- par.content) {
 
-                        @paragraph match {
-                            case ("p", x) =>  {
-                                    <p class="mathonblackboard">@paragraph._2</p>
+                        @trio match {
+
+                            case MyHTML.Trio(_, c, t) =>  {
+                                    <p class="@MyClass.classInTag(c)">t</p>
                                 }
-                            case ("br", x) =>  {
-                                    <br />
-                                }
-                            case ("h1", x) => {
-                                    <h1>@paragraph._2</h1>
-                                }
+
                             case _ => {
                                 <p class="mathonblackboard">Not matching!!!</p>
                                 }
