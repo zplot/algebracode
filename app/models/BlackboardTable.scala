@@ -2,14 +2,16 @@ package models
 
 import scala.language.implicitConversions
 
-object EntryFormC {
+object BlackboardTable {
 
-
-  case class EntryForm1C(
+  case class BlackboardTable(
 
                          title: String,
-                         title5fields: String,
-                         label1: String,
+                         notebook: String,
+                         page: String,
+                         next: String,
+                         previous: String,
+                         content: List[List[String]],
                          subject: String,
                          project: String,
                          references: String,
@@ -17,9 +19,6 @@ object EntryFormC {
                          text2: String
 
                        )
-
-  case class EntryFields1C(input1: String)
-
 
 }
 

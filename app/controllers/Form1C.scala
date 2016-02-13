@@ -45,17 +45,17 @@ object Form1C extends Controller {
   }
 
 
-
+  // Crea el form para introducir datos
   def createForm1fieldsC() = Action {
 
-    val title: String = "Test"
-    val title5fields: String = "Test"
-    val label1: String = "Test"
-    val subject: String = "Test"
-    val project: String = "Test"
-    val references: String = "Test"
-    val text1: String = "Test"
-    val text2: String = "Test"
+    val title: String = "Caley Table of a Permutation Group"
+    val title5fields: String = "Caley Table of a Permutation Group"
+    val label1: String = "Enter the name of a valid finite group"
+    val subject: String = "Permutation Groups"
+    val project: String = "Cayley Table"
+    val references: String = "These are the references on this subject"
+    val text1: String = "What a permutation group is"
+    val text2: String = "What a Cayley Table is"
 
     val par = EntryFormC.EntryForm1C(
       title,
@@ -71,17 +71,19 @@ object Form1C extends Controller {
     Ok(views.html.form1c(par))
   }
 
+  // Aquí está la magia
   val input1fields = Form(mapping(
 
     "input1" -> nonEmptyText)(EntryFormC.EntryFields1C.apply)(EntryFormC.EntryFields1C.unapply))
 
-
-
+  // Lanza la view que presenta los resultados
   def createoneC() = Action { implicit request =>
     input1fields.bindFromRequest.fold(
-      //formWithErrors => Forbidden("Invalid submission!"),
+
+      // Hay errores
       formWithErrors => Ok(views.html.form1c(tmp)),
 
+      // No hay errores
       value => Ok(views.html.blackboardmath(Blackboard.Blackboard("a","b","c","d","e", paragraph(process(value).cayleyTableListString),"h","i","j","k","l"))))
   }
 
