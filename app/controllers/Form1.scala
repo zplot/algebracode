@@ -13,7 +13,7 @@ object Form1 extends Controller {
 
   def paragraph(x: List[String]): List[(String, String)] = {
 
-    x.map(z => ("h1", z))
+    x.map(z => ("p", z))
 
   }
 
