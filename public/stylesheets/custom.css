@@ -55,6 +55,19 @@
 
 }
 
+.class2 {
+
+    font: 15px "Open Sans", sans-serif !important;
+    /*color: #a6d7ff !important;*/
+    color: #bbb !important;
+    font-weight: normal !important;;
+    font-style: italic !important;;
+    line-height: 15px !important;
+    padding-bottom: 0px !important;
+    padding-top: 4px !important;
+
+}
+
 .noclass {
 
 }
@@ -80,3 +93,4 @@
 }
 
 tr:nth-child(even){background-color: #333333 !important;}
+
