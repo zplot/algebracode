@@ -99,24 +99,19 @@ trait FiniteGroup extends Group {
     val traductorInverso = (list1 zip elementsOrdered).toMap.map(_.swap)
 
     val tmp1 = List[String]()
-    val tmp11 = List[List[String]]()
+    var tmp11 = List[List[String]]()
     val cr = "\n"
 
     def concat(x: String, xs: List[String]): List[String] = (x :: xs.reverse).reverse
 
 
-    val tmp4 = tmp11
+    val tmp4 = List[Int]()
 
-    for (i <- 1 to cardinal) {
-      for (j <- 1 to cardinal) {
+    val tmp5 = for (i <- 1 to cardinal; j <- 1 to cardinal)
+          yield traductorInverso(traductor(i).multiply(traductor(j))).toString
 
-        traductorInverso(traductor(i).multiply(traductor(j))) :: tmp4(i)
-
-      }
-
-    }
     println(tmp4)
-    tmp4
+    tmp5
   }
 
 
