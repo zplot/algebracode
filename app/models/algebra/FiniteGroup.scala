@@ -1,5 +1,8 @@
 package models.algebra
 
+import scala.collection.immutable.NumericRange
+import scala.collection.immutable.Range.Partial
+
 trait FiniteGroup extends Group {
 
   type T1
@@ -98,20 +101,18 @@ trait FiniteGroup extends Group {
     val traductor = (list1 zip elementsOrdered).toMap
     val traductorInverso = (list1 zip elementsOrdered).toMap.map(_.swap)
 
-    val tmp1 = List[String]()
-    var tmp11 = List[List[String]]()
-    val cr = "\n"
+    val tmp1 = List.range( 1, cardinal + 1)
 
-    def concat(x: String, xs: List[String]): List[String] = (x :: xs.reverse).reverse
+    def row(i: Int): List[Int] = {
+      val tmp1 = for (j <- 1 to cardinal) yield traductorInverso(traductor(i).multiply(traductor(j)))
+      val tmp2 = tmp1.toList
+      tmp2
+    }
 
+    val tmp2: List[List[Int]] = tmp1.map( i => row(i))
+    val tmp3: List[List[String]] = tmp2.map(row => row.map(elem => elem.toString))
+    tmp3
 
-    val tmp4 = List[Int]()
-
-    val tmp5 = for (i <- 1 to cardinal; j <- 1 to cardinal)
-          yield traductorInverso(traductor(i).multiply(traductor(j))).toString
-
-    println(tmp4)
-    tmp5
   }
 
 
