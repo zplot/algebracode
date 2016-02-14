@@ -1,6 +1,6 @@
 package scala
 
-import algebra.Fp
+import models.algebra.Fp
 import org.scalacheck._
 import Prop.forAll
 

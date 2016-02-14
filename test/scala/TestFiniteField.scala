@@ -1,6 +1,6 @@
 package scala
 
-import algebra._
+import models.algebra._
 import  Utils._
 
 object TestFiniteField extends App {

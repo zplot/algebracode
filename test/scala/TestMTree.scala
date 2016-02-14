@@ -1,7 +1,7 @@
 package scala
 
-import algebra._
-import botany._
+import models.algebra._
+import models.botany._
 
 import  Utils._
 import scala.language.implicitConversions

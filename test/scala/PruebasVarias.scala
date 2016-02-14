@@ -1,6 +1,6 @@
 package scala
 
-import algebra._
+import models.algebra._
 
 object PruebasVarias extends App {
 
