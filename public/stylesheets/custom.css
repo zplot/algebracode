@@ -58,3 +58,25 @@
 .noclass {
 
 }
+
+.outputtable {
+
+    font: 13px "Open Sans", sans-serif !important;
+    color: #dad1d7 !important;
+    font-weight: normal !important;;
+    font-style: italic !important;;
+    line-height: 15px !important;
+    padding-bottom: 0px !important;
+    padding-top: 4px !important;
+
+
+}
+
+.outputtd {
+
+    text-align: center !important;
+    padding: 6px !important;
+
+}
+
+tr:nth-child(even){background-color: #414141 !important;}
