@@ -134,7 +134,7 @@
 	color: #fff;
 	text-decoration: none;
 	font-size: 14px;
-	font-weight: 400;
+	font-weight: 600;
 	padding: 17px 25px;
 }
 
@@ -1645,7 +1645,7 @@ html[xmlns] .slides {display: block;}
 	width: 100%;
 	height: 100%;
 	display: inline-block;
-	background-color: rgba(29,29,29,0.7);
+	background-color: rgba(29,29,29,0.3);
 	position: absolute;
 }
 
@@ -1656,15 +1656,15 @@ html[xmlns] .slides {display: block;}
 .testimonials-slider li p {
 
 	font-size: 20px;
-	font-weight: 500;
-    color: greenyellow;
+	font-weight: 600;
+    color: #ff0101;
 	line-height: 34px;
 	padding: 75px 100px;
 }
 
 .testimonials-slider li p span {
 
-    color: greenyellow;
+    color: #ffa300;
 	display: block;
 	font-weight: 900;
 	font-size: 20px;

@@ -9,7 +9,7 @@
 .button.light:hover, 
 .button.color, 
 input[type="button"] {
-	background: #72b626;
+	background: #9d0000;
 }
 
 .infobox,
@@ -19,24 +19,24 @@ input[type="button"] {
 .ls-nav-next:hover,
 #scroll-top-top a, 
 .post-icon {
-	background-color:#72b626;
+	background-color: #9d0000;
 }
 
 .mr-rotato-prev:hover, 
 .mr-rotato-next:hover,
 li.current, 
 .tags a:hover {
-	background-color: #72b626;
-	border-color: #72b626;
+	background-color: #9d0000;
+	border-color: #9d0000;
 }
 
 #filters a:hover, 
 .selected, 
 #portfolio-navi a:hover {
-	background-color: #72b626 !important;
-	border: 1px solid #72b626 !important;
+	background-color: #9d0000 !important;
+	border: 1px solid #9d0000 !important;
 }
 
 #current {
-	background: #72b626 !important;
+	background: #9d0000 !important;
 }
