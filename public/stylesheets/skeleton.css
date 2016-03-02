@@ -62,7 +62,7 @@
     .list-style .recipe-box-content   { width: 590px; margin-left: 270px; }
     .list-style .thumbnail-holder     { width: 270px; height: 238px; }
 
-    .infobox,
+    .infobox { width: 1300px; }
     #testimonials { width: 1300px; }
 
 
