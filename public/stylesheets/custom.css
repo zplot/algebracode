@@ -1,7 +1,7 @@
 .university {
 
     font: 20px "Adobe Garamond Pro", "Times New Roman" !important;
-    color: #aea0aa !important;
+    color: #ffeafb !important;
     font-weight: normal !important;;
     font-style: normal !important;;
     padding-bottom: 10px !important;
@@ -11,7 +11,7 @@
 .fields {
 
     font: 18px "Adobe Garamond Pro", "Times New Roman" !important;
-    color: #a49ba1 !important;
+    color: #fff2fc !important;
     font-weight: normal !important;;
     font-style: normal !important;;
     padding-bottom: 10px !important;
@@ -21,7 +21,7 @@
 .mathquote {
 
     font: 20px "Adobe Garamond Pro", "Times New Roman" !important;
-    color: #d2c4ce !important;
+    color: #ffedfb !important;
     font-weight: normal !important;;
     font-style: italic !important;;
     padding-top: 40px !important;

@@ -135,7 +135,7 @@
 	text-decoration: none;
 	font-size: 14px;
 	font-weight: 600;
-	padding: 17px 25px;
+	padding: 17px 30px;
 }
 
 #navigation ul li a:hover {
@@ -1421,7 +1421,7 @@ html[xmlns] .slides {display: block;}
 
 
 .featured-box:hover > .circle {
-	background-color: #72b626;
+	background-color: #ffa300;
 }
 
 .featured-box:hover > .circle i {
@@ -1448,7 +1448,7 @@ html[xmlns] .slides {display: block;}
 }
 
 .featured-box:hover > .circle span {
-	background-color: #72b626;
+	background-color: #ffa300;
 	opacity: 0;
 	-moz-transform: scale(1.5);
 	-webkit-transform: scale(1.5);
