@@ -8,7 +8,7 @@ object TestFiniteGroups extends App {
 
   println("Empezamos")
 
-  val grupo = S(3)
+  val grupo = D(5)
 
   println(grupo.cayleyTableOK)
 
