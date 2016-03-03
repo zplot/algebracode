@@ -27,27 +27,28 @@
         <div class="four columns">
             <div class="footer-headline"><h4>About this place</h4></div>
             <p>This is as a functional computational algebra exercise.</p>
-            <p>We use Scala and the web framework selected is Play. Our main goal is learning computational algebra and have fun with it.</p>
+            <p>Our main goal is learning computational algebra and have lot of fun with it.</p>
             <p>Anyone interested in algebra and functional programming is welcome</p>
         </div>
 
             <!-- Latest Tweets -->
         <div class="four columns">
-            <div class="footer-headline"><h4>Latest Tweets</h4></div>
-            <ul id="twitter"></ul>
-            <script type="text/javascript">
-					jQuery(document).ready(function($){
-                        $.getJSON('twitter.php?url='+encodeURIComponent('statuses/user_timeline.json?screen_name=Vasterad&count=2'), function(tweets){
-                            $("#twitter").html(tz_format_twitter(tweets));
-                        }); });
-				</script>
-            <div class="clear"></div>
+            <div class="footer-headline"><h4>Learning resources</h4></div>
+            <ul class="links-list">
+                <li><a href="http://math.ucr.edu/home/baez/">Algebra</a></li>
+                <li><a href="https://golem.ph.utexas.edu/category/">Scala</a></li>
+                <li><a href="https://www.coursera.org/instructor/~275">Learning Scala in coursera</a></li>
+                <li><a href="https://twitter.github.io/scala_school/">Play framwork</a></li>
+                <li><a href="http://think-like-a-git.net/">Think like a Git</a></li>
+                <li><a href="http://magma.maths.usyd.edu.au/magma/">Magma Computational Algebra System</a></li>
+                <li><a href="https://math.dartmouth.edu/~jvoight/">John Voight website</a></li>
+            </ul>
         </div>
 
             <!-- Footer / Bottom -->
         <div class="sixteen columns">
             <div id="footer-bottom">
-				© Web design and content by <a href="#">Luis Fontes</a>. No rights reserved.
+				Web design and content by <a href="mailto:luis2@@zplot.com">Luis Fontes</a>. Feel free to send us comments and improvements. Thank you.
                 <div id="scroll-top-top"><a href="#"></a></div>
 			</div>
         </div>
