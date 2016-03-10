@@ -11,6 +11,8 @@ import play.api.data.{ Form }
 import play.api.data.Forms._
 
 
+
+
 object Form1C extends Controller {
 
   def paragraph(x: List[String]): List[Trio] = {
@@ -87,7 +89,17 @@ object Form1C extends Controller {
       value => Ok(views.html.blackboardtable(process(value).cayleyTableOK)))
   }
 
-  def process(value: EntryFormC.EntryFields1C): models.algebra.PermutationGroup = value.input1 match {
+/*  def process(value: EntryFormC.EntryFields1C): models.algebra.PermutationGroup = value.input1 match {
+
+    case "S(3)" => models.algebra.FiniteGroupExamples.S(3)
+    case "S(4)" => models.algebra.FiniteGroupExamples.S(4)
+    case "S(5)" => models.algebra.FiniteGroupExamples.S(5)
+    case _ => models.algebra.FiniteGroupExamples.Q8
+
+
+  }*/
+
+    def process(value: EntryFormC.EntryFields1C): models.algebra.PermutationGroup = value.input1 match {
 
     case "S(3)" => models.algebra.FiniteGroupExamples.S(3)
     case "S(4)" => models.algebra.FiniteGroupExamples.S(4)
@@ -96,6 +108,8 @@ object Form1C extends Controller {
 
 
   }
+
+
 
 
 }

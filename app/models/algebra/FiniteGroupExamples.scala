@@ -1,5 +1,7 @@
 package models.algebra
 
+import scala.util.matching.Regex
+
 object FiniteGroupExamples {
 
   /* Cyclic group of n elements */
@@ -151,6 +153,27 @@ object FiniteGroupExamples {
 
   }
 
+  def fromStringToGroup(s: String): FiniteGroup = {
+
+    val PatternS = """S\((\d)\)""".r
+    val PatternC = """C\((\d)\)""".r
+    val PatternA = """A\((\d)\)""".r
+    val PatternD = """D\((\d)\)""".r
+    val PatternQ8 = """Q8""".r
+
+    s match {
+
+      case PatternS(n) => S(n.toInt)
+      case PatternC(n) => C(n.toInt)
+      case PatternA(n) => A(n.toInt)
+      case PatternD(n) => D(n.toInt)
+      case PatternQ8(n) => Q8
+      case _ => S(2)
+
+    }
+  }
+
 
 }
+
 

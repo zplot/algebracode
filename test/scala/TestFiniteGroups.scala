@@ -8,9 +8,15 @@ object TestFiniteGroups extends App {
 
   println("Empezamos")
 
-  val grupo = D(5)
+  val grupo = S(4)
 
   println(grupo.cayleyTableOK)
+
+  println()
+
+  val s = "D(4)"
+
+  println(fromStringToGroup(s).cayleyTableOK)
 
 
 }
