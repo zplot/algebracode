@@ -8,7 +8,7 @@ object TestFiniteGroups extends App {
 
   println("Empezamos")
 
-  val grupo = DirectProduct(S(3), A(4))
+  val grupo = DirectProduct(S(3), Q8)
 
   println(grupo.cayleyTableOK)
 
