@@ -160,6 +160,7 @@ object FiniteGroupExamples {
     val PatternA = """A\((\d)\)""".r
     val PatternD = """D\((\d)\)""".r
     val PatternQ8 = """Q8""".r
+    val PatternDirectProduct = """DirectProduct\(([A-Z]+) ([A-Z]+)\)""".r
 
     s match {
 
@@ -168,6 +169,7 @@ object FiniteGroupExamples {
       case PatternA(n) => A(n.toInt)
       case PatternD(n) => D(n.toInt)
       case PatternQ8(n) => Q8
+      case PatternDirectProduct(x,y) => DirectProduct(fromStringToGroup(x), fromStringToGroup(y))
       case _ => S(2)
 
     }
