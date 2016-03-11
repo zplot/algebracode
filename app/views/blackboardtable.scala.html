@@ -3,8 +3,16 @@
 <!--Vamos a deshacer el Either -->
 @par2 = @{
     par match {
-        case Left(x) => List(List(x))
+        case Left(x) => List(List())
         case Right(x) => x
+    }
+}
+
+    <!--Vamos a obtener el titular del resultado -->
+@titular = @{
+    par match {
+        case Left(x) => x
+        case Right(x) => "The Cayley table of selected group is:"
     }
 }
 
@@ -138,7 +146,7 @@
 
 
                             <div>
-                                <h5 class="class2">The Cayley table of selected group is:</h5>
+                                <h5 class="class2">@titular</h5>
                                 <br />
 
                             <table class="outputtable">
