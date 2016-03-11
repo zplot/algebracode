@@ -1,7 +1,4 @@
-@(salida: GeneralOutput.PageContent)
-<!--Página general de presentación de resultados -->
-
-
+@(par: GeneralEntryForm.Form1)
 
 
 <!DOCTYPE html>
@@ -18,7 +15,7 @@
             <!-- Basic Page Needs
 ================================================== -->
         <meta charset="utf-8">
-        <title>Cayley Table of a finite Group</title>
+        <title>@par.title</title>
 
             <!-- Mobile Specific
 ================================================== -->
@@ -74,105 +71,62 @@
 
             @headernav()
 
-                <!-- Content
-================================================== -->
-                <!-- 960 Container -->
-            <div class="container">
-
-                <div class="sixteen columns">
-
-                        <!-- Page Title -->
-                    <div id="page-title">
-                        <h2>Permutation Groups <span>/ Finite Groups</span></h2>
-
-                            <!-- Portfolio Navi -->
-                        <div id="portfolio-navi">
-
-                        </div>
-                        <div class="clear"></div>
-
-                        <div id="bolded-line"></div>
-                    </div>
-                        <!-- Page Title / End -->
-
-                </div>
-            </div>
-                <!-- 960 Container / End -->
 
 
-                <!-- 960 Container -->
-                <!-- LayerSlider Container -->
+
+
+
+
             <div class="layerslider-container">
 
-                    <!-- LayerSlider / Start -->
-                    <!-- <div id="layerslider" style="width: 1180px; height: 500px; margin: 0 auto;"> -->
-                    <!--  <div id="layerslider" style="width: 1180px; height: 1200px; margin: 0 auto;"> -->
-                <div id="layerslider" style="width: 1180px; height: @(((salida.lineas + 6) * 18 + 24).toString + "px"); margin: 0 auto;">
 
-                        <!-- Slide #1 -->
-                    <div class="ls-slide" style="transition2d: 2; timeshift: -1000; slidedelay: 15000;">
-
-                            <!-- Background -->
-                        <img class="ls-bg" src='@routes.Assets.at("images/portfolio/blackboard1200.jpg")' alt="John Horton Conway">
+                <div style="width: 1180px; height: 500px; margin: 0 auto;">
 
 
-                        <div class="slide-caption alt ls-s1" style="up: 0px; width: 1108px; slidedirection: left; slideoutdirection: left; durationin: 1000; durationout: 800; delayin: 1000; delayout: 0;" data-ls="
-					offsetxin: 0;
-					offsetxout: 300;
-					offsetyin: top;
-					offsetyout: 300;
-					durationin: 2000;
-					durationout: 2000;
-					delayin: 2000;
-					rotateyin: 60;
-				">
-
-
-
-
+                    <h3>@par.title5fields</h3>
+                    <br />
+                    <form class="form-horizontal" action="@routes.Form1C.createoneC()" method="post">
+                        <div>
+                            <label for="name">@par.label1</label>
                             <div>
-                                <h5 class="class2">@salida.extraFields.title</h5>
-                                <br />
-
-                                <table class="outputtable">
-                                @for(row <- salida.contenido) {
-                                    <tr>
-                                    @for(element <- row) {
-                                        <td class="outputtd">@element</td>
-                                    }
-                                    </tr>
-                                }
-                                </table>
-
+                                <input type="text" name="input1" id="input1">
                             </div>
-
-
-
-
-
-
-
                         </div>
 
-                    </div>
+                        <br /><br />
+
+                        <div>
+                            <button type="submit" class="button color">Compute</button>
+
+                        </div>
+                    </form>
+
+
 
                 </div>
 
+
             </div>
 
+
+
+
+
+
+                <!-- 960 Container -->
             <div class="container" style="margin-top: 30px;">
 
                 <div class="four columns">
                     <ul class="project-info">
-                        <li><strong>Subject: </strong>Cayley Table</li>
-                        <li><strong>Project: </strong>Permutation Groups</li>
+                        <li><strong>Subject:</strong> @par.subject</li>
+                        <li><strong>Project:</strong> @par.project</li>
                     </ul>
-                    <a href="#" class="button color launch">References</a>
+                    <a href="@par.references" class="button color launch">References</a>
                 </div>
 
                 <div class="twelve columns tooltips">
-                    <div class="six columns alpha"><p>A permutation group is a group G whose elements are permutations of a given set M and whose group operation is the composition of permutations in G (which are thought of as bijective functions from the set M to itself).</p></div>
-                    <div class="six columns alpha"><p>If M = {1,2,...,n} then, S(M), the symmetric group on n letters is usually denoted by Sn. We write it in this site as S(n)</p></div>
+                    <div class="six columns alpha"><p>@par.text1.</p></div>
+                    <div class="six columns alpha"><p>@par.text2.</p></div>
                 </div>
 
             </div>
@@ -191,8 +145,8 @@
                 <div class="four columns">
                     <div class="picture"><a href="single_project.html"><img src='@routes.Assets.at("images/460x290/groups.jpg")' alt="Groups"/><div class="image-overlay-link"></div></a></div>
                     <div class="item-description related">
-                        <h5><a href="single_project.html">Hopf algebras</a></h5>
-                        <p>Classical examples as Group Rings, Polynomial spaces, etc.</p>
+                        <h5><a href="single_project.html">Permutation Groups</a></h5>
+                        <p>Mauris sit amet ligula est, eget conseact etur lectus maecenas hendrerit suscipit</p>
                     </div>
                 </div>
 
@@ -201,7 +155,7 @@
                     <div class="picture"><a href="single_project.html"><img src='@routes.Assets.at("images/460x290/group_rings.jpg")' alt="Group Rings"/><div class="image-overlay-link"></div></a></div>
                     <div class="item-description related">
                         <h5><a href="single_project.html">Group Rings</a></h5>
-                        <p>Let \(G\) be a group and \(R\) a ring. We denote by \(RG\) the set of all formal linear combinations of the form \[\alpha  = \sum\limits_{g \in G} {\alpha (g)g} \]</p>
+                        <p>Mauris sit amet ligula est, eget conseact etur lectus maecenas hendrerit suscipit</p>
                     </div>
                 </div>
 
@@ -210,7 +164,7 @@
                     <div class="picture"><a href="single_project.html"><img src='@routes.Assets.at("images/460x290/finite_fields.jpg")' alt="Finite Fields"/><div class="image-overlay-link"></div></a></div>
                     <div class="item-description related">
                         <h5><a href="single_project.html">Finite Fields</a></h5>
-                        <p>Calculus with finite fields of \({\mathop p\nolimits^n }\) elements</p>
+                        <p>Mauris sit amet ligula est, eget conseact etur lectus maecenas hendrerit suscipit</p>
                     </div>
                 </div>
 
@@ -219,7 +173,7 @@
                     <div class="picture"><a href="single_project.html"><img src='@routes.Assets.at("images/460x290/polynomials.jpg")' alt="Polynomials"/><div class="image-overlay-link"></div></a></div>
                     <div class="item-description related">
                         <h5><a href="single_project.html">Polynomials</a></h5>
-                        <p>Calculus with polynomials over commutative rings, including Galois fields.</p>
+                        <p>Mauris sit amet ligula est, eget conseact etur lectus maecenas hendrerit suscipit</p>
                     </div>
                 </div>
 

@@ -1,6 +1,6 @@
 package controllers
 
-import models.{GeneralEntryForm, BlackboardTable, EntryFormC}
+import models.{GeneralEntryForm, GeneralOutput}
 import models.MyHTML._
 import models.MyClass._
 import models.algebra.FiniteGroup
@@ -54,7 +54,7 @@ object General extends Controller {
     val text1: String = "What a permutation group is"
     val text2: String = "What a Cayley Table is"
 
-    val par = EntryFormC.EntryForm1C(
+    val par = GeneralEntryForm.Form1(
       title,
       title5fields,
       label1,
@@ -65,7 +65,7 @@ object General extends Controller {
       text2
     )
 
-    Ok(views.html.form1c(par))
+    Ok(views.html.generalinput(par))
   }
 
   // Aquí está la magia
@@ -94,8 +94,49 @@ object General extends Controller {
 
   }
 
-  def process(value: GeneralEntryForm.Form2): Either[String, List[List[String]]] = {
-    fromGroupStringToCayleyTableOK(value.input1)
+
+  // En Left tendremos el error caso de que exista
+  // En Right tendremos el completo de lo que se va a presentar
+  def process(value: GeneralEntryForm.Form2): GeneralOutput.PageContent = {
+
+    val title = "titulo"
+    val notebook = "notebook"
+    val page = "page"
+    val next = "next"
+    val previous ="previous"
+    val subject = "subject"
+    val project = "project"
+    val references = "references"
+    val text1 = "text1"
+    val text2 = "text2"
+
+    val camposExtra = GeneralOutput.ExtraFields(
+                                                  title,
+                                                  notebook,
+                                                  page,
+                                                  next,
+                                                  previous,
+                                                  subject,
+                                                  project,
+                                                  references,
+                                                  text1,
+                                                  text2
+                                              )
+
+    val titular = "Este es el título de los resultados a mostrar"
+
+    val numLineas = 5
+
+    val contenido = List(List("1", "2", "3"), List("4", "5", "6"), List("7", "7", "8"))
+
+
+    GeneralOutput.PageContent(
+                                  camposExtra,
+                                  titular,
+                                  numLineas,
+                                  contenido
+
+                                )
   }
 
 
