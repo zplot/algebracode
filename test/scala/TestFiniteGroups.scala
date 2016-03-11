@@ -14,16 +14,17 @@ object TestFiniteGroups extends App {
 
   println()
 
-  val s = "DirectProduct(S(3), Q8)"
+  val s = "DirectProduct(Sp(3), Q8)"
 
-  val G = {
+  def result(s: String)  = {
     val t = fromStringToGroup2(s)
       t match {
-        case Some(G)  => G.cayleyTableOK
+        case Some(x)  => x.cayleyTableOK
         case None => "None"
       }
-    
+
   }
 
+  println(result(s))
 
 }
