@@ -4,6 +4,8 @@ import models.BlackboardTable
 import models.EntryFormC
 import models.MyHTML._
 import models.MyClass._
+import models.algebra.FiniteGroup
+import models.algebra.FiniteGroupExamples._
 
 import play.api._
 import play.api.mvc._
@@ -86,28 +88,20 @@ object Form1C extends Controller {
       formWithErrors => Ok(views.html.form1c(tmp)),
 
       // No hay errores
-      value => Ok(views.html.blackboardtable(process(value).cayleyTableOK)))
+      value => Ok(views.html.blackboardtable(process(value))))
   }
 
-/*  def process(value: EntryFormC.EntryFields1C): models.algebra.PermutationGroup = value.input1 match {
 
-    case "S(3)" => models.algebra.FiniteGroupExamples.S(3)
-    case "S(4)" => models.algebra.FiniteGroupExamples.S(4)
-    case "S(5)" => models.algebra.FiniteGroupExamples.S(5)
-    case _ => models.algebra.FiniteGroupExamples.Q8
-
-
-  }*/
-
-    def process(value: EntryFormC.EntryFields1C): models.algebra.PermutationGroup = value.input1 match {
-
-    case "S(3)" => models.algebra.FiniteGroupExamples.S(3)
-    case "S(4)" => models.algebra.FiniteGroupExamples.S(4)
-    case "S(5)" => models.algebra.FiniteGroupExamples.S(5)
-    case _ => models.algebra.FiniteGroupExamples.Q8
-
+  def fromGroupStringToCayleyTableOK(s: String): Either[String, List[List[String]]]  = {
+    val t = fromStringToGroup(s)
+    t match {
+      case Right(x)  => Right(x.cayleyTableOK)
+      case Left(x) => Left(x)
+    }
 
   }
+
+  def process(value: EntryFormC.EntryFields1C): Either[String, List[List[String]]] = fromGroupStringToCayleyTableOK(value.input1)
 
 
 

@@ -8,13 +8,11 @@ object TestFiniteGroups extends App {
 
   println("Empezamos")
 
-  val grupo = DirectProduct(S(3), Q8)
 
-  println(grupo.cayleyTableOK)
 
   println()
 
-  val s = "DirectProduct(S(3), D(3))"
+  val s = "fS(4)"
 
   def result(s: String)  = {
     val t = fromStringToGroup(s)

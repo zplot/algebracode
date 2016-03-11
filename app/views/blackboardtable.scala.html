@@ -1,4 +1,13 @@
-@(par: List[List[String]])
+@(par: Either[String, List[List[String]]])
+
+<!--Vamos a deshacer el Either -->
+@par2 = @{
+    par match {
+        case Left(x) => List(List(x))
+        case Right(x) => x
+    }
+}
+
 
 
 
@@ -105,7 +114,7 @@
                     <!-- LayerSlider / Start -->
                 <!-- <div id="layerslider" style="width: 1180px; height: 500px; margin: 0 auto;"> -->
                     <!--  <div id="layerslider" style="width: 1180px; height: 1200px; margin: 0 auto;"> -->
-                        <div id="layerslider" style="width: 1180px; height: @(((par.length + 6) * 18 + 24).toString + "px"); margin: 0 auto;">
+                        <div id="layerslider" style="width: 1180px; height: @(((par2.length + 6) * 18 + 24).toString + "px"); margin: 0 auto;">
 
                         <!-- Slide #1 -->
                     <div class="ls-slide" style="transition2d: 2; timeshift: -1000; slidedelay: 15000;">
@@ -133,7 +142,7 @@
                                 <br />
 
                             <table class="outputtable">
-                                @for(row <- par) {
+                                @for(row <- par2) {
                                     <tr>
                                     @for(element <- row) {
                                         <td class="outputtd">@element</td>

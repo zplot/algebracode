@@ -161,7 +161,7 @@ object FiniteGroupExamples {
       val pair = (group1, group2)
       val result = pair match {
         case (Right(x), Right(y)) => Right(DirectProduct(x, y))
-        case _ => Left("Algo va mal 1")
+        case _ => Left("The groups for the direct product are not properly written. Please review admitted groups format")
       }
       result
     }
@@ -186,7 +186,7 @@ object FiniteGroupExamples {
         println(tmp)
         tmp
       }
-      case _ => Left("Algo va mal 2)")
+      case _ => Left("The group is not properly written. Please review admitted groups format")
 
     }
   }
