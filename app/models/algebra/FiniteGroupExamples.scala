@@ -153,82 +153,43 @@ object FiniteGroupExamples {
 
   }
 
-  def fromStringToGroup(s: String): FiniteGroup = {
+
+
+  def fromStringToGroup(s: String): Either[String, FiniteGroup] = {
+
+    def DirectProductEither(group1: Either[String, FiniteGroup], group2: Either[String, FiniteGroup]): Either[String, FiniteGroup] = {
+      val pair = (group1, group2)
+      val result = pair match {
+        case (Right(x), Right(y)) => Right(DirectProduct(x, y))
+        case _ => Left("Algo va mal 1")
+      }
+      result
+    }
 
     val PatternS = """S\((\d)\)""".r
     val PatternC = """C\((\d)\)""".r
     val PatternA = """A\((\d)\)""".r
     val PatternD = """D\((\d)\)""".r
-    // val PatternQ8 = """Q8""".r
     val PatternDirectProduct = """DirectProduct\((.*?), (.*?)\)""".r
-
 
     s match {
 
-      case PatternS(n) => S(n.toInt)
-      case PatternC(n) => C(n.toInt)
-      case PatternA(n) => A(n.toInt)
-      case PatternD(n) => D(n.toInt)
-      case "Q8" => Q8
+      case PatternS(n) => Right(S(n.toInt))
+      case PatternC(n) => Right(C(n.toInt))
+      case PatternA(n) => Right(A(n.toInt))
+      case PatternD(n) => Right(D(n.toInt))
+      case "Q8" => Right(Q8)
       case PatternDirectProduct(x,y) => {
         println("x = " + x)
         println("y = " + y)
-        val tmp = DirectProduct(fromStringToGroup(x), fromStringToGroup(y))
+        val tmp = DirectProductEither(fromStringToGroup(x), fromStringToGroup(y))
         println(tmp)
         tmp
       }
-      case _ => S(2)
+      case _ => Left("Algo va mal 2)")
 
     }
   }
-
-  def fromStringToGroup2(s: String): Option[FiniteGroup] = {
-
-    def DirectProductOptional(group1: Option[FiniteGroup], group2: Option[FiniteGroup]): Option[FiniteGroup] = {
-
-      val pair = (group1, group2)
-
-      val tmp = pair match {
-        case (Some(x), Some(y)) => Some(DirectProduct(x, y))
-        case _ =>
-      }
-
-
-
-
-
-
-    }
-
-
-    val PatternS = """S\((\d)\)""".r
-    val PatternC = """C\((\d)\)""".r
-    val PatternA = """A\((\d)\)""".r
-    val PatternD = """D\((\d)\)""".r
-    // val PatternQ8 = """Q8""".r
-    val PatternDirectProduct = """DirectProduct\((.*?), (.*?)\)""".r
-
-
-    s match {
-
-      case PatternS(n) => Some(S(n.toInt))
-      case PatternC(n) => Some(C(n.toInt))
-      case PatternA(n) => Some(A(n.toInt))
-      case PatternD(n) => Some(D(n.toInt))
-      case "Q8" => Some(Q8)
-      case PatternDirectProduct(x,y) => {
-        println("x = " + x)
-        println("y = " + y)
-        val tmp = DirectProduct(fromStringToGroup(x), fromStringToGroup(y))
-        println(tmp)
-        Some(tmp)
-      }
-      case _ => None
-
-    }
-  }
-
-
 }
 
 
