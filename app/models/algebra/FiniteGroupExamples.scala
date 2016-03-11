@@ -182,6 +182,35 @@ object FiniteGroupExamples {
     }
   }
 
+  def fromStringToGroup2(s: String): Option[FiniteGroup] = {
+
+    val PatternS = """S\((\d)\)""".r
+    val PatternC = """C\((\d)\)""".r
+    val PatternA = """A\((\d)\)""".r
+    val PatternD = """D\((\d)\)""".r
+    // val PatternQ8 = """Q8""".r
+    val PatternDirectProduct = """DirectProduct\((.*?), (.*?)\)""".r
+
+
+    s match {
+
+      case PatternS(n) => Some(S(n.toInt))
+      case PatternC(n) => Some(C(n.toInt))
+      case PatternA(n) => Some(A(n.toInt))
+      case PatternD(n) => Some(D(n.toInt))
+      case "Q8" => Some(Q8)
+      case PatternDirectProduct(x,y) => {
+        println("x = " + x)
+        println("y = " + y)
+        val tmp = DirectProduct(fromStringToGroup(x), fromStringToGroup(y))
+        println(tmp)
+        Some(tmp)
+      }
+      case _ => None
+
+    }
+  }
+
 
 }
 
