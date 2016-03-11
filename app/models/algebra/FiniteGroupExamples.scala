@@ -184,6 +184,23 @@ object FiniteGroupExamples {
 
   def fromStringToGroup2(s: String): Option[FiniteGroup] = {
 
+    def DirectProductOptional(group1: Option[FiniteGroup], group2: Option[FiniteGroup]): Option[FiniteGroup] = {
+
+      val pair = (group1, group2)
+
+      val tmp = pair match {
+        case (Some(x), Some(y)) => Some(DirectProduct(x, y))
+        case _ =>
+      }
+
+
+
+
+
+
+    }
+
+
     val PatternS = """S\((\d)\)""".r
     val PatternC = """C\((\d)\)""".r
     val PatternA = """A\((\d)\)""".r
