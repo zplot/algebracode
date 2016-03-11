@@ -1,6 +1,7 @@
 package controllers
 
-import models.{GeneralEntryForm, GeneralOutput}
+import models.GeneralEntryForm
+import models.GeneralOutput
 import models.MyHTML._
 import models.MyClass._
 import models.algebra.FiniteGroup
@@ -45,14 +46,14 @@ object General extends Controller {
   // Crea el form para introducir datos
   def createForm() = Action {
 
-    val title: String = "Caley Table of a Permutation Group"
-    val title5fields: String = "Caley Table of a Permutation Group"
-    val label1: String = "Enter the name of a valid finite group"
-    val subject: String = "Permutation Groups"
-    val project: String = "Cayley Table"
-    val references: String = "These are the references on this subject"
-    val text1: String = "What a permutation group is"
-    val text2: String = "What a Cayley Table is"
+    val title: String = "Título de la página"
+    val title5fields: String = "Este es el título 2 de la página"
+    val label1: String = "Introduzca los datos"
+    val subject: String = "Esto es el subject"
+    val project: String = "Esto es el project"
+    val references: String = "Estas son las references"
+    val text1: String = "Esto entra en el campo text1"
+    val text2: String = "Esto entra en el campo text2"
 
     val par = GeneralEntryForm.Form1(
       title,
@@ -106,7 +107,7 @@ object General extends Controller {
     val previous ="previous"
     val subject = "subject"
     val project = "project"
-    val references = "references"
+    val references = "http://www.hp.com"
     val text1 = "text1"
     val text2 = "text2"
 
@@ -127,7 +128,7 @@ object General extends Controller {
 
     val numLineas = 5
 
-    val contenido = List(List("1", "2", "3"), List("4", "5", "6"), List("7", "7", "8"))
+    val contenido = List(List("1", "2", "3"), List("4", "5", "6"), List("7", "8", "9"))
 
 
     GeneralOutput.PageContent(
