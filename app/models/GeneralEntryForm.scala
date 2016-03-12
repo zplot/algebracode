@@ -6,7 +6,7 @@ object GeneralEntryForm {
 
 
   case class Form1(
-
+                          key: String,
                           title: String,
                           title5fields: String,
                           label1: String,

@@ -30,12 +30,14 @@ POST    /cayleytableout             controllers.Form1.createone()
 GET		/cayleytablec               controllers.Form1C.createForm1fieldsC()
 POST    /cayleytableoutc            controllers.Form1C.createoneC()
 
-GET		/general                    controllers.General.createForm()
-POST    /generalout                 controllers.General.resultsView()
+GET		/general                    controllers.General.createForm(key = "generic")
+POST    /generalout                 controllers.General.resultsView(key = "generic")
+
+GET		/cayley                    controllers.General.createForm(key = "cayley")
+POST    /cayleyout                 controllers.General.resultsView(key = "cayley")
 
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
-
 
 

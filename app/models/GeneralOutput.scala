@@ -7,6 +7,7 @@ import scala.language.implicitConversions
 object GeneralOutput {
 
   case class ExtraFields(
+                              key: String,
                               title: String,
                               notebook: String,
                               page: String,
