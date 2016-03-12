@@ -51,7 +51,7 @@ object General extends Controller {
 
         val title: String = "Caley Table of a Permutation Group"
         val title5fields: String = "Caley Table of a Permutation Group"
-        val label1: String = "Enter the name of a valid finite group"
+        val label1: String = "Please review your input"
         val subject: String = "Permutation Groups"
         val project: String = "Cayley Table"
         val references: String = "These are the references on this subject"
