@@ -37,23 +37,16 @@ object RTree {
 
 object Node2 {
 
-  val state = List[Int](0)
-  def next(state: List[Int]): (List[Int], Int) = {
+  var ids: Int = 0
 
-    ((state.head + 1) :: state, state.head + 1)
+  def apply: Node2 = {
+    ids = ids + 1
+    new Node2(ids)
 
-  }
-
-
-
-  def apply(id: Int): Node2 ={
-
-    val newId = next(state)._2
-    new Node2(newId)
   }
 }
 
-class Node2 private(id: Int) {
+class Node2 private(val id: Int) {
   var mod: Int = 0
   var thread: Int = 0
   var ancestor: Node2 = this
