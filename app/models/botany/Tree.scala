@@ -24,9 +24,9 @@ case class Draw(actualNode: Node, nodes: List[Node], edges: List[Edge])
 
 
 // http://aperiodic.net/phil/scala/s-99/
-object Tree {
+object Node3 {
 
-  implicit def string2Tree(s: String): Tree = {
+  implicit def string2Tree(s: String): Node3 = {
     def nextStrBound(pos: Int, nesting: Int): Int =
       if (nesting == 0) pos
       else nextStrBound(pos + 1, if (s(pos) == '^') nesting - 1 else nesting + 1)
@@ -36,8 +36,8 @@ object Tree {
         val end = nextStrBound(pos + 1, 1)
         s.substring(pos, end - 1) :: splitChildStrings(end)
       }
-    val tmp = splitChildStrings(1).map(string2Tree(_))
-    Tree(tmp)
+    val tmp = splitChildStrings(1).map(string2Tree(_)).toVector
+    Node3(tmp)
   }
 
   // Eats a string and drops a list of nodes and a list of edges
@@ -57,6 +57,7 @@ object Tree {
       case Nil => (Nil, dibujo)
       case '*' :: xs => stringAnalyze(xs, newNode(dibujo))
       case '^' :: xs => stringAnalyze(xs, goUp(dibujo))
+      case _ => (s, dibujo) // Este caso no se da nunca. Ponemos esto para evitar warnings
 
     }
 
@@ -92,13 +93,13 @@ object Tree {
 
   }
 
-  def orderTree(t: Tree): Tree = {
+  def orderTree(t: Node3): Node3 = {
 
     if (t.children != List())  {
       val tmp3 = t.children.map( x => orderTree(x))
-      val tmp4 = Tree(tmp3)
+      val tmp4 = Node3(tmp3)
       val tmp5 = tmp4.children.sortBy(_.weight).reverse
-      val tmp6 = Tree(tmp5)
+      val tmp6 = Node3(tmp5)
       tmp6
     } else t
 
@@ -107,21 +108,55 @@ object Tree {
 }
 
 
-case class Tree(children: List[Tree]) {
+
+
+
+case class Node3(children: Vector[Node3]) {
 
   def weight: Int = children.foldLeft(1)(_ + _.weight)
-  def canonicalForm = Tree.orderTree(this)
+  def canonicalForm = Node3.orderTree(this)
+  def isALeaf = this.children == Vector[Node3]()
   var mod = 0
   var thread = 0
   var ancestor = this
 
+
   override def toString = "*" + children.map(_.toString + "^").mkString("")
 
   final override def equals(other: Any): Boolean = {
-    val that = other.asInstanceOf[Tree]
+    val that = other.asInstanceOf[Node3]
     if (that == null) false
-    else Tree.orderTree(this).children == Tree.orderTree(that).children
+    else Node3.orderTree(this).children == Node3.orderTree(that).children
   }
+
+
+
+
+  def treeLayaut(t: Node3) = {
+    firstWalk(t)
+    secondWalk(t)
+
+
+  }
+
+  def firstWalk(v: Node3) = {
+
+
+
+
+
+
+  }
+
+
+  def secondWalk(v: Node3) = {
+
+
+
+  }
+
+
+
 
 }
 
