@@ -22,10 +22,9 @@ case class Edge(pos1: Node, pos2: Node)
 case class Draw(actualNode: Node, nodes: List[Node], edges: List[Edge])
 
 
+
 // http://aperiodic.net/phil/scala/s-99/
 object Tree {
-
-
 
   implicit def string2Tree(s: String): Tree = {
     def nextStrBound(pos: Int, nesting: Int): Int =
@@ -93,27 +92,6 @@ object Tree {
 
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   def orderTree(t: Tree): Tree = {
 
     if (t.children != List())  {
@@ -129,17 +107,13 @@ object Tree {
 }
 
 
-
-
-
-
-
-
-
 case class Tree(children: List[Tree]) {
 
   def weight: Int = children.foldLeft(1)(_ + _.weight)
   def canonicalForm = Tree.orderTree(this)
+  var mod = 0
+  var thread = 0
+  var ancestor = this
 
   override def toString = "*" + children.map(_.toString + "^").mkString("")
 
