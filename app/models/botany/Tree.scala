@@ -13,12 +13,14 @@ TODO CanonicalForm
 
 case class Point(x: Int, y: Int) {
   override def toString = "(" + x ++ "," + y + ")"
-
 }
+
 case class Node(val father: Option[Node], pos: Point) {
   override def toString = pos.toString
 }
+
 case class Edge(pos1: Node, pos2: Node)
+
 case class Draw(actualNode: Node, nodes: List[Node], edges: List[Edge])
 
 
@@ -113,12 +115,21 @@ object Node3 {
 
 case class Node3(children: Vector[Node3]) {
 
+  val childrenNum = children.length
+
   def weight: Int = children.foldLeft(1)(_ + _.weight)
+
   def canonicalForm = Node3.orderTree(this)
-  def isALeaf = this.children == Vector[Node3]()
+
+  def isLeaf = this.children == Vector[Node3]()
+
   var mod = 0
   var thread = 0
   var ancestor = this
+  var prelim = 0
+  var defaultAncestor = this
+  var father: Node3 = this
+  var leftSibling: Option[Node3] = None
 
 
   override def toString = "*" + children.map(_.toString + "^").mkString("")
@@ -128,37 +139,102 @@ case class Node3(children: Vector[Node3]) {
     if (that == null) false
     else Node3.orderTree(this).children == Node3.orderTree(that).children
   }
+}
 
+object TreeLayaut {
 
+  val distance = 10
 
-
-  def treeLayaut(t: Node3) = {
+  def layaut(t: Node3) = {
+    initWalk(t)
     firstWalk(t)
     secondWalk(t)
 
 
   }
 
-  def firstWalk(v: Node3) = {
 
+  def initWalk(n: Node3): Unit = {
+    for (t <- n.children) {
+      t.father = n
+      initWalk(t)
+    }
+    for (t <- n.children.indices) {
+      if (t == 0) n.children(t).leftSibling = None else n.children(t).leftSibling = Some(n.children(t - 1))
+    }
+  }
 
+  def firstWalk(v: Node3): Unit = {
+    if (v.isLeaf) {
+      v.prelim = 0
+    } else {
+      v.defaultAncestor = v.children(0)
+      for (w <- v.children) {
+        firstWalk(w)
+        apportion(w, w.defaultAncestor)
+      }
+      executeShifts(v)
+      val midpoint = 1 / 2 * (v.children(0).prelim + v.children(v.childrenNum - 1).prelim)
+      val tmp = v.leftSibling match {
+        case None => midpoint
+        case Some(w) => {
+          v.prelim = w.prelim + distance
+          v.mod = v.prelim - midpoint
+        }
+      }
 
+    }
+  }
+
+  def secondWalk(v: Node3): Unit = {
 
 
 
   }
 
-
-  def secondWalk(v: Node3) = {
-
+  def apportion(v: Node3, defaultAncestor: Node3): Unit = {
 
 
   }
 
+  def executeShifts(v: Node3): Unit = {
 
+
+  }
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
