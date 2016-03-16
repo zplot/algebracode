@@ -130,6 +130,7 @@ case class Node3(children: Vector[Node3]) {
   var defaultAncestor = this
   var father: Node3 = this
   var leftSibling: Option[Node3] = None
+  var leftMostSibling: Option[Node3] = None
 
 
   override def toString = "*" + children.map(_.toString + "^").mkString("")
@@ -160,7 +161,10 @@ object TreeLayaut {
       initWalk(t)
     }
     for (t <- n.children.indices) {
-      if (t == 0) n.children(t).leftSibling = None else n.children(t).leftSibling = Some(n.children(t - 1))
+      if (t == 0) n.children(t).leftSibling = None else {
+        n.children(t).leftSibling = Some(n.children(t - 1))
+        n.children(t).leftMostSibling = Some(n.children(0))
+      }
     }
   }
 
@@ -192,7 +196,29 @@ object TreeLayaut {
 
   }
 
-  def apportion(v: Node3, defaultAncestor: Node3): Unit = {
+  def apportion(v: Node3, defaultAncestor: Node3): Unit = v.leftSibling match {
+
+    case Some(w) => {
+
+      var vInPlus = v
+      var vOutPlus = v
+      var vInMinus = w
+      var vOutMinus = vInPlus.leftMostSibling
+      var sOutPlus = vOutPlus.mod
+      var sInPlus = vInPlus.mod
+      var sInMinus = vInMinus.mod
+      var sOutMinus = vOutMinus match {
+        case Some(z) => z.mod
+        case None => Nil // Comprobar que este caso no se da nunca
+      }
+      while (nextRight(vInMinus) != 0 && nextLeft(vInPlus) != 0) {
+
+        
+      }
+
+
+    }
+
 
 
   }
