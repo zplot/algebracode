@@ -125,7 +125,7 @@ case class Node3(children: Vector[Node3]) {
   def numChildren = children.length
 
   var mod = 0
-  var thread = this
+  var thread: Either[Int, Node3] = Left(0)
   var ancestor = this
   var prelim = 0
   var defaultAncestor = this
@@ -219,20 +219,25 @@ object TreeLayaut {
     case Some(y) => y
   }
 
-  def apportion(v: Node3, defaultAncestor: Node3): Unit = v.leftSibling match {
+  def apportion(v: Node3, defaultAncestor: Node3): Unit = {
 
-    case Some(w) => {
+    val w = v.leftSibling match {
+      case None => v
+      case Some(w) => w
+    }
+
+    if (w != v) {
 
       var vInPlus: Node3 = v
       var vOutPlus: Node3 = v
-      var vInMinus: Node3 = w
+      var vInMinus: Either[Int, Node3] = Right(w)
       var vOutMinus: Option[Node3] = vInPlus.leftMostSibling
       var sOutPlus: Int = vOutPlus.mod
       var sInPlus: Int = vInPlus.mod
       var sInMinus: Int = vInMinus.mod
-      var sOutMinus: Node3 = inTheBox(vOutMinus)
+      var sOutMinus: Int = inTheBox(vOutMinus).mod
 
-      while (nextRight(vInMinus) != 0 && nextLeft(vInPlus) != 0) {
+      while ((nextRight(vInMinus) != Left(0)) && (nextLeft(vInPlus) != Left(0)) {
 
         vInMinus = nextRight(vInMinus)
         vInPlus = nextRight(vInPlus)
@@ -243,30 +248,58 @@ object TreeLayaut {
         vOutPlus = nextRight(vOutPlus)
         vOutPlus.ancestor = v
         v.shift = vInMinus.prelim + sInMinus - vInPlus.prelim - sInPlus + distance
+        if (v.shift > 0) {
+          moveSubtree(ancestor(vInMinus, v, v.defaultAncestor), v, v.shift)
+          sInPlus = sInPlus + v.shift
+          sOutPlus = sOutPlus + v.shift
+        }
+        sInMinus = sInMinus + vInMinus.mod
+        sInPlus = sInPlus + vInPlus.mod
+        sOutMinus = sOutMinus + inTheBox(vOutMinus).mod
 
         
       }
+
+      def ancestor(w: Node3, v: Node3, d: Node3) = {
+
+        if (vInMinus.ancestor.father == v ) {
+          vInMinus.ancestor
+        } else {
+          v.defaultAncestor
+        }
+      }
+
+
+    }
+
+    def moveSubtree(wMinus: Node3, wPlus: Node3, shift: Int): Unit = {
+
 
 
     }
 
 
 
+
   }
+
+
 
   def executeShifts(v: Node3): Unit = {
 
 
   }
 
-  def nextLeft(v: Node3): Node3 = {
-    if (v.hasChildren) inTheBox(v.leftMostChild) else v.thread
+  def nextLeft(v: Node3): Either[Int, Node3] = {
+    if (v.hasChildren) Right(inTheBox(v.leftMostChild)) else v.thread
   }
 
 
-  def nextRight(v: Node3): Node3 = {
-    if (v.hasChildren) inTheBox(v.rightMostChild) else v.thread
+  def nextRight(v: Node3): Either[Int, Node3] = {
+    if (v.hasChildren) Right(inTheBox(v.rightMostChild)) else v.thread
   }
+
+
 
 
 
