@@ -110,9 +110,6 @@ object Node3 {
 }
 
 
-
-
-
 case class Node3(children: Vector[Node3]) {
 
   val childrenNum = children.length
@@ -121,16 +118,24 @@ case class Node3(children: Vector[Node3]) {
 
   def canonicalForm = Node3.orderTree(this)
 
-  def isLeaf = this.children == Vector[Node3]()
+  def isLeaf: Boolean = this.children == Vector[Node3]()
+
+  def hasChildren: Boolean = ! isLeaf
+
+  def numChildren = children.length
 
   var mod = 0
-  var thread = 0
+  var thread = this
   var ancestor = this
   var prelim = 0
   var defaultAncestor = this
   var father: Node3 = this
   var leftSibling: Option[Node3] = None
   var leftMostSibling: Option[Node3] = None
+  var leftMostChild: Option[Node3] = None
+  var rightMostChild: Option[Node3] = None
+  var shift: Int = 0
+
 
 
   override def toString = "*" + children.map(_.toString + "^").mkString("")
@@ -156,8 +161,18 @@ object TreeLayaut {
 
 
   def initWalk(n: Node3): Unit = {
+
+    n.rightMostChild = n.numChildren match {
+      case 0 => None
+      case x => Some(n.children(x - 1))
+    }
+    n.leftMostChild = n.numChildren match {
+      case 0 => None
+      case x => Some(n.children(0))
+    }
     for (t <- n.children) {
       t.father = n
+
       initWalk(t)
     }
     for (t <- n.children.indices) {
@@ -166,6 +181,9 @@ object TreeLayaut {
         n.children(t).leftMostSibling = Some(n.children(0))
       }
     }
+
+
+
   }
 
   def firstWalk(v: Node3): Unit = {
@@ -196,22 +214,35 @@ object TreeLayaut {
 
   }
 
+  def inTheBox(x: Option[Node3]): Node3 = x match {
+    case None => Node3(Vector[Node3]())
+    case Some(y) => y
+  }
+
   def apportion(v: Node3, defaultAncestor: Node3): Unit = v.leftSibling match {
 
     case Some(w) => {
 
-      var vInPlus = v
-      var vOutPlus = v
-      var vInMinus = w
-      var vOutMinus = vInPlus.leftMostSibling
-      var sOutPlus = vOutPlus.mod
-      var sInPlus = vInPlus.mod
-      var sInMinus = vInMinus.mod
-      var sOutMinus = vOutMinus match {
-        case Some(z) => z.mod
-        case None => Nil // Comprobar que este caso no se da nunca
-      }
+      var vInPlus: Node3 = v
+      var vOutPlus: Node3 = v
+      var vInMinus: Node3 = w
+      var vOutMinus: Option[Node3] = vInPlus.leftMostSibling
+      var sOutPlus: Int = vOutPlus.mod
+      var sInPlus: Int = vInPlus.mod
+      var sInMinus: Int = vInMinus.mod
+      var sOutMinus: Node3 = inTheBox(vOutMinus)
+
       while (nextRight(vInMinus) != 0 && nextLeft(vInPlus) != 0) {
+
+        vInMinus = nextRight(vInMinus)
+        vInPlus = nextRight(vInPlus)
+        vOutMinus = vOutMinus match {
+          case None => None
+          case Some(x) => Some(nextLeft(inTheBox(vOutMinus)))
+        }
+        vOutPlus = nextRight(vOutPlus)
+        vOutPlus.ancestor = v
+        v.shift = vInMinus.prelim + sInMinus - vInPlus.prelim - sInPlus + distance
 
         
       }
@@ -227,6 +258,17 @@ object TreeLayaut {
 
 
   }
+
+  def nextLeft(v: Node3): Node3 = {
+    if (v.hasChildren) inTheBox(v.leftMostChild) else v.thread
+  }
+
+
+  def nextRight(v: Node3): Node3 = {
+    if (v.hasChildren) inTheBox(v.rightMostChild) else v.thread
+  }
+
+
 
 
 }
