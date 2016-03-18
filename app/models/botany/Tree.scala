@@ -237,7 +237,12 @@ object TreeLayaut {
       var sInMinus: Int = inTheBox(vInMinus).mod
       var sOutMinus: Int = inTheBox(vOutMinus).mod
 
-      while ((nextRight(vInMinus) != Left(0)) && (nextLeft(vInPlus) != Left(0)) {
+
+
+
+
+      while ((nextRight(vInMinus) != Left(0)) && (nextLeft(vInPlus) != Left(0))) {
+
         vInMinus = nextRight(vInMinus)
         vInPlus = nextRight(vInPlus)
         vOutMinus = nextLeft(vOutMinus)
@@ -253,7 +258,15 @@ object TreeLayaut {
         sInPlus = sInPlus + inTheBox(vInPlus).mod
         sOutMinus = sOutMinus + inTheBox(vOutMinus).mod
       }
-      
+
+
+
+
+
+
+
+
+
       def ancestor(w: Node3, v: Node3, d: Node3): Node3 = {
 
         if (inTheBox(vInMinus).ancestor.father == v ) {
