@@ -130,10 +130,10 @@ case class Node3(children: Vector[Node3]) {
   var prelim = 0
   var defaultAncestor = this
   var father: Node3 = this
-  var leftSibling: Option[Node3] = None
-  var leftMostSibling: Option[Node3] = None
-  var leftMostChild: Option[Node3] = None
-  var rightMostChild: Option[Node3] = None
+  var leftSibling: Either[Int, Node3] = Left(0)
+  var leftMostSibling: Either[Int, Node3] = Left(0)
+  var leftMostChild: Either[Int, Node3] = Left(0)
+  var rightMostChild: Either[Int, Node3] = Left(0)
   var shift: Int = 0
 
 
@@ -163,12 +163,12 @@ object TreeLayaut {
   def initWalk(n: Node3): Unit = {
 
     n.rightMostChild = n.numChildren match {
-      case 0 => None
-      case x => Some(n.children(x - 1))
+      case 0 => Left(0)
+      case x => Right(n.children(x - 1))
     }
     n.leftMostChild = n.numChildren match {
-      case 0 => None
-      case x => Some(n.children(0))
+      case 0 => Left(0)
+      case x => Right(n.children(0))
     }
     for (t <- n.children) {
       t.father = n
@@ -176,9 +176,9 @@ object TreeLayaut {
       initWalk(t)
     }
     for (t <- n.children.indices) {
-      if (t == 0) n.children(t).leftSibling = None else {
-        n.children(t).leftSibling = Some(n.children(t - 1))
-        n.children(t).leftMostSibling = Some(n.children(0))
+      if (t == 0) n.children(t).leftSibling = Left(0) else {
+        n.children(t).leftSibling = Right(n.children(t - 1))
+        n.children(t).leftMostSibling = Right(n.children(0))
       }
     }
 
@@ -198,8 +198,8 @@ object TreeLayaut {
       executeShifts(v)
       val midpoint = 1 / 2 * (v.children(0).prelim + v.children(v.childrenNum - 1).prelim)
       val tmp = v.leftSibling match {
-        case None => midpoint
-        case Some(w) => {
+        case Left(0) => midpoint
+        case Right(w) => {
           v.prelim = w.prelim + distance
           v.mod = v.prelim - midpoint
         }
@@ -214,56 +214,50 @@ object TreeLayaut {
 
   }
 
-  def inTheBox(x: Option[Node3]): Node3 = x match {
-    case None => Node3(Vector[Node3]())
-    case Some(y) => y
+  def inTheBox(z: Either[Int, Node3]): Node3 = z match {
+    case Left(x) => Node3(Vector[Node3]())
+    case Right(x) => x
   }
 
   def apportion(v: Node3, defaultAncestor: Node3): Unit = {
 
-    val w = v.leftSibling match {
-      case None => v
-      case Some(w) => w
+    val w: Node3 = v.leftSibling match {
+      case Left(0) => v
+      case Right(a) => a
     }
 
     if (w != v) {
 
-      var vInPlus: Node3 = v
-      var vOutPlus: Node3 = v
+      var vInPlus: Either[Int, Node3] = Right(v)
+      var vOutPlus: Either[Int, Node3] = Right(v)
       var vInMinus: Either[Int, Node3] = Right(w)
-      var vOutMinus: Option[Node3] = vInPlus.leftMostSibling
-      var sOutPlus: Int = vOutPlus.mod
-      var sInPlus: Int = vInPlus.mod
-      var sInMinus: Int = vInMinus.mod
+      var vOutMinus: Either[Int, Node3] = inTheBox(vInPlus).leftMostSibling
+      var sOutPlus: Int = inTheBox(vOutPlus).mod
+      var sInPlus: Int = inTheBox(vInPlus).mod
+      var sInMinus: Int = inTheBox(vInMinus).mod
       var sOutMinus: Int = inTheBox(vOutMinus).mod
 
       while ((nextRight(vInMinus) != Left(0)) && (nextLeft(vInPlus) != Left(0)) {
-
         vInMinus = nextRight(vInMinus)
         vInPlus = nextRight(vInPlus)
-        vOutMinus = vOutMinus match {
-          case None => None
-          case Some(x) => Some(nextLeft(inTheBox(vOutMinus)))
-        }
+        vOutMinus = nextLeft(vOutMinus)
         vOutPlus = nextRight(vOutPlus)
-        vOutPlus.ancestor = v
-        v.shift = vInMinus.prelim + sInMinus - vInPlus.prelim - sInPlus + distance
+        inTheBox(vOutPlus).ancestor = v
+        v.shift = inTheBox(vInMinus).prelim + sInMinus - inTheBox(vInPlus).prelim - sInPlus + distance
         if (v.shift > 0) {
-          moveSubtree(ancestor(vInMinus, v, v.defaultAncestor), v, v.shift)
+          moveSubtree(ancestor(inTheBox(vInMinus), v, v.defaultAncestor), v, v.shift)
           sInPlus = sInPlus + v.shift
           sOutPlus = sOutPlus + v.shift
         }
-        sInMinus = sInMinus + vInMinus.mod
-        sInPlus = sInPlus + vInPlus.mod
+        sInMinus = sInMinus + inTheBox(vInMinus).mod
+        sInPlus = sInPlus + inTheBox(vInPlus).mod
         sOutMinus = sOutMinus + inTheBox(vOutMinus).mod
-
-        
       }
+      
+      def ancestor(w: Node3, v: Node3, d: Node3): Node3 = {
 
-      def ancestor(w: Node3, v: Node3, d: Node3) = {
-
-        if (vInMinus.ancestor.father == v ) {
-          vInMinus.ancestor
+        if (inTheBox(vInMinus).ancestor.father == v ) {
+          inTheBox(vInMinus).ancestor
         } else {
           v.defaultAncestor
         }
@@ -290,13 +284,13 @@ object TreeLayaut {
 
   }
 
-  def nextLeft(v: Node3): Either[Int, Node3] = {
-    if (v.hasChildren) Right(inTheBox(v.leftMostChild)) else v.thread
+  def nextLeft(v: Either[Int, Node3]): Either[Int, Node3] = {
+    if (inTheBox(v).hasChildren) inTheBox(v).leftMostChild else inTheBox(v).thread
   }
 
 
-  def nextRight(v: Node3): Either[Int, Node3] = {
-    if (v.hasChildren) Right(inTheBox(v.rightMostChild)) else v.thread
+  def nextRight(v: Either[Int, Node3]): Either[Int, Node3] = {
+    if (inTheBox(v).hasChildren) inTheBox(v).rightMostChild else inTheBox(v).thread
   }
 
 
