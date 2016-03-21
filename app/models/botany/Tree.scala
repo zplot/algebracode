@@ -214,7 +214,7 @@ object TreeLayaut {
 
   }
 
-  def inTheBox(z: Either[Int, Node3]): Node3 = z match {
+  implicit def inTheBox(z: Either[Int, Node3]): Node3 = z match {
     case Left(x) => Node3(Vector[Node3]())
     case Right(x) => x
   }
@@ -231,14 +231,11 @@ object TreeLayaut {
       var vInPlus: Either[Int, Node3] = Right(v)
       var vOutPlus: Either[Int, Node3] = Right(v)
       var vInMinus: Either[Int, Node3] = Right(w)
-      var vOutMinus: Either[Int, Node3] = inTheBox(vInPlus).leftMostSibling
-      var sOutPlus: Int = inTheBox(vOutPlus).mod
-      var sInPlus: Int = inTheBox(vInPlus).mod
-      var sInMinus: Int = inTheBox(vInMinus).mod
-      var sOutMinus: Int = inTheBox(vOutMinus).mod
-
-
-
+      var vOutMinus: Either[Int, Node3] = vInPlus.leftMostSibling
+      var sOutPlus: Int = vOutPlus.mod
+      var sInPlus: Int = vInPlus.mod
+      var sInMinus: Int = vInMinus.mod
+      var sOutMinus: Int = vOutMinus.mod
 
 
       while ((nextRight(vInMinus) != Left(0)) && (nextLeft(vInPlus) != Left(0))) {
@@ -247,16 +244,34 @@ object TreeLayaut {
         vInPlus = nextRight(vInPlus)
         vOutMinus = nextLeft(vOutMinus)
         vOutPlus = nextRight(vOutPlus)
-        inTheBox(vOutPlus).ancestor = v
-        v.shift = inTheBox(vInMinus).prelim + sInMinus - inTheBox(vInPlus).prelim - sInPlus + distance
+        vOutPlus.ancestor = v
+        v.shift = vInMinus.prelim + sInMinus - vInPlus.prelim - sInPlus + distance
         if (v.shift > 0) {
           moveSubtree(ancestor(inTheBox(vInMinus), v, v.defaultAncestor), v, v.shift)
           sInPlus = sInPlus + v.shift
           sOutPlus = sOutPlus + v.shift
         }
-        sInMinus = sInMinus + inTheBox(vInMinus).mod
-        sInPlus = sInPlus + inTheBox(vInPlus).mod
-        sOutMinus = sOutMinus + inTheBox(vOutMinus).mod
+        sInMinus = sInMinus + vInMinus.mod
+        sInPlus = sInPlus + vInPlus.mod
+        sOutMinus = sOutMinus + vOutMinus.mod
+        sOutPlus = sOutPlus + vOutPlus.mod
+      }
+
+      if (nextRight(vInMinus) != Left(0) && nextRight(vOutPlus) == Left(0)) {
+
+        vOutPlus = nextRight(vInMinus)
+        vOutPlus.mod = vOutPlus.mod + sInPlus - sOutMinus
+
+      }
+
+      if (nextLeft(vInPlus) != Left(0) && nextLeft(vOutMinus) == Left(0)) {
+
+        vOutMinus.thread = nextLeft(vInPlus)
+        vOutMinus.mod = vOutMinus.mod + sInPlus - sOutMinus
+        v.defaultAncestor = v
+
+
+
       }
 
 
@@ -279,7 +294,13 @@ object TreeLayaut {
 
     }
 
+
+
     def moveSubtree(wMinus: Node3, wPlus: Node3, shift: Int): Unit = {
+
+      // Encontrar la posición que ocupa wMinus ennte los hermanos. Ese el number
+
+
 
 
 
