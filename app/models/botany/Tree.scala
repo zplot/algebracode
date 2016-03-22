@@ -113,28 +113,36 @@ object Node3 {
 case class Node3(children: Vector[Node3]) {
 
   val childrenNum = children.length
-
   def weight: Int = children.foldLeft(1)(_ + _.weight)
-
   def canonicalForm = Node3.orderTree(this)
-
   def isLeaf: Boolean = this.children == Vector[Node3]()
-
   def hasChildren: Boolean = ! isLeaf
 
-  def numChildren = children.length
 
-  var mod = 0
+  def numChildren = children.length
+  var mod: Double = 0
   var thread: Either[Int, Node3] = Left(0)
   var ancestor = this
-  var prelim = 0
+  var prelim: Double = 0
   var defaultAncestor = this
   var father: Node3 = this
   var leftSibling: Either[Int, Node3] = Left(0)
   var leftMostSibling: Either[Int, Node3] = Left(0)
   var leftMostChild: Either[Int, Node3] = Left(0)
   var rightMostChild: Either[Int, Node3] = Left(0)
-  var shift: Int = 0
+  var shift: Double = 0
+  var x: Double
+  var y: Double
+  val yStep: Double = 10 // Paso de nivel y
+  var level: Int = 0
+
+  val number: Int = {
+    val tmp: Map[Node3, Int] = father.children.zipWithIndex.toMap
+    tmp(this)
+  }
+
+  var subTrees: Int = 0
+  var change: Double = 0
 
 
 
@@ -154,7 +162,7 @@ object TreeLayaut {
   def layaut(t: Node3) = {
     initWalk(t)
     firstWalk(t)
-    secondWalk(t)
+    secondWalk(t, -)
 
 
   }
@@ -172,7 +180,7 @@ object TreeLayaut {
     }
     for (t <- n.children) {
       t.father = n
-
+      t.level = t.father.level + 1
       initWalk(t)
     }
     for (t <- n.children.indices) {
@@ -208,10 +216,13 @@ object TreeLayaut {
     }
   }
 
-  def secondWalk(v: Node3): Unit = {
+  def secondWalk(v: Node3, m: Double): Unit = {
 
-
-
+    v.x = v.prelim + m
+    v.y =v.level
+    for (w <- v.children) {
+      secondWalk(w, m + v.mod)
+    }
   }
 
   implicit def inTheBox(z: Either[Int, Node3]): Node3 = z match {
@@ -232,10 +243,10 @@ object TreeLayaut {
       var vOutPlus: Either[Int, Node3] = Right(v)
       var vInMinus: Either[Int, Node3] = Right(w)
       var vOutMinus: Either[Int, Node3] = vInPlus.leftMostSibling
-      var sOutPlus: Int = vOutPlus.mod
-      var sInPlus: Int = vInPlus.mod
-      var sInMinus: Int = vInMinus.mod
-      var sOutMinus: Int = vOutMinus.mod
+      var sOutPlus: Double = vOutPlus.mod
+      var sInPlus: Double = vInPlus.mod
+      var sInMinus: Double = vInMinus.mod
+      var sOutMinus: Double = vOutMinus.mod
 
 
       while ((nextRight(vInMinus) != Left(0)) && (nextLeft(vInPlus) != Left(0))) {
@@ -270,16 +281,7 @@ object TreeLayaut {
         vOutMinus.mod = vOutMinus.mod + sInPlus - sOutMinus
         v.defaultAncestor = v
 
-
-
       }
-
-
-
-
-
-
-
 
 
       def ancestor(w: Node3, v: Node3, d: Node3): Node3 = {
@@ -291,30 +293,20 @@ object TreeLayaut {
         }
       }
 
-
     }
-
-
 
     def moveSubtree(wMinus: Node3, wPlus: Node3, shift: Int): Unit = {
 
       // Encontrar la posición que ocupa wMinus ennte los hermanos. Ese el number
 
-
-
-
+      v.subTrees = wPlus.number - wMinus.number
+      wPlus.change = wPlus.change - shift/v.subTrees
+      wPlus.shift = wPlus.shift + shift
+      wMinus.change = wMinus.change + shift/v.subTrees
+      wPlus.prelim = wPlus.prelim + shift
+      wPlus.mod = wPlus.mod + shift
 
     }
-
-
-
-
-  }
-
-
-
-  def executeShifts(v: Node3): Unit = {
-
 
   }
 
@@ -327,10 +319,22 @@ object TreeLayaut {
     if (inTheBox(v).hasChildren) inTheBox(v).rightMostChild else inTheBox(v).thread
   }
 
+  def executeShifts(v: Node3): Unit = {
 
+    v.shift = 0
+    v.change = 0
 
+    for (x <- (v.childrenNum - 1) to 0 ) {
 
+      val w = v.children(x)
+      w.prelim = w.prelim + v.shift
+      w.mod = w.mod + v.shift
+      v.change = v.change + w.change
+      v.shift = v.shift + w.shift + v.change
 
+    }
+
+  }
 
 }
 
