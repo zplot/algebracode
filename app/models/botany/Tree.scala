@@ -104,7 +104,7 @@ object Utils {
     case Right(x) => x
   }
 
-  implicit def inTheBoxFather(z: Either[Root, Node3]): Node3 = z match {
+  implicit def inTheBoxFather(z: Either[Int, Node3]): Node3 = z match {
     case Left(x) => Node3(Vector())
     case Right(x) => x
   }
@@ -123,40 +123,7 @@ object Utils {
 
 }
 
-case class Tree3(root: Root) {
-
-}
-
-case class Root(children: Vector[Node3]) {
-
-  val childrenNum = children.length
-  val yStep: Double = 10 // Paso de nivel y
-  val number: Int = 0
-
-  def weight: Int = children.foldLeft(1)(_ + _.weight)
-  def isLeaf: Boolean = this.children == Vector[Node3]()
-  def hasChildren: Boolean = ! isLeaf
-  def numChildren = children.length
-
-  var mod: Double = 0
-  var thread: Either[Int, Node3] = Left(0)
-  var ancestor = this
-  var prelim: Double = 0
-  var defaultAncestor = this
-  var leftSibling: Either[Int, Node3] = Left(0)
-  var leftMostSibling: Either[Int, Node3] = Left(0)
-  var leftMostChild: Either[Int, Node3] = Left(0)
-  var rightMostChild: Either[Int, Node3] = Left(0)
-  var shift: Double = 0
-  var x: Double = 0
-  var y: Double = 0
-  var level: Int = 0
-  var subTrees: Int = 0
-  var change: Double = 0
-
-  override def toString = "*" + children.map(_.toString + "^").mkString("")
-
-}
+case class Tree3(root: Node3)
 
 case class Node3(children: Vector[Node3]) {
 
@@ -173,7 +140,7 @@ case class Node3(children: Vector[Node3]) {
   var ancestor = this
   var prelim: Double = 0
   var defaultAncestor = this
-  var father: Either[Root, Node3] = Right(this)
+  var father: Either[Int, Node3] = Right(this)
   var leftSibling: Either[Int, Node3] = Left(0)
   var leftMostSibling: Either[Int, Node3] = Left(0)
   var leftMostChild: Either[Int, Node3] = Left(0)
@@ -187,7 +154,7 @@ case class Node3(children: Vector[Node3]) {
   val number: Int = {
 
     val tmp: Map[Node3, Int] = this.father match {
-      case Left(Root(z)) => z.zipWithIndex.toMap
+      case Left(x) => Map[Node3, Int]((Node3(Vector()), 0))
       case Right(Node3(z)) => z.zipWithIndex.toMap
     }
     tmp(this)
@@ -215,51 +182,33 @@ object TreeLayaut {
   def layaut(t: Tree3) = {
     initWalk(t.root)
     firstWalk(t.root)
-    secondWalk(t.root, -)
-
+    secondWalk(t.root, 0)  // TODO cuál es el segundo agumento?
 
   }
 
+  def initWalk(n: Node3): Unit = {
 
-  def initWalk(r: Root): Unit = {
-
-    def initWalkNode3(x: Node3): Unit = {
-
-      for (t <- x.children) {
-        import Utils.inTheBoxFather
-        t.father = Right(x)
-        t.level = t.father.level + 1
-        t.rightMostChild = t.numChildren match {
-          case 0 => Left(0)
-          case s => Right(r.children(s - 1))
-        }
-        t.leftMostChild = t.numChildren match {
-          case 0 => Left(0)
-          case s => Right(t.children(0))
-        }
-        for (t <- x.children.indices) {
-          if (t == 0) x.children(t).leftSibling = Left(0) else {
-            x.children(t).leftSibling = Right(x.children(t - 1))
-            x.children(t).leftMostSibling = Right(x.children(0))
-          }
-        }
-        initWalkNode3(t)
-
+    for (t <- n.children) {
+      import Utils.inTheBoxFather
+      t.father = Right(n)
+      t.level = t.father.level + 1
+      t.rightMostChild = t.numChildren match {
+        case 0 => Left(0)
+        case s => Right(n.children(s - 1))
       }
+      t.leftMostChild = t.numChildren match {
+        case 0 => Left(0)
+        case s => Right(t.children(0))
+      }
+      for (t <- n.children.indices) {
+        if (t == 0) n.children(t).leftSibling = Left(0) else {
+          n.children(t).leftSibling = Right(n.children(t - 1))
+          n.children(t).leftMostSibling = Right(n.children(0))
+        }
+      }
+      initWalk(t)
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
   }
 
@@ -275,7 +224,7 @@ object TreeLayaut {
       executeShifts(v)
       val midpoint = 1 / 2 * (v.children(0).prelim + v.children(v.childrenNum - 1).prelim)
       val tmp = v.leftSibling match {
-        case Left(0) => midpoint
+        case Left(x) => midpoint
         case Right(w) => {
           v.prelim = w.prelim + distance
           v.mod = v.prelim - midpoint
@@ -300,8 +249,10 @@ object TreeLayaut {
 
   def apportion(v: Node3, defaultAncestor: Node3): Unit = {
 
+    import Utils.inTheBox
+
     val w: Node3 = v.leftSibling match {
-      case Left(0) => v
+      case Left(x) => v
       case Right(a) => a
     }
 
@@ -354,7 +305,7 @@ object TreeLayaut {
 
       def ancestor(w: Node3, v: Node3, d: Node3): Node3 = {
 
-        if (inTheBox(vInMinus).ancestor.father == v ) {
+        if (inTheBox(vInMinus).ancestor.father == v ) { // TODO revisar esto
           inTheBox(vInMinus).ancestor
         } else {
           v.defaultAncestor
@@ -363,7 +314,7 @@ object TreeLayaut {
 
     }
 
-    def moveSubtree(wMinus: Node3, wPlus: Node3, shift: Int): Unit = {
+    def moveSubtree(wMinus: Node3, wPlus: Node3, shift: Double): Unit = {
 
       // Encontrar la posición que ocupa wMinus ennte los hermanos. Ese el number
 
@@ -379,11 +330,11 @@ object TreeLayaut {
   }
 
   def nextLeft(v: Either[Int, Node3]): Either[Int, Node3] = {
-    if (inTheBox(v).hasChildren) inTheBox(v).leftMostChild else inTheBox(v).thread
+    if (Utils.inTheBox(v).hasChildren) Utils.inTheBox(v).leftMostChild else Utils.inTheBox(v).thread
   }
 
   def nextRight(v: Either[Int, Node3]): Either[Int, Node3] = {
-    if (inTheBox(v).hasChildren) inTheBox(v).rightMostChild else inTheBox(v).thread
+    if (Utils.inTheBox(v).hasChildren) Utils.inTheBox(v).rightMostChild else Utils.inTheBox(v).thread
   }
 
   def executeShifts(v: Node3): Unit = {
