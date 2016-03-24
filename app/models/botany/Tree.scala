@@ -15,7 +15,7 @@ case class Point(x: Int, y: Int) {
   override def toString = "(" + x ++ "," + y + ")"
 }
 
-case class Node(val father: Option[Node], pos: Point) {
+case class Node(father: Option[Node], pos: Point) {
   override def toString = pos.toString
 }
 
@@ -95,9 +95,23 @@ object Node3 {
 
   }
 
+}
+
+object Utils {
+
+  implicit def inTheBox(z: Either[Int, Node3]): Node3 = z match {
+    case Left(x) => Node3(Vector[Node3]())
+    case Right(x) => x
+  }
+
+  implicit def inTheBoxFather(z: Either[Root, Node3]): Tree3 = z match {
+    case Left(x) => Root(Vector[Node3]())
+    case Right(x) => x
+  }
+
   def orderTree(t: Node3): Node3 = {
 
-    if (t.children != List())  {
+    if (t.children != Vector[Node3]())  {
       val tmp3 = t.children.map( x => orderTree(x))
       val tmp4 = Node3(tmp3)
       val tmp5 = tmp4.children.sortBy(_.weight).reverse
@@ -109,12 +123,74 @@ object Node3 {
 
 }
 
+trait Tree3 {
 
-case class Node3(children: Vector[Node3]) {
+  val childrenNum: Int
+  val number: Int
+  val yStep: Double
+
+  def weight: Int
+  def isLeaf: Boolean
+  def hasChildren: Boolean
+  def numChildren: Int
+
+  var mod: Double
+  var thread: Either[Int, Node3]
+  var ancestor: Node3
+  var prelim: Double
+  var defaultAncestor: Node3
+  var leftSibling: Either[Int, Node3]
+  var leftMostSibling: Either[Int, Node3]
+  var leftMostChild: Either[Int, Node3]
+  var rightMostChild: Either[Int, Node3]
+  var shift: Double
+  var x: Double
+  var y: Double
+  var level: Int
+  var subTrees: Int
+  var change: Double
+
+}
+
+
+case class Root(children: Vector[Node3]) extends Tree3 {
+
+  val childrenNum = children.length
+  val yStep: Double = 10 // Paso de nivel y
+  val number: Int = 0
+
+  def weight: Int = children.foldLeft(1)(_ + _.weight)
+  def isLeaf: Boolean = this.children == Vector[Node3]()
+  def hasChildren: Boolean = ! isLeaf
+  def numChildren = children.length
+
+  var mod: Double = 0
+  var thread: Either[Int, Node3] = Left(0)
+  var ancestor = this
+  var prelim: Double = 0
+  var defaultAncestor = this
+  var leftSibling: Either[Int, Node3] = Left(0)
+  var leftMostSibling: Either[Int, Node3] = Left(0)
+  var leftMostChild: Either[Int, Node3] = Left(0)
+  var rightMostChild: Either[Int, Node3] = Left(0)
+  var shift: Double = 0
+  var x: Double = 0
+  var y: Double = 0
+  var level: Int = 0
+  var subTrees: Int = 0
+  var change: Double = 0
+
+  override def toString = "*" + children.map(_.toString + "^").mkString("")
+
+}
+
+
+
+case class Node3(children: Vector[Node3]) extends Tree3 {
 
   val childrenNum = children.length
   def weight: Int = children.foldLeft(1)(_ + _.weight)
-  def canonicalForm = Node3.orderTree(this)
+  def canonicalForm = Utils.orderTree(this)
   def isLeaf: Boolean = this.children == Vector[Node3]()
   def hasChildren: Boolean = ! isLeaf
 
@@ -125,20 +201,25 @@ case class Node3(children: Vector[Node3]) {
   var ancestor = this
   var prelim: Double = 0
   var defaultAncestor = this
-  var father: Node3 = this
+  var father: Either[Root, Node3] = Right(this)
   var leftSibling: Either[Int, Node3] = Left(0)
   var leftMostSibling: Either[Int, Node3] = Left(0)
   var leftMostChild: Either[Int, Node3] = Left(0)
   var rightMostChild: Either[Int, Node3] = Left(0)
   var shift: Double = 0
-  var x: Double
-  var y: Double
+  var x: Double = 0
+  var y: Double = 0
   val yStep: Double = 10 // Paso de nivel y
   var level: Int = 0
 
   val number: Int = {
-    val tmp: Map[Node3, Int] = father.children.zipWithIndex.toMap
+
+    val tmp: Map[Node3, Int] = this.father match {
+      case Left(Root(z)) => z.zipWithIndex.toMap
+      case Right(Node3(z)) => z.zipWithIndex.toMap
+    }
     tmp(this)
+
   }
 
   var subTrees: Int = 0
@@ -148,18 +229,18 @@ case class Node3(children: Vector[Node3]) {
 
   override def toString = "*" + children.map(_.toString + "^").mkString("")
 
-  final override def equals(other: Any): Boolean = {
+/*  final override def equals(other: Any): Boolean = {
     val that = other.asInstanceOf[Node3]
     if (that == null) false
     else Node3.orderTree(this).children == Node3.orderTree(that).children
-  }
+  }*/
 }
 
 object TreeLayaut {
 
   val distance = 10
 
-  def layaut(t: Node3) = {
+  def layaut(t: Root) = {
     initWalk(t)
     firstWalk(t)
     secondWalk(t, -)
@@ -168,17 +249,19 @@ object TreeLayaut {
   }
 
 
-  def initWalk(n: Node3): Unit = {
+  def initWalk(r: Root): Unit = {
 
-    n.rightMostChild = n.numChildren match {
+    r.rightMostChild = r.numChildren match {
       case 0 => Left(0)
-      case x => Right(n.children(x - 1))
+      case x => Right(r.children(x - 1))
     }
-    n.leftMostChild = n.numChildren match {
+    r.leftMostChild = r.numChildren match {
       case 0 => Left(0)
-      case x => Right(n.children(0))
+      case x => Right(r.children(0))
     }
-    for (t <- n.children) {
+
+
+    for (t <- r.children) {
       t.father = n
       t.level = t.father.level + 1
       initWalk(t)
@@ -225,10 +308,9 @@ object TreeLayaut {
     }
   }
 
-  implicit def inTheBox(z: Either[Int, Node3]): Node3 = z match {
-    case Left(x) => Node3(Vector[Node3]())
-    case Right(x) => x
-  }
+
+
+
 
   def apportion(v: Node3, defaultAncestor: Node3): Unit = {
 
@@ -313,7 +395,6 @@ object TreeLayaut {
   def nextLeft(v: Either[Int, Node3]): Either[Int, Node3] = {
     if (inTheBox(v).hasChildren) inTheBox(v).leftMostChild else inTheBox(v).thread
   }
-
 
   def nextRight(v: Either[Int, Node3]): Either[Int, Node3] = {
     if (inTheBox(v).hasChildren) inTheBox(v).rightMostChild else inTheBox(v).thread
