@@ -154,18 +154,18 @@ case class Node3(children: Vector[Node3]) {
   val number: Int = {
 
     val tmp: Map[Node3, Int] = this.father match {
-      case Left(x) => Map[Node3, Int]((Node3(Vector()), 0))
+      case Left(x) => Map()
+      case Right(Node3(Vector())) => Map()
       case Right(Node3(z)) => z.zipWithIndex.toMap
     }
-    tmp(this)
-
+    if (tmp == Map()) 0 else tmp(this)
   }
 
   var subTrees: Int = 0
   var change: Double = 0
 
 
-
+  // TODO Descomentar lo de abajo para imprimir * y ^
   override def toString = "*" + children.map(_.toString + "^").mkString("")
 
 /*  final override def equals(other: Any): Boolean = {
@@ -305,7 +305,9 @@ object TreeLayaut {
 
       def ancestor(w: Node3, v: Node3, d: Node3): Node3 = {
 
-        if (inTheBox(vInMinus).ancestor.father == v ) { // TODO revisar esto
+        import Utils._
+
+        if (inTheBoxFather(inTheBox(vInMinus).ancestor.father) == v ) {
           inTheBox(vInMinus).ancestor
         } else {
           v.defaultAncestor
