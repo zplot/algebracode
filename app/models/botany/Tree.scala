@@ -104,8 +104,8 @@ object Utils {
     case Right(x) => x
   }
 
-  implicit def inTheBoxFather(z: Either[Root, Node3]): Tree3 = z match {
-    case Left(x) => Root(Vector[Node3]())
+  implicit def inTheBoxFather(z: Either[Root, Node3]): Node3 = z match {
+    case Left(x) => Node3(Vector())
     case Right(x) => x
   }
 
@@ -123,37 +123,11 @@ object Utils {
 
 }
 
-trait Tree3 {
-
-  val childrenNum: Int
-  val number: Int
-  val yStep: Double
-
-  def weight: Int
-  def isLeaf: Boolean
-  def hasChildren: Boolean
-  def numChildren: Int
-
-  var mod: Double
-  var thread: Either[Int, Node3]
-  var ancestor: Node3
-  var prelim: Double
-  var defaultAncestor: Node3
-  var leftSibling: Either[Int, Node3]
-  var leftMostSibling: Either[Int, Node3]
-  var leftMostChild: Either[Int, Node3]
-  var rightMostChild: Either[Int, Node3]
-  var shift: Double
-  var x: Double
-  var y: Double
-  var level: Int
-  var subTrees: Int
-  var change: Double
+case class Tree3(root: Root) {
 
 }
 
-
-case class Root(children: Vector[Node3]) extends Tree3 {
+case class Root(children: Vector[Node3]) {
 
   val childrenNum = children.length
   val yStep: Double = 10 // Paso de nivel y
@@ -184,9 +158,7 @@ case class Root(children: Vector[Node3]) extends Tree3 {
 
 }
 
-
-
-case class Node3(children: Vector[Node3]) extends Tree3 {
+case class Node3(children: Vector[Node3]) {
 
   val childrenNum = children.length
   def weight: Int = children.foldLeft(1)(_ + _.weight)
@@ -240,10 +212,10 @@ object TreeLayaut {
 
   val distance = 10
 
-  def layaut(t: Root) = {
-    initWalk(t)
-    firstWalk(t)
-    secondWalk(t, -)
+  def layaut(t: Tree3) = {
+    initWalk(t.root)
+    firstWalk(t.root)
+    secondWalk(t.root, -)
 
 
   }
@@ -251,27 +223,41 @@ object TreeLayaut {
 
   def initWalk(r: Root): Unit = {
 
-    r.rightMostChild = r.numChildren match {
-      case 0 => Left(0)
-      case x => Right(r.children(x - 1))
-    }
-    r.leftMostChild = r.numChildren match {
-      case 0 => Left(0)
-      case x => Right(r.children(0))
-    }
+    def initWalkNode3(x: Node3): Unit = {
 
+      for (t <- x.children) {
+        import Utils.inTheBoxFather
+        t.father = Right(x)
+        t.level = t.father.level + 1
+        t.rightMostChild = t.numChildren match {
+          case 0 => Left(0)
+          case s => Right(r.children(s - 1))
+        }
+        t.leftMostChild = t.numChildren match {
+          case 0 => Left(0)
+          case s => Right(t.children(0))
+        }
+        for (t <- x.children.indices) {
+          if (t == 0) x.children(t).leftSibling = Left(0) else {
+            x.children(t).leftSibling = Right(x.children(t - 1))
+            x.children(t).leftMostSibling = Right(x.children(0))
+          }
+        }
+        initWalkNode3(t)
 
-    for (t <- r.children) {
-      t.father = n
-      t.level = t.father.level + 1
-      initWalk(t)
-    }
-    for (t <- n.children.indices) {
-      if (t == 0) n.children(t).leftSibling = Left(0) else {
-        n.children(t).leftSibling = Right(n.children(t - 1))
-        n.children(t).leftMostSibling = Right(n.children(0))
       }
+
     }
+
+
+
+
+
+
+
+
+
+
 
 
 
