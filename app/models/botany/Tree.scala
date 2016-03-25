@@ -28,6 +28,8 @@ case class Draw(actualNode: Node, nodes: List[Node], edges: List[Edge])
 // http://aperiodic.net/phil/scala/s-99/
 object Node3 {
 
+  var lastId = 0
+
   implicit def string2Tree(s: String): Node3 = {
     def nextStrBound(pos: Int, nesting: Int): Int =
       if (nesting == 0) pos
@@ -132,9 +134,8 @@ case class Node3(children: Vector[Node3]) {
   def canonicalForm = Utils.orderTree(this)
   def isLeaf: Boolean = this.children == Vector[Node3]()
   def hasChildren: Boolean = ! isLeaf
-
-
   def numChildren = children.length
+
   var mod: Double = 0
   var thread: Either[Int, Node3] = Left(0)
   var ancestor = this
@@ -148,17 +149,18 @@ case class Node3(children: Vector[Node3]) {
   var shift: Double = 0
   var x: Double = 0
   var y: Double = 0
-  val yStep: Double = 10 // Paso de nivel y
+  var yStep: Double = 10 // Paso de nivel y
   var level: Int = 0
 
   val number: Int = {
 
-    val tmp: Map[Node3, Int] = this.father match {
-      case Left(x) => Map()
-      case Right(Node3(Vector())) => Map()
-      case Right(Node3(z)) => z.zipWithIndex.toMap
+    val fathersChilds: Vector[Node3] = this.father match {
+      case Left(x) => Vector()
+      case Right(Node3(Vector())) => Vector()
+      case Right(Node3(z)) => z
     }
-    if (tmp == Map()) 0 else tmp(this)
+    val mapa: Map[Node3, Int] = if (fathersChilds == Vector()) Map() else fathersChilds.zipWithIndex.toMap
+    if (mapa == Map()) -100 else mapa(this)
   }
 
   var subTrees: Int = 0
