@@ -185,7 +185,8 @@ object TreeLayaut {
 
   val distance = 10
 
-  def layaut(t: Tree3) = {
+  def layaut(t: Tree3): Unit = {
+
     initWalk(t)
     firstWalk(t.root)
     secondWalk(t.root, 0)  // TODO cuál es el segundo agumento?
@@ -214,8 +215,12 @@ object TreeLayaut {
           if (mapa == Map()) -100 else mapa(t)
         }
         import Utils.inTheBoxFather
-        t.leftSibling = Some(t.father.children(t.number - 1))
-        t.leftMostSibling = Some(t.father.children(0))
+        t.leftSibling = {
+          if (t.number == 0) None else Some(t.father.children(t.number - 1))
+        }
+        t.leftMostSibling = {
+          if (t.number == 0) None else Some(t.father.children(0))
+        }
         initNextLevel(t)
       }
     }
@@ -252,10 +257,6 @@ object TreeLayaut {
       secondWalk(w, m + v.mod)
     }
   }
-
-
-
-
 
   def apportion(v: Node3, defaultAncestor: Node3): Unit = {
 

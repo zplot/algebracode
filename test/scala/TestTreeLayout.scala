@@ -17,6 +17,9 @@ object TestTreeLayout extends App {
   val tree1 = Tree3(node1)
 
   println(tree1)
+  TreeLayaut.layaut(tree1)
+
+
 
 
 
