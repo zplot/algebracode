@@ -194,6 +194,7 @@ class Node3(val id: Int, val children: Vector[Node3]) {
 object TreeLayaut {
 
   val distance = 10
+  val yStep = 10
 
   def layaut(t: Tree3): Unit = {
 
@@ -258,8 +259,10 @@ object TreeLayaut {
       }
       executeShifts(v)
       val midpoint = 1 / 2 * (v.children(0).prelim + v.children(v.childrenNum - 1).prelim)
-      val tmp = v.leftSibling match {
-        case None => midpoint
+      v.leftSibling match {
+        case None => {
+          v.prelim = midpoint
+        }
         case Some(w) => {
           v.prelim = w.prelim + distance
           v.mod = v.prelim - midpoint
@@ -272,7 +275,7 @@ object TreeLayaut {
   def secondWalk(v: Node3, m: Double): Unit = {
 
     v.x = v.prelim + m
-    v.y =v.level
+    v.y = v.level * yStep
     for (w <- v.children) {
       secondWalk(w, m + v.mod)
     }
@@ -355,11 +358,6 @@ object TreeLayaut {
 
   }
 
-
-
-
-
-
   def moveSubtree(wMinus: Node3, wPlus: Node3, shift: Double): Unit = {
 
     // Encontrar la posición que ocupa wMinus ennte los hermanos. Ese el number
@@ -372,10 +370,6 @@ object TreeLayaut {
     wPlus.mod = wPlus.mod + shift
 
   }
-
-
-
-
 
   def executeShifts(v: Node3): Unit = {
 

@@ -27,6 +27,7 @@ object TestTreeLayout extends App {
   println(node1.x)
   println(node1.y)
 
+  println()
   println("Capitulo 1")
   println()
   val string = "**u*u*u"
