@@ -44,6 +44,7 @@ object Node3 {
 
 
   implicit def string2Tree(s: String): Node3 = {
+
     def nextStrBound(pos: Int, nesting: Int): Int =
       if (nesting == 0) pos
       else nextStrBound(pos + 1, if (s(pos) == '^') nesting - 1 else nesting + 1)
@@ -56,6 +57,12 @@ object Node3 {
     val tmp = splitChildStrings(1).map(string2Tree(_)).toVector
     Node3(tmp)
   }
+
+  implicit def string2Tree3(s: String): Tree3 = {
+    val tmp = string2Tree(s)
+    Tree3(tmp)
+  }
+
 
   // Eats a string and drops a list of nodes and a list of edges
   def string2Draw(s: String): Draw = {
