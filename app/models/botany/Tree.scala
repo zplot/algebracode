@@ -1,6 +1,7 @@
 package models.botany
 
 import scala.language.implicitConversions
+import scala.language.postfixOps
 
 
 /*
@@ -33,6 +34,7 @@ object Node3 {
   def apply(children: Vector[Node3]): Node3 = {
 
     val newId = lastId + 1
+    lastId = newId
     new Node3(newId, children)
 
   }
@@ -172,7 +174,8 @@ class Node3(val id: Int, val children: Vector[Node3]) {
 
 
   // TODO Descomentar lo de abajo para imprimir * y ^
-  override def toString = "*" + children.map(_.toString + "^").mkString("")
+  // override def toString = "*" + children.map(_.toString + "^").mkString("")
+  override def toString = id.toString + "-" + children.toString()
 
 /*  final override def equals(other: Any): Boolean = {
     val that = other.asInstanceOf[Node3]
@@ -189,7 +192,8 @@ object TreeLayaut {
 
     initWalk(t)
     firstWalk(t.root)
-    secondWalk(t.root, 0)  // TODO cuál es el segundo agumento?
+    secondWalk(t.root, 0)  // TODO cuál es el segundo argumento?
+    println
 
   }
 
@@ -202,11 +206,17 @@ object TreeLayaut {
     root.leftSibling = None
     root.leftMostSibling = None
     root.number = -1
+    root.mod = 0
+    root.thread = None
+    root.ancestor = Some(root)
     initNextLevel(root)
 
     def initNextLevel(n: Node3): Unit = {
 
       for (t <- n.children) {
+        t.mod = 0
+        t.thread = None
+        t.ancestor = Some(t)
         t.father = Some(n)
         t.level = n.level + 1
         t.number = {
@@ -230,6 +240,9 @@ object TreeLayaut {
     import Utils.inTheBox
     if (v.isLeaf) {
       v.prelim = 0
+      if (v.leftSibling isDefined) {
+        v.prelim = v.leftSibling.prelim + distance
+      }
     } else {
       v.defaultAncestor = Some(v.children(0))
       for (w <- v.children) {
@@ -298,6 +311,7 @@ object TreeLayaut {
         sOutPlus = sOutPlus + vOutPlus.mod
       }
 
+
       if (nextRight(vInMinus).isDefined && nextRight(vOutPlus).isEmpty) {
 
         vOutPlus = nextRight(vInMinus)
@@ -313,41 +327,48 @@ object TreeLayaut {
 
       }
 
+    }
 
-      def ancestor(w: Node3, v: Node3, d: Node3): Node3 = {
+    def nextLeft(v: Option[Node3]): Option[Node3] = {
+      if (Utils.inTheBox(v).hasChildren) Utils.inTheBox(v).leftMostChild else Utils.inTheBox(v).thread
+    }
 
+    def nextRight(v: Option[Node3]): Option[Node3] = {
+      if (Utils.inTheBox(v).hasChildren) Utils.inTheBox(v).rightMostChild else Utils.inTheBox(v).thread
+    }
 
-        if (inTheBox(w.ancestor).father == v.father) {
-          inTheBox(inTheBox(vInMinus).ancestor)
-        } else {
-          inTheBox(v.defaultAncestor)
-        }
+    def ancestor(w: Node3, v: Node3, d: Node3): Node3 = {
+
+      if (inTheBox(w.ancestor).father == v.father) {
+        inTheBox(w.ancestor)
+      } else {
+        inTheBox(v.defaultAncestor)
       }
-
-    }
-
-    def moveSubtree(wMinus: Node3, wPlus: Node3, shift: Double): Unit = {
-
-      // Encontrar la posición que ocupa wMinus ennte los hermanos. Ese el number
-
-      v.subTrees = wPlus.number - wMinus.number
-      wPlus.change = wPlus.change - shift/v.subTrees
-      wPlus.shift = wPlus.shift + shift
-      wMinus.change = wMinus.change + shift/v.subTrees
-      wPlus.prelim = wPlus.prelim + shift
-      wPlus.mod = wPlus.mod + shift
-
     }
 
   }
 
-  def nextLeft(v: Option[Node3]): Option[Node3] = {
-    if (Utils.inTheBox(v).hasChildren) Utils.inTheBox(v).leftMostChild else Utils.inTheBox(v).thread
+
+
+
+
+
+  def moveSubtree(wMinus: Node3, wPlus: Node3, shift: Double): Unit = {
+
+    // Encontrar la posición que ocupa wMinus ennte los hermanos. Ese el number
+
+    val subTrees = wPlus.number - wMinus.number
+    wPlus.change = wPlus.change - shift/subTrees
+    wPlus.shift = wPlus.shift + shift
+    wMinus.change = wMinus.change + shift/subTrees
+    wPlus.prelim = wPlus.prelim + shift
+    wPlus.mod = wPlus.mod + shift
+
   }
 
-  def nextRight(v: Option[Node3]): Option[Node3] = {
-    if (Utils.inTheBox(v).hasChildren) Utils.inTheBox(v).rightMostChild else Utils.inTheBox(v).thread
-  }
+
+
+
 
   def executeShifts(v: Node3): Unit = {
 

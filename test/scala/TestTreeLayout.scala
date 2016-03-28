@@ -18,6 +18,14 @@ object TestTreeLayout extends App {
 
   println(tree1)
   TreeLayaut.layaut(tree1)
+  println(leaf1.x)
+  println(leaf1.y)
+  println(leaf2.x)
+  println(leaf2.y)
+  println(leaf3.x)
+  println(leaf3.y)
+  println(node1.x)
+  println(node1.y)
 
 
 
