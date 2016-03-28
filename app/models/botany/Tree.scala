@@ -201,7 +201,7 @@ object TreeLayaut {
     initWalk(t)
     firstWalk(t.root)
     secondWalk(t.root, 0)  // TODO cuál es el segundo argumento?
-    println
+
 
   }
 
@@ -258,7 +258,7 @@ object TreeLayaut {
         apportion(w, w.defaultAncestor)
       }
       executeShifts(v)
-      val midpoint = 1 / 2 * (v.children(0).prelim + v.children(v.childrenNum - 1).prelim)
+      val midpoint = 1.0 / 2.0 * (v.children(0).prelim + v.children(v.childrenNum - 1).prelim)
       v.leftSibling match {
         case None => {
           v.prelim = midpoint
