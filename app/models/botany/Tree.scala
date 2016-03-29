@@ -147,9 +147,11 @@ object Utils {
 
 }
 
+
+
 case class Tree3(root: Node3) {
 
-  override def toString = {
+  /*override def toString = {
 
     var result = " (" + root.x + ", " + root.y + ")"
 
@@ -162,7 +164,18 @@ case class Tree3(root: Node3) {
     }
     loop(root)
     result
+  }*/
+
+
+
+  def nodes: List[Node3] = {
+    def loop(s: List[Node3]): List[Node3] = s match {
+      case Nil => Nil
+      case x :: xs => List(x) ::: loop(x.children.toList) ::: loop(xs)
+    }
+    root :: loop(this.root.children.toList)
   }
+
 
 }
 
@@ -198,7 +211,7 @@ class Node3(val id: Int, val children: Vector[Node3]) {
 
 
   // TODO Descomentar lo de abajo para imprimir * y ^
-  override def toString = "*" + children.map(_.toString + "^").mkString("")
+  //override def toString = "*" + children.map(_.toString + "^").mkString("")
   // override def toString = id.toString + "-" + children.toString()
 
 /*  final override def equals(other: Any): Boolean = {
@@ -206,6 +219,9 @@ class Node3(val id: Int, val children: Vector[Node3]) {
     if (that == null) false
     else Node3.orderTree(this).children == Node3.orderTree(that).children
   }*/
+
+  override def toString = id.toString()
+
 }
 
 object TreeLayaut {
