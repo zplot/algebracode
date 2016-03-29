@@ -147,7 +147,24 @@ object Utils {
 
 }
 
-case class Tree3(root: Node3)
+case class Tree3(root: Node3) {
+
+  override def toString = {
+
+    var result = " (" + root.x + ", " + root.y + ")"
+
+    def toStr(z: Node3): String = " (" + z.x + ", " + z.y + ") "
+    def loop(z: Node3): Unit = {
+      for (w <- z.children) {
+        result = result + toStr(w) + loop(w)
+
+      }
+    }
+    loop(root)
+    result
+  }
+
+}
 
 class Node3(val id: Int, val children: Vector[Node3]) {
 
@@ -181,8 +198,8 @@ class Node3(val id: Int, val children: Vector[Node3]) {
 
 
   // TODO Descomentar lo de abajo para imprimir * y ^
-  // override def toString = "*" + children.map(_.toString + "^").mkString("")
-  override def toString = id.toString + "-" + children.toString()
+  override def toString = "*" + children.map(_.toString + "^").mkString("")
+  // override def toString = id.toString + "-" + children.toString()
 
 /*  final override def equals(other: Any): Boolean = {
     val that = other.asInstanceOf[Node3]
