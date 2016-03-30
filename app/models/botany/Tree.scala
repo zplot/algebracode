@@ -12,17 +12,15 @@ TODO CanonicalForm
 4. Devolver árbl ordenado
 */
 
-case class Point(x: Int, y: Int) {
+
+
+case class Point(x: Double, y: Double) {
   override def toString = "(" + x ++ "," + y + ")"
 }
 
-case class Node(father: Option[Node], pos: Point) {
-  override def toString = pos.toString
-}
+case class Edge(pos1: Point, pos2: Point)
 
-case class Edge(pos1: Node, pos2: Node)
-
-case class Draw(actualNode: Node, nodes: List[Node], edges: List[Edge])
+case class Draw(nodes: List[Point], edges: List[Edge])
 
 
 
@@ -64,58 +62,6 @@ object Node3 {
   }
 
 
-  // Eats a string and drops a list of nodes and a list of edges
-  def string2Draw(s: String): Draw = {
-
-    val root = Node(None, Point(0,1))
-
-    def show(x: Option[Node]) = x match {
-      case Some(node) => node
-      case None => root
-    }
-
-    val initialDraw = Draw(root, List[Node](), List[Edge]())
-
-    def stringAnalyze(s: List[Char], dibujo: Draw): (List[Char], Draw) = s match {
-
-      case Nil => (Nil, dibujo)
-      case '*' :: xs => stringAnalyze(xs, newNode(dibujo))
-      case '^' :: xs => stringAnalyze(xs, goUp(dibujo))
-      case _ => (s, dibujo) // Este caso no se da nunca. Ponemos esto para evitar warnings
-
-    }
-
-    def newNode(dibujo: Draw): Draw = {
-
-      def firstEmptyX: Int = {
-        val actualX = dibujo.actualNode.pos.x
-        val actualY = dibujo.actualNode.pos.y
-        val newY = actualY -1
-        val tmp1 = dibujo.nodes.filter(node => node.pos.y == newY )
-        val tmp2 = tmp1.map(node => node.pos.x) // List of xs
-        val tmp3 = if (tmp2.isEmpty) 0 else tmp2.max + 1 // highest x
-        tmp3 // next empty x
-      }
-
-
-      val newNode = Node(Some(dibujo.actualNode), Point(firstEmptyX, dibujo.actualNode.pos.y - 1))
-      val newEdge = Edge(dibujo.actualNode, newNode)
-
-      if (dibujo.actualNode.pos == Point(0, 1)) {
-        Draw(newNode, newNode :: dibujo.nodes, dibujo.edges)
-      } else {
-        Draw(newNode, newNode :: dibujo.nodes, newEdge :: dibujo.edges)
-      }
-
-
-    }
-
-    def goUp(dibujo: Draw): Draw = Draw(show(dibujo.actualNode.father), dibujo.nodes, dibujo.edges)
-
-    val tmp = stringAnalyze(s.toList, initialDraw)
-    tmp._2
-
-  }
 
 }
 
@@ -151,20 +97,7 @@ object Utils {
 
 case class Tree3(root: Node3) {
 
-  /*override def toString = {
-
-    var result = " (" + root.x + ", " + root.y + ")"
-
-    def toStr(z: Node3): String = " (" + z.x + ", " + z.y + ") "
-    def loop(z: Node3): Unit = {
-      for (w <- z.children) {
-        result = result + toStr(w) + loop(w)
-
-      }
-    }
-    loop(root)
-    result
-  }*/
+  override def toString = "Tree3\n" + "Nodes: " + nodes.toString + "\n" + "Edges: " + edges.toString()
 
 
 
@@ -174,6 +107,29 @@ case class Tree3(root: Node3) {
       case x :: xs => List(x) ::: loop(x.children.toList) ::: loop(xs)
     }
     root :: loop(this.root.children.toList)
+  }
+
+  def nodePoints: List[Point] = {
+    nodes.map(node => Point(node.x, node.y))
+  }
+
+  def edges: List[Edge] = {
+
+    val pairs: List[(Node3, Option[Node3])] = nodes.map(x => (x, x.father))
+
+    val pairs2: List[(Node3, Node3)] = {
+      val tmp: List[(Node3, Option[Node3])] = pairs.filterNot(x => x ==(x._1, None))
+      def transform(x: (Node3, Option[Node3])): (Node3, Node3) = x match {
+        case (a, Some(b)) => (a, b)
+        case (a, None) => (a, a)
+      }
+      val tmp2: List[(Node3, Node3)] = tmp.map(x => transform(x))
+      tmp2
+    }
+
+    val result: List[Edge] = pairs2.map(x => Edge(Point(x._1.x, x._1.y), Point(x._2.x, x._2.y)))
+    result
+
   }
 
 
