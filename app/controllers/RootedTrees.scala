@@ -1,3 +1,4 @@
+package controllers
 
 // Imports de los árboles
 import controllers.Application._
@@ -18,7 +19,7 @@ object RootedTrees extends Controller {
   def drawRootedTrees = Action {
 
     val title = "Drawing rooted trees"
-    val arbol: String = "***^*^^*^**^**^*^*^*^*^^*^^**^^"
+    val arbol: String = "***u*uu*u**u**u*u*u*u*uu*uu**uu"
     val arbol2: Tree3 = Node3.string2Tree3(arbol.toString)
     val texto = arbol
     val arbol3: PrintableDraw = arbol2.toPrint
