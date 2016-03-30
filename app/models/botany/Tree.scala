@@ -18,9 +18,9 @@ case class PrintableDraw(points: List[Point], edges: List[Edge])
 
 object DrawSettings {
 
-  val factor = 40
-  val shiftX = 50
-  val shiftY = 50
+  val factor = 5
+  val shiftX = 40
+  val shiftY = 100
 
   // For circles
   val r ="6"
@@ -146,7 +146,7 @@ case class Tree3(root: Node3) {
   // TODO Hay que revisar esto
   val toPrint = {
 
-    val newPoints = nodePoints.map(point => Point(point.x * factor + shiftX, - point.y * factor + shiftY))
+    val newPoints = nodePoints.map(point => Point(point.x * factor + shiftX, point.y * factor + shiftY))
 
     val newEdges = edges.map(edge => {
 
@@ -155,14 +155,14 @@ case class Tree3(root: Node3) {
       val p2X = edge.pos2.x
       val p2Y = edge.pos2.y
 
+      // Estas son las coordenadas de los nodos antes de corregir el que las líneas enren en los círculos
       val newp1X = p1X * factor + shiftX
-      val newp1Y = - p1Y * factor + shiftY
+      val newp1Y = p1Y * factor + shiftY
       val newp2X = p2X * factor + shiftX
-      val newp2Y = - p2Y * factor + shiftY
-      //val dummyNode = Node(None, Point(0, 1))
+      val newp2Y = p2Y * factor + shiftY
+
 
       // Removing lines inside circles
-
       val slope: Float = if ((newp2X - newp1X) > 1) {  // The edge is not vertical
         (newp2Y - newp1Y).toFloat / (newp2X - newp1X).toFloat
       } else {
@@ -174,16 +174,20 @@ case class Tree3(root: Node3) {
       val deltaY: Float = r.toFloat * math.sqrt(1 - deltaX * deltaX / r.toFloat / r.toFloat).toFloat
 
       val defp1X = newp1X + deltaX
-      val defp1Y = newp1Y + deltaY
+      val defp1Y = newp1Y - deltaY
       val defp2X = newp2X - deltaX
-      val defp2Y = newp2Y - deltaY
+      val defp2Y = newp2Y + deltaY
 
       val defp1XInt = defp1X.toInt
       val defp1YInt = defp1Y.toInt
       val defp2XInt = defp2X.toInt
       val defp2YInt = defp2Y.toInt
 
+      // Con corrección de invasión de círculos
       Edge(Point(defp1XInt, defp1YInt), Point(defp2XInt, defp2YInt))
+
+      // Sin corrección de invasión de círculos
+      //Edge(Point(newp1X, newp1Y), Point(newp2X, newp2Y))
     }
     )
 
