@@ -110,7 +110,7 @@ case class Tree3(root: Node3) {
 
   import DrawSettings._
 
-  override def toString = "Tree3\n" + "Nodes: " + nodes.toString + "\n" + "Edges: " + edges.toString()
+  TreeLayaut.layaut(this)
 
   val nodes: List[Node3] = {
     def loop(s: List[Node3]): List[Node3] = s match {
@@ -143,6 +143,7 @@ case class Tree3(root: Node3) {
 
   }
 
+  // TODO Hay que revisar esto
   val toPrint = {
 
     val newPoints = nodePoints.map(point => Point(point.x * factor + shiftX, - point.y * factor + shiftY))
@@ -189,6 +190,7 @@ case class Tree3(root: Node3) {
     PrintableDraw(newPoints, newEdges)
   }
 
+  override def toString = "Tree3\n" + "Nodes: " + nodes.toString + "\n" + "Edges: " + edges.toString()
 
 }
 
