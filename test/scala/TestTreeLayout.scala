@@ -39,10 +39,7 @@ object TestTreeLayout extends App {
   println()
   TreeLayaut.layaut(tree2)
   println(tree2)
-  println()
-  println(tree2)
-  println(tree2.nodes)
-  println(tree2.edges)
+
 
 
 

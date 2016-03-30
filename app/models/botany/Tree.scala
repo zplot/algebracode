@@ -4,14 +4,6 @@ import scala.language.implicitConversions
 import scala.language.postfixOps
 
 
-/*
-TODO CanonicalForm
-1. Asignar un identificador a cada nodo
-2. Asignar un peso a cada nodo
-3. Reordenar nodos por pesos
-4. Devolver árbl ordenado
-*/
-
 
 
 case class Point(x: Double, y: Double) {
@@ -21,6 +13,25 @@ case class Point(x: Double, y: Double) {
 case class Edge(pos1: Point, pos2: Point)
 
 case class Draw(nodes: List[Point], edges: List[Edge])
+
+case class PrintableDraw(nodes: List[Node3], edges: List[Edge])
+
+object DrawSettings {
+
+  val factor = 40
+  val shiftX = 50
+  val shiftY = 50
+
+  // For circles
+  val r ="6"
+  val stroke = "black"
+  val strokeWidth = "1"
+  val fill = "red"
+
+  // For lines
+  val lineStyle = "stroke:rgb(40,40,40);stroke-width:1"
+
+}
 
 
 
@@ -99,8 +110,6 @@ case class Tree3(root: Node3) {
 
   override def toString = "Tree3\n" + "Nodes: " + nodes.toString + "\n" + "Edges: " + edges.toString()
 
-
-
   def nodes: List[Node3] = {
     def loop(s: List[Node3]): List[Node3] = s match {
       case Nil => Nil
@@ -131,6 +140,8 @@ case class Tree3(root: Node3) {
     result
 
   }
+
+  val toPrint = PrintableDraw(nodes, edges)
 
 
 }

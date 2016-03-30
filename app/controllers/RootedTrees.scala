@@ -1,12 +1,12 @@
 
 // Imports de los árboles
+import controllers.Application._
 import models.Blackboard.Blackboard
 import models.MyHTML._
 import models.MyClass._
-
+import models.Tree
+import models.Tree.{apply => _, _}
 import scala.language.implicitConversions
-import models.botany._
-import models.botany._
 import models.botany._
 import play.api.mvc._
 
@@ -15,21 +15,15 @@ import play.api.mvc._
 
 object RootedTrees extends Controller {
 
-  def index = Action {
+  def drawRootedTrees = Action {
 
-    Ok(views.html.index("Algebra & Functional Code"))
+    val title = "Drawing rooted trees"
+    val arbol: String = "***^*^^*^**^**^*^*^*^*^^*^^**^^"
+    val arbol2: Tree3 = Node3.string2Tree3(arbol.toString)
+    val texto = arbol
+    val arbol3: PrintableDraw = arbol2.toPrint
+    val parameters: (String, String, PrintableDraw) = (title, texto, arbol3)
+    Ok(views.html.trees3(parameters))
 
   }
-
-  /*def printTree3 = Action {
-
-    val title = "Primeros dibujos"
-    val arbol: Tree3 = Node3.string2Tree3("***^*^^*^**^**^*^*^*^*^^*^^**^^")
-
-    val draw3: PrintableDraw = Tree.scaleDraw(Tree.string2Draw(arbol.toString))
-    val texto = arbol.toString
-    val parameters = (title, texto, draw3)
-    Ok(views.html.trees(parameters))
-
-  }*/
 }

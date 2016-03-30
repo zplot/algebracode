@@ -7,6 +7,8 @@ GET     /                           controllers.Application.index
 
 GET     /tree                       controllers.Application.treeExample
 
+GET     /rootedtrees                controllers.RootedTrees.drawRootedTrees
+
 GET     /static                     controllers.Application.static
 
 GET     /blackboard                 controllers.Application.blackboard
