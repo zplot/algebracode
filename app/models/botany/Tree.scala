@@ -12,9 +12,9 @@ case class Point(x: Double, y: Double) {
 
 case class Edge(pos1: Point, pos2: Point)
 
-case class Draw(nodes: List[Point], edges: List[Edge])
+case class Draw(points: List[Point], edges: List[Edge])
 
-case class PrintableDraw(nodes: List[Node3], edges: List[Edge])
+case class PrintableDraw(points: List[Point], edges: List[Edge])
 
 object DrawSettings {
 
@@ -108,9 +108,11 @@ object Utils {
 
 case class Tree3(root: Node3) {
 
+  import DrawSettings._
+
   override def toString = "Tree3\n" + "Nodes: " + nodes.toString + "\n" + "Edges: " + edges.toString()
 
-  def nodes: List[Node3] = {
+  val nodes: List[Node3] = {
     def loop(s: List[Node3]): List[Node3] = s match {
       case Nil => Nil
       case x :: xs => List(x) ::: loop(x.children.toList) ::: loop(xs)
@@ -118,11 +120,11 @@ case class Tree3(root: Node3) {
     root :: loop(this.root.children.toList)
   }
 
-  def nodePoints: List[Point] = {
+  val nodePoints: List[Point] = {
     nodes.map(node => Point(node.x, node.y))
   }
 
-  def edges: List[Edge] = {
+  val edges: List[Edge] = {
 
     val pairs: List[(Node3, Option[Node3])] = nodes.map(x => (x, x.father))
 
@@ -141,7 +143,51 @@ case class Tree3(root: Node3) {
 
   }
 
-  val toPrint = PrintableDraw(nodes, edges)
+  val toPrint = {
+
+    val newPoints = nodePoints.map(point => Point(point.x * factor + shiftX, - point.y * factor + shiftY))
+
+    val newEdges = edges.map(edge => {
+
+      val p1X = edge.pos1.x
+      val p1Y = edge.pos1.y
+      val p2X = edge.pos2.x
+      val p2Y = edge.pos2.y
+
+      val newp1X = p1X * factor + shiftX
+      val newp1Y = - p1Y * factor + shiftY
+      val newp2X = p2X * factor + shiftX
+      val newp2Y = - p2Y * factor + shiftY
+      //val dummyNode = Node(None, Point(0, 1))
+
+      // Removing lines inside circles
+
+      val slope: Float = if ((newp2X - newp1X) > 1) {  // The edge is not vertical
+        (newp2Y - newp1Y).toFloat / (newp2X - newp1X).toFloat
+      } else {
+        99999 // The edge is vertical
+      }
+
+      val sqrtOfOnePlusTg2betha = math.sqrt(1 + slope * slope).toFloat
+      val deltaX: Float = r.toFloat / sqrtOfOnePlusTg2betha
+      val deltaY: Float = r.toFloat * math.sqrt(1 - deltaX * deltaX / r.toFloat / r.toFloat).toFloat
+
+      val defp1X = newp1X + deltaX
+      val defp1Y = newp1Y + deltaY
+      val defp2X = newp2X - deltaX
+      val defp2Y = newp2Y - deltaY
+
+      val defp1XInt = defp1X.toInt
+      val defp1YInt = defp1Y.toInt
+      val defp2XInt = defp2X.toInt
+      val defp2YInt = defp2Y.toInt
+
+      Edge(Point(defp1XInt, defp1YInt), Point(defp2XInt, defp2YInt))
+    }
+    )
+
+    PrintableDraw(newPoints, newEdges)
+  }
 
 
 }

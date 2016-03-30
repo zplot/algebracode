@@ -35,10 +35,11 @@ object TestTreeLayout extends App {
   println()
   val string = "**u*u*u*****uuuuu"
   val string2 = "**u"
-  val tree2: Tree3 = Node3.string2Tree3(string)
+  val tree2: Tree3 = Node3.string2Tree3(string2)
   println()
   TreeLayaut.layaut(tree2)
   println(tree2)
+
 
 
 

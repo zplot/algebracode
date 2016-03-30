@@ -12,7 +12,7 @@
 
         <svg width="800" height="600">
 
-            @for(node <- parameters._3.nodes) {
+            @for(node <- parameters._3.points) {
                 @*<circle cx=@node.pos.x cy=@node.pos.y r="5" stroke="black" stroke-width="1" fill="red" />*@
                 <circle cx=@node.x cy=@node.y r=@DrawSettings.r stroke=@DrawSettings.stroke stroke-width=@DrawSettings.strokeWidth fill=@DrawSettings.fill />
             }
