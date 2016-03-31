@@ -18,7 +18,7 @@ case class PrintableDraw(points: List[Point], edges: List[Edge])
 
 object DrawSettings {
 
-  val factor: Double = 5
+  val factor: Double = 3
   val shiftX: Double = 40
   val shiftY: Double = 100
 
