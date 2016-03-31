@@ -20,12 +20,12 @@ object RootedTrees extends Controller {
 
     val title = "Drawing rooted trees"
     val arbol: String = "***u*u**uu*u*uu*u*u*u**uu*u*u*u*u**u*u*uuu*u*uuuu"
-    val arbol2: Tree3 = Node3.string2Tree3(arbol)
-    val texto = arbol
-    val arbol3: PrintableDraw = arbol2.toPrint
+    val arbol2: String = "***u*u**uuu"
+    val arbolTree: Tree3 = Node3.string2Tree3(arbol2)
+    val texto = arbol2
+    val arbol3: PrintableDraw = arbolTree.toPrint
     val parameters: (String, String, PrintableDraw) = (title, texto, arbol3)
-    println(arbol2)
-    println(arbol3.edges)
+
     Ok(views.html.trees3(parameters))
 
   }
