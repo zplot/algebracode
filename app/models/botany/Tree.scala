@@ -18,9 +18,9 @@ case class PrintableDraw(points: List[Point], edges: List[Edge])
 
 object DrawSettings {
 
-  val factor = 5
-  val shiftX = 40
-  val shiftY = 100
+  val factor: Double = 5
+  val shiftX: Double = 40
+  val shiftY: Double = 100
 
   // For circles
   val r ="6"
@@ -163,20 +163,44 @@ case class Tree3(root: Node3) {
 
 
       // Removing lines inside circles
-      val slope: Float = if ((newp2X - newp1X) > 1) {  // The edge is not vertical
+      val slope: Float = if (math.abs(newp2X - newp1X) > 1) {  // The edge is not vertical
         (newp2Y - newp1Y).toFloat / (newp2X - newp1X).toFloat
       } else {
         99999 // The edge is vertical
       }
 
       val sqrtOfOnePlusTg2betha = math.sqrt(1 + slope * slope).toFloat
-      val deltaX: Float = r.toFloat / sqrtOfOnePlusTg2betha
-      val deltaY: Float = r.toFloat * math.sqrt(1 - deltaX * deltaX / r.toFloat / r.toFloat).toFloat
 
-      val defp1X = newp1X + deltaX
-      val defp1Y = newp1Y - deltaY
-      val defp2X = newp2X - deltaX
-      val defp2Y = newp2Y + deltaY
+      val deltaX: Double = r.toFloat / sqrtOfOnePlusTg2betha
+      val deltaY: Double = r.toFloat * math.sqrt(1 - deltaX * deltaX / r.toFloat / r.toFloat).toFloat
+
+
+
+      val defp1X: Double = if (slope < 0) {
+        newp1X + deltaX
+      } else {
+        newp1X - deltaX
+      }
+
+      val defp1Y: Double = if (slope < 0) {
+        newp1Y - deltaY
+      } else {
+        newp1Y - deltaY
+      }
+
+      val defp2X: Double = if (slope < 0) {
+        newp2X - deltaX
+      } else {
+        newp2X + deltaX
+      }
+
+      val defp2Y: Double = if (slope < 0) {
+        newp2Y + deltaY
+      } else {
+        newp2Y + deltaY
+      }
+
+
 
       val defp1XInt = defp1X.toInt
       val defp1YInt = defp1Y.toInt
