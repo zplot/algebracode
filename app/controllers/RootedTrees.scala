@@ -14,6 +14,10 @@ import play.api.mvc._
 
 
 
+
+
+
+
 object RootedTrees extends Controller {
 
   def drawRootedTrees = Action {
@@ -27,6 +31,7 @@ object RootedTrees extends Controller {
     val parameters: (String, String, PrintableDraw) = (title, texto, arbol3)
 
     Ok(views.html.trees3(parameters))
+
 
   }
 }
