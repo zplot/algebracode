@@ -253,7 +253,8 @@ class Node3(val id: Int, val children: Vector[Node3]) {
   var thread: Option[Node3] = None
   var ancestor: Option[Node3] = None
   var prelim: Double = 0
-  var defaultAncestor: Option[Node3] = None
+  // defaultAncestor es una variable general y no un atributo de un Node3
+  // var defaultAncestor: Option[Node3] = None
   var father: Option[Node3] = None // En initWalk
   var leftSibling: Option[Node3] = None // En initWalk
   var leftMostSibling: Option[Node3] = None // En initWalk
@@ -289,6 +290,16 @@ object TreeLayaut {
 
   val distance = 10
   val yStep = 10
+  var defaultAncestor:Node3 = Utils.nothing
+
+  var vInPlus: Option[Node3] = None
+  var vOutPlus: Option[Node3] = None
+  var vInMinus: Option[Node3] = None
+  var vOutMinus: Option[Node3] = None
+  var sOutPlus: Double = 0
+  var sInPlus: Double = 0
+  var sInMinus: Double = 0
+  var sOutMinus: Double = 0
 
   def layaut(t: Tree3): Unit = {
 
@@ -346,10 +357,10 @@ object TreeLayaut {
         v.prelim = v.leftSibling.prelim + distance
       }
     } else {
-      v.defaultAncestor = Some(v.children(0))
+      defaultAncestor = Some(v.children(0))
       for (w <- v.children) {
         firstWalk(w)
-        apportion(w, w.defaultAncestor)
+        apportion(w, defaultAncestor)
       }
       executeShifts(v)
       val midpoint = 1.0 / 2.0 * (v.children(0).prelim + v.children(v.childrenNum - 1).prelim)
@@ -375,7 +386,7 @@ object TreeLayaut {
     }
   }
 
-  def apportion(v: Node3, defaultAncestor: Node3): Unit = {
+  def apportion(v: Node3, defAncest: Node3): Unit = {
 
     import Utils.inTheBox
 
@@ -386,14 +397,7 @@ object TreeLayaut {
 
     if (w != v) {
 
-      var vInPlus: Option[Node3] = Some(v)
-      var vOutPlus: Option[Node3] = Some(v)
-      var vInMinus: Option[Node3] = Some(v)
-      var vOutMinus: Option[Node3] = vInPlus.leftMostSibling
-      var sOutPlus: Double = vOutPlus.mod
-      var sInPlus: Double = vInPlus.mod
-      var sInMinus: Double = vInMinus.mod
-      var sOutMinus: Double = vOutMinus.mod
+
 
 
       while (nextRight(vInMinus).isDefined && nextLeft(vInPlus).isDefined) {
@@ -405,7 +409,7 @@ object TreeLayaut {
         vOutPlus.ancestor = Some(v)
         v.shift = vInMinus.prelim + sInMinus - vInPlus.prelim - sInPlus + distance
         if (v.shift > 0) {
-          moveSubtree(ancestor(inTheBox(vInMinus), v, v.defaultAncestor), v, v.shift)
+          moveSubtree(ancestor(inTheBox(vInMinus), v, defAncest), v, v.shift)
           sInPlus = sInPlus + v.shift
           sOutPlus = sOutPlus + v.shift
         }
@@ -414,24 +418,25 @@ object TreeLayaut {
         sOutMinus = sOutMinus + vOutMinus.mod
         sOutPlus = sOutPlus + vOutPlus.mod
       }
+    }
 
 
-      if (nextRight(vInMinus).isDefined && nextRight(vOutPlus).isEmpty) {
+    if (nextRight(vInMinus).isDefined && nextRight(vOutPlus).isEmpty) {
 
-        vOutPlus = nextRight(vInMinus)
-        vOutPlus.mod = vOutPlus.mod + sInPlus - sOutMinus
-
-      }
-
-      if (nextLeft(vInPlus).isDefined && nextLeft(vOutMinus).isEmpty) {
-
-        vOutMinus.thread = nextLeft(vInPlus)
-        vOutMinus.mod = vOutMinus.mod + sInPlus - sOutMinus
-        v.defaultAncestor = Some(v)
-
-      }
+      vOutPlus = nextRight(vInMinus)
+      vOutPlus.mod = vOutPlus.mod + sInPlus - sOutMinus
 
     }
+
+    if (nextLeft(vInPlus).isDefined && nextLeft(vOutMinus).isEmpty) {
+
+      vOutMinus.thread = nextLeft(vInPlus)
+      vOutMinus.mod = vOutMinus.mod + sInPlus - sOutMinus
+      defaultAncestor = Some(v)
+
+    }
+
+
 
     def nextLeft(v: Option[Node3]): Option[Node3] = {
       if (Utils.inTheBox(v).hasChildren) Utils.inTheBox(v).leftMostChild else Utils.inTheBox(v).thread
@@ -446,7 +451,7 @@ object TreeLayaut {
       if (inTheBox(w.ancestor).father == v.father) {
         inTheBox(w.ancestor)
       } else {
-        inTheBox(v.defaultAncestor)
+        defaultAncestor
       }
     }
 
