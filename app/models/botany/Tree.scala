@@ -18,7 +18,8 @@ case class PrintableDraw(points: List[Point], edges: List[Edge])
 
 object DrawSettings {
 
-  val factor: Double = 3
+  val factorX: Double = 3
+  val factorY: Double = 6
   val shiftX: Double = 40
   val shiftY: Double = 100
 
@@ -143,10 +144,27 @@ case class Tree3(root: Node3) {
 
   }
 
+  val drawWidth = {
+    val minX: Double = nodePoints.map(p => p.x).min
+    val maxX: Double = nodePoints.map(p => p.x).max
+    maxX - minX
+  }
+
+  val drawHeight = {
+    val minY: Double = nodePoints.map(p => p.y).min
+    val maxY: Double = nodePoints.map(p => p.x).max
+    maxY - minY
+  }
+
+
+
+  val factorX: Double = if (drawWidth > 1000) 1000 / drawWidth else 3
+  val factorY: Double = if (drawHeight > 1000) 1000 / drawWidth else 6
+
   // TODO Hay que revisar esto
   val toPrint = {
 
-    val newPoints = nodePoints.map(point => Point(point.x * factor + shiftX, point.y * factor + shiftY))
+    val newPoints = nodePoints.map(point => Point(point.x * factorX + shiftX, point.y * factorY + shiftY))
 
     val newEdges = edges.map(edge => {
 
@@ -156,10 +174,10 @@ case class Tree3(root: Node3) {
       val p2Y = edge.pos2.y
 
       // Estas son las coordenadas de los nodos antes de corregir el que las líneas enren en los círculos
-      val newp1X = p1X * factor + shiftX
-      val newp1Y = p1Y * factor + shiftY
-      val newp2X = p2X * factor + shiftX
-      val newp2Y = p2Y * factor + shiftY
+      val newp1X = p1X * factorX + shiftX
+      val newp1Y = p1Y * factorY + shiftY
+      val newp2X = p2X * factorX + shiftX
+      val newp2Y = p2Y * factorY + shiftY
 
 
       // Removing lines inside circles

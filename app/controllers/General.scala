@@ -157,10 +157,6 @@ object General extends Controller {
 
   }
 
-
-
-
-
     // Se le pasa un key que identifica la aplicación: key
     // Se le pasa los dotos introducidos por el usuario: value
     // Devuelve los datos que hay que mostrar en la página de resultados. Se guardan en: salida

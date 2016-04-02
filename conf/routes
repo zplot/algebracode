@@ -38,6 +38,9 @@ POST    /generalout                 controllers.General.resultsView(key = "gener
 GET		/cayley                    controllers.General.createForm(key = "cayley")
 POST    /cayleyout                 controllers.General.resultsView(key = "cayley")
 
+GET		/rtrees                    controllers.General.createForm(key = "rtrees")
+POST    /rtreesout                 controllers.General.resultsView(key = "rtrees")
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
