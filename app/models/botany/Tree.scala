@@ -300,6 +300,8 @@ object TreeLayaut {
   var sInPlus: Double = 0
   var sInMinus: Double = 0
   var sOutMinus: Double = 0
+  var shiftVar: Double = 0
+  var changeVar: Double = 0
 
   def layaut(t: Tree3): Unit = {
 
@@ -388,17 +390,29 @@ object TreeLayaut {
 
   def apportion(v: Node3, defAncest: Node3): Unit = {
 
+    println()
+    println("Apportion")
+    println("v = " + v)
+
+
+
     import Utils.inTheBox
 
-    val w: Node3 = v.leftSibling match {
-      case None => v
-      case Some(a) => a
-    }
+    val w: Node3 = v.leftSibling
 
-    if (w != v) {
+    if (w != Utils.nothing) {   // v tiene leftSibling w
 
+      println()
+      println("w = " + w)
 
-
+      vInPlus = Some(v)
+      vOutPlus = Some(v)
+      vInMinus = Some(w)
+      vInMinus = vInPlus.leftMostSibling
+      sInPlus = vInPlus.mod
+      sOutPlus = vOutPlus.mod
+      sInMinus = vInMinus.mod
+      sOutMinus = vOutMinus.mod
 
       while (nextRight(vInMinus).isDefined && nextLeft(vInPlus).isDefined) {
 
@@ -407,11 +421,12 @@ object TreeLayaut {
         vOutMinus = nextLeft(vOutMinus)
         vOutPlus = nextRight(vOutPlus)
         vOutPlus.ancestor = Some(v)
-        v.shift = vInMinus.prelim + sInMinus - vInPlus.prelim - sInPlus + distance
-        if (v.shift > 0) {
-          moveSubtree(ancestor(inTheBox(vInMinus), v, defAncest), v, v.shift)
-          sInPlus = sInPlus + v.shift
-          sOutPlus = sOutPlus + v.shift
+        shiftVar = vInMinus.prelim + sInMinus - vInPlus.prelim - sInPlus + distance
+        println("shiftVar = " + shiftVar)
+        if (shiftVar > 0) {
+          moveSubtree(ancestor(inTheBox(vInMinus), v, defAncest), v, shiftVar)
+          sInPlus = sInPlus + shiftVar
+          sOutPlus = sOutPlus + shiftVar
         }
         sInMinus = sInMinus + vInMinus.mod
         sInPlus = sInPlus + vInPlus.mod
@@ -457,31 +472,36 @@ object TreeLayaut {
 
   }
 
-  def moveSubtree(wMinus: Node3, wPlus: Node3, shift: Double): Unit = {
+  def moveSubtree(wMinus: Node3, wPlus: Node3, sh: Double): Unit = {
+    println
+    println("wMinus = " + wMinus)
+    println("wPlus = " + wPlus)
+    println("shift = " + sh)
+    println
 
     // Encontrar la posición que ocupa wMinus ennte los hermanos. Ese el number
 
     val subTrees = wPlus.number - wMinus.number
-    wPlus.change = wPlus.change - shift/subTrees
-    wPlus.shift = wPlus.shift + shift
-    wMinus.change = wMinus.change + shift/subTrees
-    wPlus.prelim = wPlus.prelim + shift
-    wPlus.mod = wPlus.mod + shift
+    wPlus.change = wPlus.change - sh/subTrees
+    wPlus.shift = wPlus.shift + shiftVar
+    wMinus.change = wMinus.change + shiftVar/subTrees
+    wPlus.prelim = wPlus.prelim + shiftVar
+    wPlus.mod = wPlus.mod + shiftVar
 
   }
 
   def executeShifts(v: Node3): Unit = {
 
-    v.shift = 0
-    v.change = 0
+    shiftVar = 0
+    changeVar = 0
 
     for (x <- (v.childrenNum - 1) to 0 ) {
 
       val w = v.children(x)
-      w.prelim = w.prelim + v.shift
-      w.mod = w.mod + v.shift
-      v.change = v.change + w.change
-      v.shift = v.shift + w.shift + v.change
+      w.prelim = w.prelim + shiftVar
+      w.mod = w.mod + shiftVar
+      changeVar = changeVar + w.change
+      shiftVar = shiftVar + w.shift + changeVar
 
     }
 
