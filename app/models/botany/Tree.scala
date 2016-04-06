@@ -408,7 +408,7 @@ object TreeLayaut {
       vInPlus = Some(v)
       vOutPlus = Some(v)
       vInMinus = Some(w)
-      vInMinus = vInPlus.leftMostSibling
+      vOutMinus = vInPlus.leftMostSibling
       sInPlus = vInPlus.mod
       sOutPlus = vOutPlus.mod
       sInMinus = vInMinus.mod
@@ -417,16 +417,29 @@ object TreeLayaut {
       while (nextRight(vInMinus).isDefined && nextLeft(vInPlus).isDefined) {
 
         vInMinus = nextRight(vInMinus)
-        vInPlus = nextRight(vInPlus)
+        vInPlus = nextLeft(vInPlus)
         vOutMinus = nextLeft(vOutMinus)
         vOutPlus = nextRight(vOutPlus)
         vOutPlus.ancestor = Some(v)
-        shiftVar = vInMinus.prelim + sInMinus - vInPlus.prelim - sInPlus + distance
+        shiftVar =  math.abs((vInMinus.prelim + sInMinus) - (vInPlus.prelim + sInPlus) + distance)
+        println()
+        println("Voy a lanzar un moveSubtree")
+        println("vInMinus = " + vInMinus)
+        println("v = " + v)
         println("shiftVar = " + shiftVar)
+        println("vInMinus.prelim = " + vInMinus.prelim)
+        println("sInMinus = " + sInMinus)
+        println("vInPlus.prelim = " + vInPlus.prelim)
+        println("sInPlus = " + sInPlus)
+        println("distance = " + distance)
+        println()
+
         if (shiftVar > 0) {
+
           moveSubtree(ancestor(inTheBox(vInMinus), v, defAncest), v, shiftVar)
           sInPlus = sInPlus + shiftVar
           sOutPlus = sOutPlus + shiftVar
+
         }
         sInMinus = sInMinus + vInMinus.mod
         sInPlus = sInPlus + vInPlus.mod
@@ -479,7 +492,7 @@ object TreeLayaut {
     println("shift = " + sh)
     println
 
-    // Encontrar la posición que ocupa wMinus ennte los hermanos. Ese el number
+    // Encontrar la posición que ocupa wMinus entre los hermanos. Ese el number
 
     val subTrees = wPlus.number - wMinus.number
     wPlus.change = wPlus.change - sh/subTrees
