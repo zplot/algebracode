@@ -24,7 +24,7 @@ object DrawSettings {
   val shiftY: Double = 100
 
   // For circles
-  val r = "20"
+  val r = 12
   val stroke = "green"
   val strokeWidth = "1"
   val fill = "yellow"
@@ -421,7 +421,8 @@ object TreeLayaut {
         vOutMinus = nextLeft(vOutMinus)
         vOutPlus = nextRight(vOutPlus)
         vOutPlus.ancestor = Some(v)
-        shiftVar =  math.abs((vInMinus.prelim + sInMinus) - (vInPlus.prelim + sInPlus) + distance)
+        shiftVar =  -((vInMinus.prelim + sInMinus) - (vInPlus.prelim + sInPlus) + distance)
+        // shiftVar =  math.abs((vInMinus.prelim + sInMinus) - (vInPlus.prelim + sInPlus) + distance)
         println()
         println("Voy a lanzar un moveSubtree")
         println("vInMinus = " + vInMinus)
