@@ -6,7 +6,7 @@ import scala.language.postfixOps
 
 
 
-case class Point(x: Double, y: Double) {
+case class Point(id: Int, x: Double, y: Double) {
   override def toString = "(" + x ++ "," + y + ")"
 }
 
@@ -24,7 +24,7 @@ object DrawSettings {
   val shiftY: Double = 100
 
   // For circles
-  val r = 12
+  val r = 10
   val stroke = "green"
   val strokeWidth = "1"
   val fill = "yellow"
@@ -122,7 +122,7 @@ case class Tree3(root: Node3) {
   }
 
   val nodePoints: List[Point] = {
-    nodes.map(node => Point(node.x, node.y))
+    nodes.map(node => Point(node.id, node.x, node.y))
   }
 
   val edges: List[Edge] = {
@@ -139,7 +139,7 @@ case class Tree3(root: Node3) {
       tmp2
     }
 
-    val result: List[Edge] = pairs2.map(x => Edge(Point(x._1.x, x._1.y), Point(x._2.x, x._2.y)))
+    val result: List[Edge] = pairs2.map(x => Edge(Point(x._1.id, x._1.x, x._1.y), Point(x._2.id, x._2.x, x._2.y)))
     result
 
   }
@@ -164,7 +164,7 @@ case class Tree3(root: Node3) {
   // TODO Hay que revisar esto
   val toPrint = {
 
-    val newPoints = nodePoints.map(point => Point(point.x * factorX + shiftX, point.y * factorY + shiftY))
+    val newPoints = nodePoints.map(point => Point(point.id, point.x * factorX + shiftX, point.y * factorY + shiftY))
 
     val newEdges = edges.map(edge => {
 
@@ -226,7 +226,7 @@ case class Tree3(root: Node3) {
       val defp2YInt = defp2Y.toInt
 
       // Con corrección de invasión de círculos
-      Edge(Point(defp1XInt, defp1YInt), Point(defp2XInt, defp2YInt))
+      Edge(Point(edge.pos1.id, defp1XInt, defp1YInt), Point(edge.pos2.id, defp2XInt, defp2YInt))
 
       // Sin corrección de invasión de círculos
       //Edge(Point(newp1X, newp1Y), Point(newp2X, newp2Y))
