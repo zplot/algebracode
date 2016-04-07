@@ -24,10 +24,10 @@ object DrawSettings {
   val shiftY: Double = 100
 
   // For circles
-  val r ="6"
-  val stroke = "black"
+  val r = "20"
+  val stroke = "green"
   val strokeWidth = "1"
-  val fill = "red"
+  val fill = "yellow"
 
   // For lines
   val lineStyle = "stroke:rgb(40,40,40);stroke-width:1"
@@ -189,8 +189,8 @@ case class Tree3(root: Node3) {
 
       val sqrtOfOnePlusTg2betha = math.sqrt(1 + slope * slope).toFloat
 
-      val deltaX: Double = r.toFloat / sqrtOfOnePlusTg2betha
-      val deltaY: Double = r.toFloat * math.sqrt(1 - deltaX * deltaX / r.toFloat / r.toFloat).toFloat
+      val deltaX: Double = r.toDouble / sqrtOfOnePlusTg2betha
+      val deltaY: Double = r.toDouble * math.sqrt(1 - deltaX * deltaX / r.toFloat / r.toFloat).toFloat
 
 
 
