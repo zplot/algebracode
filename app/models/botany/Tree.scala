@@ -21,7 +21,7 @@ object DrawSettings {
   val factorX: Double = 3
   val factorY: Double = 6
   val shiftX: Double = 40
-  val shiftY: Double = 100
+  val shiftY: Double = 40
 
   // For circles
   val r = 10
