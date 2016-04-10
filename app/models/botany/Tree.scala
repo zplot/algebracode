@@ -295,7 +295,7 @@ class Node3(val id: Int, val children: Vector[Node3]) {
 
 object TreeLayaut {
 
-  val distance = 10
+  val distance = 14
   val yStep = 10
   var defaultAncestor:Node3 = Utils.nothing
 
