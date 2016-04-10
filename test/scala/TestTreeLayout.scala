@@ -1,9 +1,13 @@
 package scala
 
+import scala.language.implicitConversions
+
+
 
 object TestTreeLayout extends App {
 
   import models.botany._
+  import models.botany.Node3._
 
 
 
@@ -52,6 +56,9 @@ object TestTreeLayout extends App {
   val b = Tree3.bPlus(a)
   println("bPlus(a) = " + b)
   println(tree.toString == b.toString)
+  val arbolito1: Tree3 = "**u**uu"
+  val arbolito2: Tree3 = "***uu*u"
+  println(arbolito1 == arbolito2)
 
 
 
