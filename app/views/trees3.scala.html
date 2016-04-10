@@ -17,7 +17,7 @@
             @for(node <- parameters._3.points) {
                 @*<circle cx=@node.pos.x cy=@node.pos.y r="5" stroke="black" stroke-width="1" fill="red" />*@
                 <circle cx=@node.x cy=@node.y r=@DrawSettings.r stroke=@DrawSettings.stroke stroke-width=@DrawSettings.strokeWidth fill=@DrawSettings.fill />
-                <text x=@(node.x - 6) y=@(node.y + 3) fill="red" font-size="10">@node.id</text>
+                <text x=@(node.x + DrawSettings.shiftTextIdX(node)) y=@(node.y + DrawSettings.shiftTextIdY(node)) fill="black" font-size="9">@node.id</text>
             }
 
             @for(line <- parameters._3.edges) {

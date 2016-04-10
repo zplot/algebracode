@@ -25,12 +25,16 @@ object DrawSettings {
 
   // For circles
   val r = 10
-  val stroke = "green"
+  val stroke = "red"
   val strokeWidth = "1"
   val fill = "yellow"
 
   // For lines
-  val lineStyle = "stroke:rgb(40,40,40);stroke-width:1"
+  val lineStyle = "stroke:rgb(90,90,90);stroke-width:1"
+
+  // For text of nodes
+  def shiftTextIdX(p: Point): Double = -1 - 3 * math.log10(p.id)
+  def shiftTextIdY(p: Point): Double = 3
 
 }
 
@@ -103,9 +107,8 @@ object Utils {
 
   }
 
-  def shiftTextX(p: Point) = {
-    val numChar = math.log10(p.id)
-  }
+
+
 
 }
 
