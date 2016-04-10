@@ -47,7 +47,11 @@ object TestTreeLayout extends App {
   println("bMinus ================================================")
   println()
   println("tree = " + tree)
-  println("bMinus(tree) = " + Tree3.bMinus(tree))
+  val a = Tree3.bMinus(tree)
+  println("bMinus(tree) = " + a)
+  val b = Tree3.bPlus(a)
+  println("bPlus(a) = " + b)
+  println(tree.toString == b.toString)
 
 
 

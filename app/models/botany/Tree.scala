@@ -121,15 +121,19 @@ object Utils {
 
 }
 
-case class Forest(s: Vector[Tree3]) {
+case class Forest(trees: Vector[Tree3]) {
 
 }
 
 object Tree3 {
+
+  // Following A Very Basic Introduction to Hopf Algebras by J.M. Selig
   def bMinus(t: Tree3): Forest = {
     val tmp = for { x <- t.root.children } yield Tree3(x)
     Forest(tmp)
   }
+  // Following A Very Basic Introduction to Hopf Algebras by J.M. Selig
+  def bPlus(f:Forest): Tree3 = Tree3(Node3(f.trees.map( x => x.root)))
 }
 
 case class Tree3(root: Node3) {
@@ -414,20 +418,11 @@ object TreeLayaut {
 
   def apportion(v: Node3, defAncest: Node3): Unit = {
 
-    println()
-    println("Apportion")
-    println("v = " + v)
-
-
-
     import Utils.inTheBox
 
     val w: Node3 = v.leftSibling
 
     if (w != Utils.nothing) {   // v tiene leftSibling w
-
-      println()
-      println("w = " + w)
 
       vInPlus = Some(v)
       vOutPlus = Some(v)
@@ -448,17 +443,7 @@ object TreeLayaut {
         // shiftVar =  -((vInMinus.prelim + sInMinus) - (vInPlus.prelim + sInPlus) + distance)
         // shiftVar =  math.abs((vInMinus.prelim + sInMinus) - (vInPlus.prelim + sInPlus) + distance)
         shiftVar =  (vInMinus.prelim + sInMinus) - (vInPlus.prelim + sInPlus) + distance
-        println()
-        println("Voy a lanzar un moveSubtree")
-        println("vInMinus = " + vInMinus)
-        println("v = " + v)
-        println("shiftVar = " + shiftVar)
-        println("vInMinus.prelim = " + vInMinus.prelim)
-        println("sInMinus = " + sInMinus)
-        println("vInPlus.prelim = " + vInPlus.prelim)
-        println("sInPlus = " + sInPlus)
-        println("distance = " + distance)
-        println()
+
 
         if (shiftVar > 0) {
 
@@ -512,15 +497,6 @@ object TreeLayaut {
   }
 
   def moveSubtree(wMinus: Node3, wPlus: Node3, sh: Double): Unit = {
-    println
-    println("Moving subtree =============================================")
-    println
-    println("wMinus = " + wMinus)
-    println("wPlus = " + wPlus)
-    println("shift = " + sh)
-    println
-    println("============================================================")
-    println
 
     // Encontrar la posición que ocupa wMinus entre los hermanos. Ese el number
 
@@ -547,17 +523,6 @@ object TreeLayaut {
       w.mod = w.mod + shiftVar
       changeVar = changeVar + w.change
       shiftVar = shiftVar + w.shift + changeVar
-
-      println
-      println("executeShifts =============================================")
-      println
-      println("v = " + v)
-      println("hijo = " + w)
-      println("hijo.prelim = " + w.prelim)
-      println("hijo.mod = " + w.mod)
-      println
-      println("============================================================")
-      println
 
     }
 
