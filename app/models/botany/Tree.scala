@@ -103,6 +103,10 @@ object Utils {
 
   }
 
+  def shiftTextX(p: Point) = {
+    val numChar = math.log10(p.id)
+  }
+
 }
 
 
@@ -258,8 +262,8 @@ class Node3(val id: Int, val children: Vector[Node3]) {
   var father: Option[Node3] = None // En initWalk
   var leftSibling: Option[Node3] = None // En initWalk
   var leftMostSibling: Option[Node3] = None // En initWalk
-  val leftMostChild: Option[Node3] = if (isLeaf) None else Some(children(numChildren - 1))
-  val rightMostChild: Option[Node3] = if (isLeaf) None else Some(children(0))
+  val leftMostChild: Option[Node3] = if (isLeaf) None else Some(children(0))
+  val rightMostChild: Option[Node3] = if (isLeaf) None else Some(children(numChildren - 1))
   var shift: Double = 0
   var x: Double = 0
   var y: Double = 0
@@ -308,7 +312,6 @@ object TreeLayaut {
     initWalk(t)
     firstWalk(t.root)
     secondWalk(t.root, 0)  // TODO cuál es el segundo argumento?
-
 
   }
 
@@ -421,8 +424,9 @@ object TreeLayaut {
         vOutMinus = nextLeft(vOutMinus)
         vOutPlus = nextRight(vOutPlus)
         vOutPlus.ancestor = Some(v)
-        shiftVar =  -((vInMinus.prelim + sInMinus) - (vInPlus.prelim + sInPlus) + distance)
+        // shiftVar =  -((vInMinus.prelim + sInMinus) - (vInPlus.prelim + sInPlus) + distance)
         // shiftVar =  math.abs((vInMinus.prelim + sInMinus) - (vInPlus.prelim + sInPlus) + distance)
+        shiftVar =  (vInMinus.prelim + sInMinus) - (vInPlus.prelim + sInPlus) + distance
         println()
         println("Voy a lanzar un moveSubtree")
         println("vInMinus = " + vInMinus)
@@ -488,9 +492,13 @@ object TreeLayaut {
 
   def moveSubtree(wMinus: Node3, wPlus: Node3, sh: Double): Unit = {
     println
+    println("Moving subtree =============================================")
+    println
     println("wMinus = " + wMinus)
     println("wPlus = " + wPlus)
     println("shift = " + sh)
+    println
+    println("============================================================")
     println
 
     // Encontrar la posición que ocupa wMinus entre los hermanos. Ese el number
@@ -511,11 +519,24 @@ object TreeLayaut {
 
     for (x <- (v.childrenNum - 1) to 0 ) {
 
+
+
       val w = v.children(x)
       w.prelim = w.prelim + shiftVar
       w.mod = w.mod + shiftVar
       changeVar = changeVar + w.change
       shiftVar = shiftVar + w.shift + changeVar
+
+      println
+      println("executeShifts =============================================")
+      println
+      println("v = " + v)
+      println("hijo = " + w)
+      println("hijo.prelim = " + w.prelim)
+      println("hijo.mod = " + w.mod)
+      println
+      println("============================================================")
+      println
 
     }
 

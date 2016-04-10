@@ -23,7 +23,7 @@ object RootedTrees extends Controller {
     val arbol2: String = "***u*uu**u*uu"
     val arbol3: String = "******u*uuuuu*u"
     val arbol4 = "*********uuuuu*uuuu"
-    val arbolTree: Tree3 = Node3.string2Tree3(arbol)
+    val arbolTree: Tree3 = Node3.string2Tree3(arbol4)
     val texto = arbol
     val arbolPintable: PrintableDraw = arbolTree.toPrint
     val parameters: (String, String, PrintableDraw) = (title, texto, arbolPintable)
