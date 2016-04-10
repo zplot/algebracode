@@ -87,6 +87,19 @@ object Node3 {
   }
 
 
+  def orderNode3(t: Node3): Node3 = {
+
+    if (t.children != Vector[Node3]())  {
+      val tmp3 = t.children.map( x => orderNode3(x))
+      val tmp4 = Node3(tmp3)
+      val tmp5 = tmp4.children.sortBy(_.weight).reverse
+      val tmp6 = Node3(tmp5)
+      tmp6
+    } else t
+
+  }
+
+
 
 }
 
@@ -104,17 +117,6 @@ object Utils {
     case Some(x) => x
   }
 
-  def orderTree(t: Node3): Node3 = {
-
-    if (t.children != Vector[Node3]())  {
-      val tmp3 = t.children.map( x => orderTree(x))
-      val tmp4 = Node3(tmp3)
-      val tmp5 = tmp4.children.sortBy(_.weight).reverse
-      val tmp6 = Node3(tmp5)
-      tmp6
-    } else t
-
-  }
 
 
 
@@ -134,6 +136,9 @@ object Tree3 {
   }
   // Following A Very Basic Introduction to Hopf Algebras by J.M. Selig
   def bPlus(f:Forest): Tree3 = Tree3(Node3(f.trees.map( x => x.root)))
+
+  def orderTree3(t: Tree3): Tree3 = t.canonicalForm
+
 }
 
 case class Tree3(root: Node3) {
@@ -141,6 +146,8 @@ case class Tree3(root: Node3) {
   import DrawSettings._
 
   TreeLayaut.layaut(this)
+
+  val canonicalForm: Tree3 = Tree3(root.canonicalForm)
 
   val nodes: List[Node3] = {
     def loop(s: List[Node3]): List[Node3] = s match {
@@ -208,7 +215,8 @@ case class Tree3(root: Node3) {
 
 
       // Removing lines inside circles
-      val slope: Float = if (math.abs(newp2X - newp1X) > 1) {  // The edge is not vertical
+      val slope: Float = if (math.abs(newp2X - newp1X) > 1) {
+        // The edge is not vertical
         (newp2Y - newp1Y).toFloat / (newp2X - newp1X).toFloat
       } else {
         99999 // The edge is vertical
@@ -263,16 +271,13 @@ case class Tree3(root: Node3) {
     PrintableDraw(newPoints, newEdges)
   }
 
-
-  // override def toString = "Tree3\n" + "Nodes: " + nodes.toString + "\nPoints: " + nodePoints.toString + "\n" + "Edges: " + edges.toString()
-
 }
 
 class Node3(val id: Int, val children: Vector[Node3]) {
 
   val childrenNum = children.length
   def weight: Int = children.foldLeft(1)(_ + _.weight)
-  def canonicalForm = Utils.orderTree(this)
+  def canonicalForm = Node3.orderNode3(this)
   def isLeaf: Boolean = this.children == Vector[Node3]()
   def hasChildren: Boolean = ! isLeaf
   def numChildren = children.length
