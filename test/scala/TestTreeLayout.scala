@@ -37,12 +37,19 @@ object TestTreeLayout extends App {
 
   val arbol2 = "**u*u*u*****uuuuu"
   val arbol3 = "***u*uu**u*uu"
-  val arbol4 = "**u"
+  val arbol4 = "**u*u"
   val tree: Tree3 = Node3.string2Tree3(arbol4)
   println()
   TreeLayaut.layaut(tree)
   println(tree)
   println("número de * = " + arbol4.toList.count(_ == '*'))
+  println()
+  println("bMinus ================================================")
+  println()
+  println("tree = " + tree)
+  println("bMinus(tree) = " + Tree3.bMinus(tree))
+
+
 
 
 

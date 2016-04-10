@@ -121,7 +121,16 @@ object Utils {
 
 }
 
+case class Forest(s: Vector[Tree3]) {
 
+}
+
+object Tree3 {
+  def bMinus(t: Tree3): Forest = {
+    val tmp = for { x <- t.root.children } yield Tree3(x)
+    Forest(tmp)
+  }
+}
 
 case class Tree3(root: Node3) {
 
@@ -250,7 +259,8 @@ case class Tree3(root: Node3) {
     PrintableDraw(newPoints, newEdges)
   }
 
-  override def toString = "Tree3\n" + "Nodes: " + nodes.toString + "\nPoints: " + nodePoints.toString + "\n" + "Edges: " + edges.toString()
+  
+  // override def toString = "Tree3\n" + "Nodes: " + nodes.toString + "\nPoints: " + nodePoints.toString + "\n" + "Edges: " + edges.toString()
 
 }
 
@@ -287,7 +297,8 @@ class Node3(val id: Int, val children: Vector[Node3]) {
 
 
   // TODO Descomentar lo de abajo para imprimir * y ^
-  //override def toString = "*" + children.map(_.toString + "^").mkString("")
+  override def toString = "*" + children.map(_.toString + "u").mkString("")
+
   // override def toString = id.toString + "-" + children.toString()
 
 /*  final override def equals(other: Any): Boolean = {
@@ -296,7 +307,7 @@ class Node3(val id: Int, val children: Vector[Node3]) {
     else Node3.orderTree(this).children == Node3.orderTree(that).children
   }*/
 
-  override def toString = id.toString()
+  // override def toString = id.toString()
 
 }
 
