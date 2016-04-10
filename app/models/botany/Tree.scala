@@ -259,7 +259,7 @@ case class Tree3(root: Node3) {
     PrintableDraw(newPoints, newEdges)
   }
 
-  
+
   // override def toString = "Tree3\n" + "Nodes: " + nodes.toString + "\nPoints: " + nodePoints.toString + "\n" + "Edges: " + edges.toString()
 
 }
