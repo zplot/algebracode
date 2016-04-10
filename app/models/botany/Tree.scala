@@ -33,7 +33,16 @@ object DrawSettings {
   val lineStyle = "stroke:rgb(90,90,90);stroke-width:1"
 
   // For text of nodes
-  def shiftTextIdX(p: Point): Double = -1 - 3 * math.log10(p.id)
+  def shiftTextIdX(p: Point): Double =
+
+    if ((p.id.toInt < 20) && (p.id.toInt > 9)) {
+      -1 - 3 * math.log10(p.id) - 1
+    } else {
+      -1 - 3 * math.log10(p.id)
+    }
+
+
+
   def shiftTextIdY(p: Point): Double = 3
 
 }
@@ -162,8 +171,6 @@ case class Tree3(root: Node3) {
     val maxY: Double = nodePoints.map(p => p.x).max
     maxY - minY
   }
-
-
 
   val factorX: Double = if (drawWidth > 1000) 1000 / drawWidth else 3
   val factorY: Double = if (drawHeight > 1000) 1000 / drawWidth else 6
