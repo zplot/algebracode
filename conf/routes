@@ -9,6 +9,8 @@ GET     /tree                       controllers.Application.treeExample
 
 GET     /rootedtrees                controllers.RootedTrees.drawRootedTrees
 
+GET     /rootedtrees4                controllers.RootedTrees.drawRootedTrees4
+
 GET     /static                     controllers.Application.static
 
 GET     /blackboard                 controllers.Application.blackboard
@@ -40,6 +42,8 @@ POST    /cayleyout                 controllers.General.resultsView(key = "cayley
 
 GET		/rtrees                    controllers.General.createForm(key = "rtrees")
 POST    /rtreesout                 controllers.General.resultsView(key = "rtrees")
+
+
 
 
 # Map static resources from the /public folder to the /assets URL path

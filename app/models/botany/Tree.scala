@@ -521,7 +521,6 @@ case class Tree3(root: Node3) {
 object DrawSettings4 {
 
 
-
   // Para nodos numerados
   val factorX: Double = 3
   val factorY: Double = 6
@@ -529,26 +528,16 @@ object DrawSettings4 {
   val shiftY: Double = 40
 
   // For circles
-  val r = 10
-  val stroke = "red"
+  val r = 4
+  val stroke = "black"
   val strokeWidth = "1"
-  val fill = "yellow"
+  val fill = "red"
 
   // For lines
   val lineStyle = "stroke:rgb(90,90,90);stroke-width:1"
 
-  // For text of nodes
-  def shiftTextIdX(p: Point): Double =
-
-    if ((p.id < 20) && (p.id.toInt > 9)) {
-      -1 - 3 * math.log10(p.id) - 1
-    } else {
-      -1 - 3 * math.log10(p.id)
-    }
-
-  def shiftTextIdY(p: Point): Double = 3
-
 }
+
 
 case class Point4(x: Double, y: Double) {
   override def toString = "(" + x ++ "," + y + ")"
@@ -562,8 +551,8 @@ case class PrintableDraw4(points: List[Point4], edges: List[Edge4])
 
 object Tree4Layaut {
 
-  val distance = 14
-  val yStep = 10
+  val distance = 7
+  val yStep = 4
   var defaultAncestor:Node4 = Utils4.nothing
 
   var vInPlus: Option[Node4] = None
@@ -891,7 +880,7 @@ object Tree4 {
 
 case class Tree4(root: Node4) {
 
-  import DrawSettings3._
+  import DrawSettings4._
 
   Tree4Layaut.layaut(this)
 
