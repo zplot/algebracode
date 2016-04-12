@@ -4,7 +4,7 @@ import scala.language.implicitConversions
 import scala.language.postfixOps
 
 
-// Common objects to all Trees
+// Tree3: Numbered nodes
 
 object DrawSettings3 {
 
@@ -47,10 +47,6 @@ case class Edge(pos1: Point, pos2: Point)
 case class Draw(points: List[Point], edges: List[Edge])
 
 case class PrintableDraw(points: List[Point], edges: List[Edge])
-
-
-
-// Tree3: Numbered nodes
 
 object Tree3Layaut {
 
@@ -522,6 +518,48 @@ case class Tree3(root: Node3) {
 
 // Tree4: identical nodes
 
+object DrawSettings4 {
+
+
+
+  // Para nodos numerados
+  val factorX: Double = 3
+  val factorY: Double = 6
+  val shiftX: Double = 40
+  val shiftY: Double = 40
+
+  // For circles
+  val r = 10
+  val stroke = "red"
+  val strokeWidth = "1"
+  val fill = "yellow"
+
+  // For lines
+  val lineStyle = "stroke:rgb(90,90,90);stroke-width:1"
+
+  // For text of nodes
+  def shiftTextIdX(p: Point): Double =
+
+    if ((p.id < 20) && (p.id.toInt > 9)) {
+      -1 - 3 * math.log10(p.id) - 1
+    } else {
+      -1 - 3 * math.log10(p.id)
+    }
+
+  def shiftTextIdY(p: Point): Double = 3
+
+}
+
+case class Point4(x: Double, y: Double) {
+  override def toString = "(" + x ++ "," + y + ")"
+}
+
+case class Edge4(pos1: Point4, pos2: Point4)
+
+case class Draw4(points: List[Point4], edges: List[Edge4])
+
+case class PrintableDraw4(points: List[Point4], edges: List[Edge4])
+
 object Tree4Layaut {
 
   val distance = 14
@@ -743,9 +781,7 @@ object Node4 {
 
   def apply(children: Vector[Node4]): Node4 = {
 
-    val newId = lastId + 1
-    lastId = newId
-    new Node4(newId, children)
+    new Node4(children)
 
   }
 
@@ -790,7 +826,7 @@ object Node4 {
 
 }
 
-class Node4(val id: Int, val children: Vector[Node4]) {
+class Node4(val children: Vector[Node4]) {
 
   val childrenNum = children.length
   def weight: Int = children.foldLeft(1)(_ + _.weight)
@@ -869,11 +905,11 @@ case class Tree4(root: Node4) {
     root :: loop(this.root.children.toList)
   }
 
-  val nodePoints: List[Point] = {
-    nodes.map(node => Point(node.id, node.x, node.y))
+  val nodePoints: List[Point4] = {
+    nodes.map(node => Point4(node.x, node.y))
   }
 
-  val edges: List[Edge] = {
+  val edges: List[Edge4] = {
 
     val pairs: List[(Node4, Option[Node4])] = nodes.map(x => (x, x.father))
 
@@ -887,7 +923,7 @@ case class Tree4(root: Node4) {
       tmp2
     }
 
-    val result: List[Edge] = pairs2.map(x => Edge(Point(x._1.id, x._1.x, x._1.y), Point(x._2.id, x._2.x, x._2.y)))
+    val result: List[Edge4] = pairs2.map(x => Edge4(Point4(x._1.x, x._1.y), Point4(x._2.x, x._2.y)))
     result
 
   }
@@ -909,7 +945,7 @@ case class Tree4(root: Node4) {
 
   // Generates a PrintableDraw
   val toPrint = {
-    val newPoints = nodePoints.map(point => Point(point.id, point.x * factorX + shiftX, point.y * factorY + shiftY))
+    val newPoints = nodePoints.map(point => Point4(point.x * factorX + shiftX, point.y * factorY + shiftY))
     val newEdges = edges.map(edge => {
 
       val p1X = edge.pos1.x
@@ -971,13 +1007,13 @@ case class Tree4(root: Node4) {
       val defp2YInt = defp2Y.toInt
 
       // Con corrección de invasión de círculos
-      Edge(Point(edge.pos1.id, defp1XInt, defp1YInt), Point(edge.pos2.id, defp2XInt, defp2YInt))
+      Edge4(Point4(defp1XInt, defp1YInt), Point4(defp2XInt, defp2YInt))
 
       // Sin corrección de invasión de círculos
       //Edge(Point(newp1X, newp1Y), Point(newp2X, newp2Y))
     }
     )
-    PrintableDraw(newPoints, newEdges)
+    PrintableDraw4(newPoints, newEdges)
   }
 
 
@@ -992,46 +1028,6 @@ case class Tree4(root: Node4) {
 case class Forest4(Tree4s: Vector[Tree4]) {
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
