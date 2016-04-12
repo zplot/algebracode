@@ -35,7 +35,7 @@ object DrawSettings {
   // For text of nodes
   def shiftTextIdX(p: Point): Double =
 
-    if ((p.id.toInt < 20) && (p.id.toInt > 9)) {
+    if ((p.id < 20) && (p.id.toInt > 9)) {
       -1 - 3 * math.log10(p.id) - 1
     } else {
       -1 - 3 * math.log10(p.id)
@@ -137,7 +137,7 @@ object Tree3 {
   // Following A Very Basic Introduction to Hopf Algebras by J.M. Selig
   def bPlus(f:Forest): Tree3 = Tree3(Node3(f.trees.map( x => x.root)))
 
-  def orderTree3(t: Tree3): Tree3 = t.canonicalForm
+  def orderTree3(t: Tree3): Tree3 = Node3.string2Tree3(t.canonicalForm)
 
 }
 
@@ -147,7 +147,7 @@ case class Tree3(root: Node3) {
 
   TreeLayaut.layaut(this)
 
-  val canonicalForm: Tree3 = Tree3(root.canonicalForm)
+  val canonicalForm: String = root.canonicalForm.toString
 
   val nodes: List[Node3] = {
     def loop(s: List[Node3]): List[Node3] = s match {
@@ -271,13 +271,20 @@ case class Tree3(root: Node3) {
     PrintableDraw(newPoints, newEdges)
   }
 
+  // TODO Esto no funciona porque sale un Stack Overflow
+/*  final override def equals(other: Any): Boolean = {
+    val that = other.asInstanceOf[Tree3]
+    if (that == null) false
+    else this.root.canonicalForm == that.root.canonicalForm
+  }*/
+
 }
 
 class Node3(val id: Int, val children: Vector[Node3]) {
 
   val childrenNum = children.length
   def weight: Int = children.foldLeft(1)(_ + _.weight)
-  def canonicalForm = Node3.orderNode3(this)
+  def canonicalForm: Node3 = Node3.orderNode3(this)
   def isLeaf: Boolean = this.children == Vector[Node3]()
   def hasChildren: Boolean = ! isLeaf
   def numChildren = children.length
