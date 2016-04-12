@@ -17,7 +17,7 @@ object DrawSettings3 {
   val shiftY: Double = 40
 
   // For circles
-  val r = 10
+  val r = 8
   val stroke = "red"
   val strokeWidth = "1"
   val fill = "yellow"
@@ -50,7 +50,7 @@ case class PrintableDraw(points: List[Point], edges: List[Edge])
 
 object Tree3Layaut {
 
-  val distance = 14
+  val distance = 8
   val yStep = 10
   var defaultAncestor:Node3 = Utils3.nothing
 
@@ -1011,6 +1011,7 @@ case class Tree4(root: Node4) {
     if (that == null) false
     else this.root.canonicalForm == that.root.canonicalForm
   }
+
 
 }
 

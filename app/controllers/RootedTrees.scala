@@ -23,7 +23,7 @@ object RootedTrees extends Controller {
 
     val title = "Drawing rooted trees"
 
-    val arbolito1: Tree3 = "**u**uu"
+    val arbolito1: Tree3 = "******uuuuu*u***uu*uu***uu*u***uu*uuu***uu*u***uu*uu***uu*u***uu*uuuu***uu*u***uu*uu***uu*u***uu*uuu***uu*u***uu*uu***uu*u***uu*uuuuu"
     val arbolito2: Tree3 = "***uu*u"
 
     val texto = arbolito1.toString
@@ -42,10 +42,14 @@ object RootedTrees extends Controller {
 
     val arbolito1: Tree4 = "**u**uu"
     val arbolito2: Tree4 = "***uu*u"
+    val arbolito3: Tree4 = "***uu*u***uu*uu***uu*u***uu*uuu***uu*u***uu*uu***uu*u***uu*uuuu***uu*u***uu*uu***uu*u***uu*uuu***uu*u***uu*uu***uu*u***uu*uuuuu"
+    val arbolito3Canonical = arbolito3.canonicalForm
+    println(arbolito3)
+    println(arbolito3Canonical)
 
 
-    val texto = arbolito2.toString
-    val arbolPintable: PrintableDraw4 = arbolito2.canonicalForm.toPrint
+    val texto = arbolito3.toString
+    val arbolPintable: PrintableDraw4 = arbolito3.canonicalForm.toPrint
     val parameters: (String, String, PrintableDraw4) = (title, texto, arbolPintable)
 
     Ok(views.html.trees4(parameters))
