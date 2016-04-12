@@ -4,18 +4,6 @@ import scala.language.implicitConversions
 import scala.language.postfixOps
 
 
-
-
-case class Point(id: Int, x: Double, y: Double) {
-  override def toString = "(" + x ++ "," + y + ")"
-}
-
-case class Edge(pos1: Point, pos2: Point)
-
-case class Draw(points: List[Point], edges: List[Edge])
-
-case class PrintableDraw(points: List[Point], edges: List[Edge])
-
 object DrawSettings {
 
   val factorX: Double = 3
@@ -47,285 +35,15 @@ object DrawSettings {
 
 }
 
-
-
-// http://aperiodic.net/phil/scala/s-99/
-object Node3 {
-
-  var lastId = 0
-
-  def apply(children: Vector[Node3]): Node3 = {
-
-    val newId = lastId + 1
-    lastId = newId
-    new Node3(newId, children)
-
-  }
-
-  def unapply(x: Node3): Option[Vector[Node3]] = Some(x.children)
-
-
-
-  implicit def string2Tree(s: String): Node3 = {
-
-    def nextStrBound(pos: Int, nesting: Int): Int =
-      if (nesting == 0) pos
-      else nextStrBound(pos + 1, if (s(pos) == 'u') nesting - 1 else nesting + 1)
-    def splitChildStrings(pos: Int): List[String] =
-      if (pos >= s.length) Nil
-      else {
-        val end = nextStrBound(pos + 1, 1)
-        s.substring(pos, end - 1) :: splitChildStrings(end)
-      }
-    val tmp = splitChildStrings(1).map(string2Tree(_)).toVector
-    Node3(tmp)
-  }
-
-  implicit def string2Tree3(s: String): Tree3 = {
-    val tmp = string2Tree(s)
-    Tree3(tmp)
-  }
-
-
-  def orderNode3(t: Node3): Node3 = {
-
-    if (t.children != Vector[Node3]())  {
-      val tmp3 = t.children.map( x => orderNode3(x))
-      val tmp4 = Node3(tmp3)
-      val tmp5 = tmp4.children.sortBy(_.weight).reverse
-      val tmp6 = Node3(tmp5)
-      tmp6
-    } else t
-
-  }
-
-
-
+case class Point(id: Int, x: Double, y: Double) {
+  override def toString = "(" + x ++ "," + y + ")"
 }
 
-object Utils {
+case class Edge(pos1: Point, pos2: Point)
 
-  val nothing = Node3(Vector[Node3]())
+case class Draw(points: List[Point], edges: List[Edge])
 
-  implicit def inTheBox(z: Option[Node3]): Node3 = z match {
-    case None => nothing
-    case Some(x) => x
-  }
-
-  implicit def inTheBoxFather(z: Option[Node3]): Node3 = z match {
-    case None => nothing
-    case Some(x) => x
-  }
-
-
-
-
-
-}
-
-case class Forest(trees: Vector[Tree3]) {
-
-}
-
-object Tree3 {
-
-  // Following A Very Basic Introduction to Hopf Algebras by J.M. Selig
-  def bMinus(t: Tree3): Forest = {
-    val tmp = for { x <- t.root.children } yield Tree3(x)
-    Forest(tmp)
-  }
-  // Following A Very Basic Introduction to Hopf Algebras by J.M. Selig
-  def bPlus(f:Forest): Tree3 = Tree3(Node3(f.trees.map( x => x.root)))
-
-  def orderTree3(t: Tree3): Tree3 = Node3.string2Tree3(t.canonicalForm)
-
-}
-
-case class Tree3(root: Node3) {
-
-  import DrawSettings._
-
-  TreeLayaut.layaut(this)
-
-  val canonicalForm: String = root.canonicalForm.toString
-
-  val nodes: List[Node3] = {
-    def loop(s: List[Node3]): List[Node3] = s match {
-      case Nil => Nil
-      case x :: xs => List(x) ::: loop(x.children.toList) ::: loop(xs)
-    }
-    root :: loop(this.root.children.toList)
-  }
-
-  val nodePoints: List[Point] = {
-    nodes.map(node => Point(node.id, node.x, node.y))
-  }
-
-  val edges: List[Edge] = {
-
-    val pairs: List[(Node3, Option[Node3])] = nodes.map(x => (x, x.father))
-
-    val pairs2: List[(Node3, Node3)] = {
-      val tmp: List[(Node3, Option[Node3])] = pairs.filterNot(x => x ==(x._1, None))
-      def transform(x: (Node3, Option[Node3])): (Node3, Node3) = x match {
-        case (a, Some(b)) => (a, b)
-        case (a, None) => (a, a)
-      }
-      val tmp2: List[(Node3, Node3)] = tmp.map(x => transform(x))
-      tmp2
-    }
-
-    val result: List[Edge] = pairs2.map(x => Edge(Point(x._1.id, x._1.x, x._1.y), Point(x._2.id, x._2.x, x._2.y)))
-    result
-
-  }
-
-  val drawWidth = {
-    val minX: Double = nodePoints.map(p => p.x).min
-    val maxX: Double = nodePoints.map(p => p.x).max
-    maxX - minX
-  }
-
-  val drawHeight = {
-    val minY: Double = nodePoints.map(p => p.y).min
-    val maxY: Double = nodePoints.map(p => p.x).max
-    maxY - minY
-  }
-
-  val factorX: Double = if (drawWidth > 1000) 1000 / drawWidth else 3
-  val factorY: Double = if (drawHeight > 1000) 1000 / drawWidth else 6
-
-  // TODO Hay que revisar esto
-  val toPrint = {
-
-    val newPoints = nodePoints.map(point => Point(point.id, point.x * factorX + shiftX, point.y * factorY + shiftY))
-
-    val newEdges = edges.map(edge => {
-
-      val p1X = edge.pos1.x
-      val p1Y = edge.pos1.y
-      val p2X = edge.pos2.x
-      val p2Y = edge.pos2.y
-
-      // Estas son las coordenadas de los nodos antes de corregir el que las líneas enren en los círculos
-      val newp1X = p1X * factorX + shiftX
-      val newp1Y = p1Y * factorY + shiftY
-      val newp2X = p2X * factorX + shiftX
-      val newp2Y = p2Y * factorY + shiftY
-
-
-      // Removing lines inside circles
-      val slope: Float = if (math.abs(newp2X - newp1X) > 1) {
-        // The edge is not vertical
-        (newp2Y - newp1Y).toFloat / (newp2X - newp1X).toFloat
-      } else {
-        99999 // The edge is vertical
-      }
-
-      val sqrtOfOnePlusTg2betha = math.sqrt(1 + slope * slope).toFloat
-
-      val deltaX: Double = r.toDouble / sqrtOfOnePlusTg2betha
-      val deltaY: Double = r.toDouble * math.sqrt(1 - deltaX * deltaX / r.toFloat / r.toFloat).toFloat
-
-
-
-      val defp1X: Double = if (slope < 0) {
-        newp1X + deltaX
-      } else {
-        newp1X - deltaX
-      }
-
-      val defp1Y: Double = if (slope < 0) {
-        newp1Y - deltaY
-      } else {
-        newp1Y - deltaY
-      }
-
-      val defp2X: Double = if (slope < 0) {
-        newp2X - deltaX
-      } else {
-        newp2X + deltaX
-      }
-
-      val defp2Y: Double = if (slope < 0) {
-        newp2Y + deltaY
-      } else {
-        newp2Y + deltaY
-      }
-
-
-
-      val defp1XInt = defp1X.toInt
-      val defp1YInt = defp1Y.toInt
-      val defp2XInt = defp2X.toInt
-      val defp2YInt = defp2Y.toInt
-
-      // Con corrección de invasión de círculos
-      Edge(Point(edge.pos1.id, defp1XInt, defp1YInt), Point(edge.pos2.id, defp2XInt, defp2YInt))
-
-      // Sin corrección de invasión de círculos
-      //Edge(Point(newp1X, newp1Y), Point(newp2X, newp2Y))
-    }
-    )
-
-    PrintableDraw(newPoints, newEdges)
-  }
-
-  // TODO Esto no funciona porque sale un Stack Overflow
-/*  final override def equals(other: Any): Boolean = {
-    val that = other.asInstanceOf[Tree3]
-    if (that == null) false
-    else this.root.canonicalForm == that.root.canonicalForm
-  }*/
-
-}
-
-class Node3(val id: Int, val children: Vector[Node3]) {
-
-  val childrenNum = children.length
-  def weight: Int = children.foldLeft(1)(_ + _.weight)
-  def canonicalForm: Node3 = Node3.orderNode3(this)
-  def isLeaf: Boolean = this.children == Vector[Node3]()
-  def hasChildren: Boolean = ! isLeaf
-  def numChildren = children.length
-
-  var mod: Double = 0
-  var thread: Option[Node3] = None
-  var ancestor: Option[Node3] = None
-  var prelim: Double = 0
-  // defaultAncestor es una variable general y no un atributo de un Node3
-  // var defaultAncestor: Option[Node3] = None
-  var father: Option[Node3] = None // En initWalk
-  var leftSibling: Option[Node3] = None // En initWalk
-  var leftMostSibling: Option[Node3] = None // En initWalk
-  val leftMostChild: Option[Node3] = if (isLeaf) None else Some(children(0))
-  val rightMostChild: Option[Node3] = if (isLeaf) None else Some(children(numChildren - 1))
-  var shift: Double = 0
-  var x: Double = 0
-  var y: Double = 0
-  var yStep: Double = 10 // Paso de nivel y
-  var level: Int = 0 // En initWalk
-
-  var number: Int = -1  // en initWalh
-
-  var subTrees: Int = 0
-  var change: Double = 0
-
-
-  // TODO Descomentar lo de abajo para imprimir * y ^
-  override def toString = "*" + children.map(_.toString + "u").mkString("")
-
-  // override def toString = id.toString + "-" + children.toString()
-
-/*  final override def equals(other: Any): Boolean = {
-    val that = other.asInstanceOf[Node3]
-    if (that == null) false
-    else Node3.orderTree(this).children == Node3.orderTree(that).children
-  }*/
-
-  // override def toString = id.toString()
-
-}
+case class PrintableDraw(points: List[Point], edges: List[Edge])
 
 object TreeLayaut {
 
@@ -541,6 +259,291 @@ object TreeLayaut {
   }
 
 }
+
+
+
+
+
+
+
+object Node3 {
+
+  var lastId = 0
+
+  def apply(children: Vector[Node3]): Node3 = {
+
+    val newId = lastId + 1
+    lastId = newId
+    new Node3(newId, children)
+
+  }
+
+  def unapply(x: Node3): Option[Vector[Node3]] = Some(x.children)
+
+
+  // http://aperiodic.net/phil/scala/s-99/
+  implicit def string2Tree(s: String): Node3 = {
+
+    def nextStrBound(pos: Int, nesting: Int): Int =
+      if (nesting == 0) pos
+      else nextStrBound(pos + 1, if (s(pos) == 'u') nesting - 1 else nesting + 1)
+    def splitChildStrings(pos: Int): List[String] =
+      if (pos >= s.length) Nil
+      else {
+        val end = nextStrBound(pos + 1, 1)
+        s.substring(pos, end - 1) :: splitChildStrings(end)
+      }
+    val tmp = splitChildStrings(1).map(string2Tree(_)).toVector
+    Node3(tmp)
+  }
+
+  implicit def string2Tree3(s: String): Tree3 = {
+    val tmp = string2Tree(s)
+    Tree3(tmp)
+  }
+
+
+  def orderNode3(t: Node3): Node3 = {
+
+    if (t.children != Vector[Node3]())  {
+      val tmp3 = t.children.map( x => orderNode3(x))
+      val tmp4 = Node3(tmp3)
+      val tmp5 = tmp4.children.sortBy(_.weight).reverse
+      val tmp6 = Node3(tmp5)
+      tmp6
+    } else t
+
+  }
+
+
+
+}
+
+class Node3(val id: Int, val children: Vector[Node3]) {
+
+  val childrenNum = children.length
+  def weight: Int = children.foldLeft(1)(_ + _.weight)
+  def canonicalForm: String = Node3.orderNode3(this).toString
+  def isLeaf: Boolean = this.children == Vector[Node3]()
+  def hasChildren: Boolean = ! isLeaf
+  def numChildren = children.length
+
+  var mod: Double = 0
+  var thread: Option[Node3] = None
+  var ancestor: Option[Node3] = None
+  var prelim: Double = 0
+  // defaultAncestor es una variable general y no un atributo de un Node3
+  // var defaultAncestor: Option[Node3] = None
+  var father: Option[Node3] = None // En initWalk
+  var leftSibling: Option[Node3] = None // En initWalk
+  var leftMostSibling: Option[Node3] = None // En initWalk
+  val leftMostChild: Option[Node3] = if (isLeaf) None else Some(children(0))
+  val rightMostChild: Option[Node3] = if (isLeaf) None else Some(children(numChildren - 1))
+  var shift: Double = 0
+  var x: Double = 0
+  var y: Double = 0
+  var yStep: Double = 10 // Paso de nivel y
+  var level: Int = 0 // En initWalk
+
+  var number: Int = -1  // en initWalh
+
+  var subTrees: Int = 0
+  var change: Double = 0
+
+
+  // TODO Descomentar lo de abajo para imprimir * y ^
+  override def toString = "*" + children.map(_.toString + "u").mkString("")
+
+  // override def toString = id.toString + "-" + children.toString()
+
+  /*  final override def equals(other: Any): Boolean = {
+      val that = other.asInstanceOf[Node3]
+      if (that == null) false
+      else Node3.orderTree(this).children == Node3.orderTree(that).children
+    }*/
+
+  // override def toString = id.toString()
+
+}
+
+object Utils {
+
+  val nothing = Node3(Vector[Node3]())
+
+  implicit def inTheBox(z: Option[Node3]): Node3 = z match {
+    case None => nothing
+    case Some(x) => x
+  }
+
+  implicit def inTheBoxFather(z: Option[Node3]): Node3 = z match {
+    case None => nothing
+    case Some(x) => x
+  }
+
+
+
+
+
+}
+
+object Tree3 {
+
+  // Following A Very Basic Introduction to Hopf Algebras by J.M. Selig
+  def bMinus(t: Tree3): Forest = {
+    val tmp = for { x <- t.root.children } yield Tree3(x)
+    Forest(tmp)
+  }
+  // Following A Very Basic Introduction to Hopf Algebras by J.M. Selig
+  def bPlus(f:Forest): Tree3 = Tree3(Node3(f.trees.map( x => x.root)))
+
+  def orderTree3(t: Tree3): Tree3 = Node3.string2Tree3(t.canonicalForm)
+
+}
+
+case class Tree3(root: Node3) {
+
+  import DrawSettings._
+
+  TreeLayaut.layaut(this)
+
+  val canonicalForm: String = root.canonicalForm
+
+  val nodes: List[Node3] = {
+    def loop(s: List[Node3]): List[Node3] = s match {
+      case Nil => Nil
+      case x :: xs => List(x) ::: loop(x.children.toList) ::: loop(xs)
+    }
+    root :: loop(this.root.children.toList)
+  }
+
+  val nodePoints: List[Point] = {
+    nodes.map(node => Point(node.id, node.x, node.y))
+  }
+
+  val edges: List[Edge] = {
+
+    val pairs: List[(Node3, Option[Node3])] = nodes.map(x => (x, x.father))
+
+    val pairs2: List[(Node3, Node3)] = {
+      val tmp: List[(Node3, Option[Node3])] = pairs.filterNot(x => x ==(x._1, None))
+      def transform(x: (Node3, Option[Node3])): (Node3, Node3) = x match {
+        case (a, Some(b)) => (a, b)
+        case (a, None) => (a, a)
+      }
+      val tmp2: List[(Node3, Node3)] = tmp.map(x => transform(x))
+      tmp2
+    }
+
+    val result: List[Edge] = pairs2.map(x => Edge(Point(x._1.id, x._1.x, x._1.y), Point(x._2.id, x._2.x, x._2.y)))
+    result
+
+  }
+
+  val drawWidth = {
+    val minX: Double = nodePoints.map(p => p.x).min
+    val maxX: Double = nodePoints.map(p => p.x).max
+    maxX - minX
+  }
+
+  val drawHeight = {
+    val minY: Double = nodePoints.map(p => p.y).min
+    val maxY: Double = nodePoints.map(p => p.x).max
+    maxY - minY
+  }
+
+  val factorX: Double = if (drawWidth > 1000) 1000 / drawWidth else 3
+  val factorY: Double = if (drawHeight > 1000) 1000 / drawWidth else 6
+
+  // TODO Hay que revisar esto
+  val toPrint = {
+
+    val newPoints = nodePoints.map(point => Point(point.id, point.x * factorX + shiftX, point.y * factorY + shiftY))
+
+    val newEdges = edges.map(edge => {
+
+      val p1X = edge.pos1.x
+      val p1Y = edge.pos1.y
+      val p2X = edge.pos2.x
+      val p2Y = edge.pos2.y
+
+      // Estas son las coordenadas de los nodos antes de corregir el que las líneas enren en los círculos
+      val newp1X = p1X * factorX + shiftX
+      val newp1Y = p1Y * factorY + shiftY
+      val newp2X = p2X * factorX + shiftX
+      val newp2Y = p2Y * factorY + shiftY
+
+
+      // Removing lines inside circles
+      val slope: Float = if (math.abs(newp2X - newp1X) > 1) {
+        // The edge is not vertical
+        (newp2Y - newp1Y).toFloat / (newp2X - newp1X).toFloat
+      } else {
+        99999 // The edge is vertical
+      }
+
+      val sqrtOfOnePlusTg2betha = math.sqrt(1 + slope * slope).toFloat
+
+      val deltaX: Double = r.toDouble / sqrtOfOnePlusTg2betha
+      val deltaY: Double = r.toDouble * math.sqrt(1 - deltaX * deltaX / r.toFloat / r.toFloat).toFloat
+
+
+
+      val defp1X: Double = if (slope < 0) {
+        newp1X + deltaX
+      } else {
+        newp1X - deltaX
+      }
+
+      val defp1Y: Double = if (slope < 0) {
+        newp1Y - deltaY
+      } else {
+        newp1Y - deltaY
+      }
+
+      val defp2X: Double = if (slope < 0) {
+        newp2X - deltaX
+      } else {
+        newp2X + deltaX
+      }
+
+      val defp2Y: Double = if (slope < 0) {
+        newp2Y + deltaY
+      } else {
+        newp2Y + deltaY
+      }
+
+
+
+      val defp1XInt = defp1X.toInt
+      val defp1YInt = defp1Y.toInt
+      val defp2XInt = defp2X.toInt
+      val defp2YInt = defp2Y.toInt
+
+      // Con corrección de invasión de círculos
+      Edge(Point(edge.pos1.id, defp1XInt, defp1YInt), Point(edge.pos2.id, defp2XInt, defp2YInt))
+
+      // Sin corrección de invasión de círculos
+      //Edge(Point(newp1X, newp1Y), Point(newp2X, newp2Y))
+    }
+    )
+
+    PrintableDraw(newPoints, newEdges)
+  }
+
+  // TODO Esto no funciona porque sale un Stack Overflow
+/*  final override def equals(other: Any): Boolean = {
+    val that = other.asInstanceOf[Tree3]
+    if (that == null) false
+    else this.root.canonicalForm == that.root.canonicalForm
+  }*/
+
+}
+
+case class Forest(trees: Vector[Tree3]) {
+
+}
+
+
 
 
 
