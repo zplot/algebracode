@@ -29,8 +29,6 @@ object DrawSettings {
       -1 - 3 * math.log10(p.id)
     }
 
-
-
   def shiftTextIdY(p: Point): Double = 3
 
 }
@@ -350,6 +348,7 @@ class Node3(val id: Int, val children: Vector[Node3]) {
 
   override def toString = "*" + children.map(_.toString + "u").mkString("")
 
+}
 
 object Utils {
 
