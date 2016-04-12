@@ -842,12 +842,12 @@ object Utils4 {
 object Tree4 {
 
   // Following A Very Basic Introduction to Hopf Algebras by J.M. Selig
-  def bMinus(t: Tree4): Forest = {
+  def bMinus(t: Tree4): Forest4 = {
     val tmp = for { x <- t.root.children } yield Tree4(x)
-    Forest(tmp)
+    Forest4(tmp)
   }
   // Following A Very Basic Introduction to Hopf Algebras by J.M. Selig
-  def bPlus(f:Forest): Tree4 = Tree4(Node4(f.Tree4s.map( x => x.root)))
+  def bPlus(f:Forest4): Tree4 = Tree4(Node4(f.Tree4s.map( x => x.root)))
 
   def orderTree4(t: Tree4): Tree4 = Node4.string2Tree4(t.canonicalForm)
 
@@ -989,9 +989,7 @@ case class Tree4(root: Node4) {
 
 }
 
-
-
-case class Forest(Tree4s: Vector[Tree4]) {
+case class Forest4(Tree4s: Vector[Tree4]) {
 
 }
 
