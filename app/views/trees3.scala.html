@@ -16,13 +16,13 @@
 
             @for(node <- parameters._3.points) {
                 @*<circle cx=@node.pos.x cy=@node.pos.y r="5" stroke="black" stroke-width="1" fill="red" />*@
-                <circle cx=@node.x cy=@node.y r=@DrawSettings.r stroke=@DrawSettings.stroke stroke-width=@DrawSettings.strokeWidth fill=@DrawSettings.fill />
-                <text x=@(node.x + DrawSettings.shiftTextIdX(node)) y=@(node.y + DrawSettings.shiftTextIdY(node)) fill="black" font-size="9">@node.id</text>
+                <circle cx=@node.x cy=@node.y r=@DrawSettings3.r stroke=@DrawSettings3.stroke stroke-width=@DrawSettings3.strokeWidth fill=@DrawSettings3.fill />
+                <text x=@(node.x + DrawSettings3.shiftTextIdX(node)) y=@(node.y + DrawSettings3.shiftTextIdY(node)) fill="black" font-size="9">@node.id</text>
             }
 
             @for(line <- parameters._3.edges) {
                 @*<line x1=@line.pos1.pos.x y1=@line.pos1.pos.y x2=@line.pos2.pos.x y2=@line.pos2.pos.y style="stroke:rgb(40,40,40);stroke-width:1" />*@
-                <line x1=@line.pos1.x y1=@line.pos1.y x2=@line.pos2.x y2=@line.pos2.y style=@DrawSettings.lineStyle />
+                <line x1=@line.pos1.x y1=@line.pos1.y x2=@line.pos2.x y2=@line.pos2.y style=@DrawSettings3.lineStyle />
             }
 
         </svg>

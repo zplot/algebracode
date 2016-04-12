@@ -4,8 +4,11 @@ import scala.language.implicitConversions
 import scala.language.postfixOps
 
 
-object DrawSettings {
+object DrawSettings3 {
 
+
+
+// Para nodos numerados
   val factorX: Double = 3
   val factorY: Double = 6
   val shiftX: Double = 40
@@ -261,9 +264,6 @@ object TreeLayaut {
 
 
 
-
-
-
 object Node3 {
 
   var lastId = 0
@@ -386,7 +386,7 @@ object Tree3 {
 
 case class Tree3(root: Node3) {
 
-  import DrawSettings._
+  import DrawSettings3._
 
   TreeLayaut.layaut(this)
 
