@@ -25,7 +25,7 @@ object RootedTrees extends Controller {
     val arbolito2: Tree3 = "***uu*u"
 
     val texto = arbolito1.toString
-    val arbolPintable: PrintableDraw = arbolito2.toPrint
+    val arbolPintable: PrintableDraw = arbolito1.toPrint
     val parameters: (String, String, PrintableDraw) = (title, texto, arbolPintable)
 
     Ok(views.html.trees3(parameters))
