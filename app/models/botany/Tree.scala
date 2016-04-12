@@ -344,27 +344,12 @@ class Node3(val id: Int, val children: Vector[Node3]) {
   var y: Double = 0
   var yStep: Double = 10 // Paso de nivel y
   var level: Int = 0 // En initWalk
-
   var number: Int = -1  // en initWalh
-
   var subTrees: Int = 0
   var change: Double = 0
 
-
-  // TODO Descomentar lo de abajo para imprimir * y ^
   override def toString = "*" + children.map(_.toString + "u").mkString("")
 
-  // override def toString = id.toString + "-" + children.toString()
-
-  /*  final override def equals(other: Any): Boolean = {
-      val that = other.asInstanceOf[Node3]
-      if (that == null) false
-      else Node3.orderTree(this).children == Node3.orderTree(that).children
-    }*/
-
-  // override def toString = id.toString()
-
-}
 
 object Utils {
 
@@ -454,11 +439,9 @@ case class Tree3(root: Node3) {
   val factorX: Double = if (drawWidth > 1000) 1000 / drawWidth else 3
   val factorY: Double = if (drawHeight > 1000) 1000 / drawWidth else 6
 
-  // TODO Hay que revisar esto
+  // Generates a PrintableDraw
   val toPrint = {
-
     val newPoints = nodePoints.map(point => Point(point.id, point.x * factorX + shiftX, point.y * factorY + shiftY))
-
     val newEdges = edges.map(edge => {
 
       val p1X = edge.pos1.x
@@ -526,16 +509,15 @@ case class Tree3(root: Node3) {
       //Edge(Point(newp1X, newp1Y), Point(newp2X, newp2Y))
     }
     )
-
     PrintableDraw(newPoints, newEdges)
   }
 
-  // TODO Esto no funciona porque sale un Stack Overflow
-/*  final override def equals(other: Any): Boolean = {
+
+  final override def equals(other: Any): Boolean = {
     val that = other.asInstanceOf[Tree3]
     if (that == null) false
     else this.root.canonicalForm == that.root.canonicalForm
-  }*/
+  }
 
 }
 

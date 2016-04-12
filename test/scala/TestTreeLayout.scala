@@ -58,9 +58,10 @@ object TestTreeLayout extends App {
   println(tree.toString == b.toString)
   val arbolito1: Tree3 = "**u**uu"
   val arbolito2: Tree3 = "***uu*u"
-  // println(arbolito1.canonicalForm)
+
   println(arbolito1.canonicalForm)
   println(arbolito2.canonicalForm)
+  println(arbolito1 == arbolito2)
 
 
 
