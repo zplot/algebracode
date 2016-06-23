@@ -42,10 +42,9 @@ object RootedTrees extends Controller {
 
     val arbolito1: Tree4 = "**u**uu"
     val arbolito2: Tree4 = "***uu*u"
-    val arbolito3: Tree4 = "***uu*u***uu*uu***uu*u***uu*uuu***uu*u***uu*uu***uu*u***uu*uuuu***uu*u***uu*uu***uu*u***uu*uuu***uu*u***uu*uu***uu*u***uu*uuuuu"
+    val arbolito3: Tree4 = "***uu*u"
     val arbolito3Canonical = arbolito3.canonicalForm
-    println(arbolito3)
-    println(arbolito3Canonical)
+
 
 
     val texto = arbolito3.toString
