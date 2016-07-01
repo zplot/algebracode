@@ -37,31 +37,31 @@ object TestTreeLayout extends App {
   println()
   println("Capitulo 1")
   println()*/
-  val arbol: String = "***u*u**uu*u*uu*u*u*u**uu*u*u*u*u********uuuuu*uuu*u*uuu*u*uuuu"
-
-  val arbol2 = "**u*u*u*****uuuuu"
-  val arbol3 = "***u*uu**u*uu"
-  val arbol4 = "***u*uu**u*uu"
-  val tree: Tree3 = Node3.string2Tree3(arbol4)
-  println()
-  TreeLayaut.layaut(tree)
-  println(tree)
-  println("número de * = " + arbol4.toList.count(_ == '*'))
-  println()
-  println("bMinus ================================================")
-  println()
-  println("tree = " + tree)
-  val a = Tree3.bMinus(tree)
-  println("bMinus(tree) = " + a)
-  val b = Tree3.bPlus(a)
-  println("bPlus(a) = " + b)
-  println(tree.toString == b.toString)
-  val arbolito1: Tree3 = "**u**uu"
-  val arbolito2: Tree3 = "***uu*u"
-
-  println(arbolito1.canonicalForm)
-  println(arbolito2.canonicalForm)
-  println(arbolito1 == arbolito2)
+//  val arbol: String = "***u*u**uu*u*uu*u*u*u**uu*u*u*u*u********uuuuu*uuu*u*uuu*u*uuuu"
+//
+//  val arbol2 = "**u*u*u*****uuuuu"
+//  val arbol3 = "***u*uu**u*uu"
+//  val arbol4 = "***u*uu**u*uu"
+//  val tree: Tree3 = Node3.string2Tree3(arbol4)
+//  println()
+//  TreeLayaut.layaut(tree)
+//  println(tree)
+//  println("número de * = " + arbol4.toList.count(_ == '*'))
+//  println()
+//  println("bMinus ================================================")
+//  println()
+//  println("tree = " + tree)
+//  val a = Tree3.bMinus(tree)
+//  println("bMinus(tree) = " + a)
+//  val b = Tree3.bPlus(a)
+//  println("bPlus(a) = " + b)
+//  println(tree.toString == b.toString)
+//  val arbolito1: Tree3 = "**u**uu"
+//  val arbolito2: Tree3 = "***uu*u"
+//
+//  println(arbolito1.canonicalForm)
+//  println(arbolito2.canonicalForm)
+//  println(arbolito1 == arbolito2)
 
 
 
