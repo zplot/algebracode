@@ -1,17 +1,21 @@
 package models.algebra
 
+import scala.language.implicitConversions
+
 case class Zn(n: Int) extends Ring {
 
   type T1 = Int
   type T2 = IntModN
 
-  def builder(x: Int) = IntModN(x)
+  def builder(x: T1) = IntModN(x)
 
   val structureId: String = "Zn" + n
   val zero = IntModN(0)
   val one = IntModN(1)
   val finite = true
   val minusOne = IntModN(n - 1)
+
+  override def toString = "Zn(" + n + ")"
 
   object IntModN {
     def apply(k: Int): IntModN = {

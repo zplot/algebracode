@@ -1,6 +1,6 @@
 package models.algebra
 
-case class GroupRing(group: FiniteGroup, ring:Ring ) {
+case class GroupRing(group: FiniteGroup, ring: Ring ) {
 
   type T1 = Vector[ring.T2]
   type T2 = GroupRingElement
