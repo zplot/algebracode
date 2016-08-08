@@ -1,5 +1,6 @@
 package models.algebra.examples
 
+import scala.language.implicitConversions
 import models.algebra.AbelianGroup
 
 object AbelianGroupExample extends App {
@@ -8,8 +9,7 @@ object AbelianGroupExample extends App {
 
     type T1 = Int
     type T2 = Entero
-
-    def builder(x: T1) = Entero(x)
+    def builder(x: T1): T2 = Entero(x)
     val structureId: String = "Z"
     val zero = builder(0)
 
@@ -22,7 +22,6 @@ object AbelianGroupExample extends App {
 
     class Entero private(val k: T1) extends AbelianGroupElement {
 
-      val elementId = k.toString
       val isZero = k == 0
       def add(other: Entero) = Entero(k + other.k)
       def minus(other: Entero) = Entero(k - other.k)
@@ -38,4 +37,20 @@ object AbelianGroupExample extends App {
 
   }
 
+  println("Empezamos")
+
+  import Z._
+
+  val cinco = Z.Entero(5)
+  val siete = Z.Entero(7)
+  val suma = cinco + siete
+  val ocho = Z.builder(8)
+  val quince = siete + ocho
+  println(quince)
+  println(suma)
+  println(Entero(239))
+  println(builder(23))
+  println(quince - cinco)
 }
+
+
