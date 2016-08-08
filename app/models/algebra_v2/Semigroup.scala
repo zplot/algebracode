@@ -1,13 +1,13 @@
 package models.algebra_v2
 
 trait Semigroup[T] {
-  self =>
+
   def bin(f1: T, f2: T): T
 
   trait SemigroupLaw {
     def associative(f1: T, f2: T, f3: T): Boolean =
       bin(f1, bin(f2, f3)) == bin(bin(f1, f2), f3)
-    def op(x1: T, x2: T) = bin(x1, x2)
+
   }
 
 }
@@ -21,24 +21,19 @@ trait Monoid[T] extends Semigroup[T] {
 
 trait Group[T] extends Monoid[T] {
 
-  def bin(f1: T, f2: T): T
+  def inverse(x: T): T
 
   trait GroupLaw extends MonoidLaw {
-    def operation(x1: T, x2: T) = bin(x1, x2)
+
   }
-  def inverse(x: T): T
+
 }
 
 trait AbelianGroup[T] extends Group[T] {
 
   trait AbelianGroupLaw extends GroupLaw {
-    def commutative(f1: T, f2: T): Boolean =
-      bin(f1, f2) == bin(f2, f1)
-    def suma(x1: T, x2: T) = bin(x1, x2)
-
+    def commutative(f1: T, f2: T): Boolean = bin(f1, f2) == bin(f2, f1)
   }
-
-  def inverse(x: T): T
 }
 
 trait Ring[T] extends Group[T] with AbelianGroup[T] {
@@ -78,7 +73,8 @@ object Test1 extends App {
 
 
   object Z4 extends Ring[Int] {
-    def bin(f1: Int, f2: Int): Int = f1 * f2
+    def bin1(f1: Int, f2: Int): Int = f1 + f2
+    def bin2(f1: Int, f2: Int): Int = f1 + f2
     val identity: Int = 0
     def inverse(x: Int): Int = -x
 
@@ -99,7 +95,7 @@ object Test1 extends App {
   println(b)
 
   println(Z.suma.associative(2, 3, 4))
-  println(Z.suma.op(2, 3))
+  println(Z.bin(2, 3))
 
   val t = Z3.suma
 }
