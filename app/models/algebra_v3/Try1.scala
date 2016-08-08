@@ -1,36 +1,41 @@
 package models.algebra_v3
 
-
-trait Semigroup2[T] {
+trait Semigroup[T] {
   def bin(x1: T, x2: T): T
-  trait Semigroup2Law {
+
+  trait SemigroupLaw {
   }
+
 }
-trait Monoid[T] extends Semigroup2[T] {
+
+trait Monoid[T] extends Semigroup[T] {
   val identity: T
-  trait MonoidLaw extends Semigroup2Law {
+
+  trait MonoidLaw extends SemigroupLaw {
   }
+
 }
+
 trait Group[T] extends Monoid[T] {
   def inverse(x: T): T
+
   trait GroupLaw extends MonoidLaw {
   }
+
 }
+
 trait AbelianGroup[T] extends Group[T] {
+
   trait AbelianGroupLaw extends GroupLaw {
   }
+
 }
+
 trait Ring[T] extends Group[T] with AbelianGroup[T] {
 }
 
-
-
-object Test1 extends App {
-  println("Empezamos")
-  def suma(x: Int, y: Int) = x + y
-  def producto(x: Int, y: Int) = x * y
-
-  def instanceMonoid[A] (f: (A, A) => A, z: A): Monoid[A] = {
+object Factories {
+  def instanceMonoid[A](f: (A, A) => A, z: A): Monoid[A] = {
     new Monoid[A] {
       val identity = z
       def bin(f1: A, f2: A): A = f(f1, f2)
@@ -43,21 +48,23 @@ object Test1 extends App {
       def bin(f1: A, f2: A): A = f(f1, f2)
     }
   }
+}
 
-  val monoid1 = instanceMonoid[Int] ((x:Int , y: Int) => x + y, 0)
+object Test1 extends App {
+  println("Empezamos")
+  def suma(x: Int, y: Int) = x + y
+  def producto(x: Int, y: Int) = x * y
 
-  val Z = instanceRing[Int] ((x:Int , y: Int) => x + y, (x:Int , y: Int) => x * y, 0, (x: Int) => - x)
+  import Factories._
 
-  val Z2 = instanceRing[Int] (
-    (x:Int , y: Int) => x + y,
-    (x:Int , y: Int) => x * y,
+  val monoid1 = instanceMonoid[Int]((x: Int, y: Int) => x + y, 0)
+  val Z: Ring[Int] = instanceRing[Int]((x: Int, y: Int) => x + y, (x: Int, y: Int) => x * y, 0, (x: Int) => -x)
+  val Z2: Ring[Int] = instanceRing[Int](
+    (x: Int, y: Int) => x + y,
+    (x: Int, y: Int) => x * y,
     0,
-    (x: Int) => - x
+    (x: Int) => -x
   )
-
-
-
-
 }
 
 
