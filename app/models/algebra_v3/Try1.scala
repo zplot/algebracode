@@ -31,7 +31,7 @@ trait AbelianGroup[T] extends Group[T] {
 
 }
 
-trait Ring[T] extends Group[T] with AbelianGroup[T] {
+trait Ring[T] extends Semigroup[T] with AbelianGroup[T] {
 }
 
 object Factories {
@@ -46,6 +46,8 @@ object Factories {
       val identity = z
       def inverse(x: A) = inv(x)
       def bin(f1: A, f2: A): A = f(f1, f2)
+      def +(x: A, y: A) = g(x, y)
+      def *(x: A, y: A) = f(x, y)
     }
   }
 }
