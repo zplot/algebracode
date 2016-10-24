@@ -19,5 +19,6 @@ trait Ring extends AbelianGroup with Semigroup {
     val fatherRing = Ring.this
 
 
+
   }
 }
