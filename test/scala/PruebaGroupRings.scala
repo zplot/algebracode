@@ -15,7 +15,7 @@ object PruebaGroupRings extends App {
   println("5 + 4 = " + cinco.add(cuatro))
   println("5 * 4 = " + cinco.multiply(cuatro))
 
-  val Z6 = new Zn(6)
+  val Z6 = Zn(6)
   val cincoMod6 = Z6.IntModN(5)
   println("5 * 5 = " + cincoMod6.multiply(cincoMod6))
   val w1 = Permutation(Set(Cycle(List(1, 2, 3))))
