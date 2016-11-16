@@ -10,13 +10,13 @@ object PruebaGroupRings extends App {
 
   println("Empezamos2")
 
-  val cinco = Z.ZInteger(5)
-  val cuatro = Z.ZInteger(4)
+  val cinco = Z.builder(5)
+  val cuatro = Z.builder(4)
   println("5 + 4 = " + cinco.add(cuatro))
   println("5 * 4 = " + cinco.multiply(cuatro))
 
-  val Z6 = new Zn(6)
-  val cincoMod6 = Z6.IntModN(5)
+  val Z6 = Zn(6)
+  val cincoMod6 = Z6.builder(5)
   println("5 * 5 = " + cincoMod6.multiply(cincoMod6))
   val w1 = Permutation(Set(Cycle(List(1, 2, 3))))
   val w2 = Permutation(Set(Cycle(List(1, 2))))
