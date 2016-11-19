@@ -31,9 +31,10 @@ case class GroupRing2(group: FiniteGroup, ring:Ring ) extends Ring {
   case class GroupRing2Element(vector: Vector[ring.T2]) extends RingElement {
 
     val fatherGroupRing = GroupRing2.this
-    val isZero = false // TODO
-    override def negate: GroupRing2Element = ???
-    override val elementId: String = ???
+    val isZero = vector == List.fill(dim)(ring.zero).toVector
+    override def negate: GroupRing2Element = builder(vector.map(x => x.negate))
+
+    override val elementId: String = structureId + "." + vector.toString()
 
     def add(other: GroupRing2Element) = {
       def recursiveAdd(vector1: Vector[ring.T2], vector2: Vector[ring.T2]): Vector[ring.T2] = {
