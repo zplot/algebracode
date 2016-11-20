@@ -1,3 +1,5 @@
+// Este programa es una plantilla de cómo ir extendiendo estructuras algebraicas
+
 package models.algebra
 
 
