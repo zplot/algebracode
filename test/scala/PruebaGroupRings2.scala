@@ -3,12 +3,17 @@ package scala
 import models.algebra._
 
 import FiniteGroupExamples._
+import scala.language.implicitConversions
 
 
 
 object PruebaGroupRings2 extends App {
 
   println("Empezamos2")
+
+
+
+
 
   val cinco = Z.builder(5)
   val cuatro = Z.builder(4)
@@ -21,27 +26,36 @@ object PruebaGroupRings2 extends App {
   val w1 = Permutation(Set(Cycle(List(1, 2, 3))))
   val w2 = Permutation(Set(Cycle(List(1, 2))))
 
-  val group = S(3)
-  val ring = Zn(6)
+  val grupito = S(3)
+  val anillo = Zn(6)
 
-  val example = GroupRing2(group, ring)
-
-
+  val example = GroupRing2(grupito, anillo)
 
 
-  val hola = GroupRing2(group, ring)
+
+
+  val hola = GroupRing2(grupito, anillo)
   val m1 = Z.builder(6)
   println(m1)
 
 
-  val r1 = hola.ring.one
-  val r2 = hola.ring.builder(3.asInstanceOf[hola.ring.T1])
+
+
+  val r1 = anillo.one
+  val r2: PruebaGroupRings2.anillo.IntModN = anillo.builder(3)
+
+
+
 
 
   println(r2)
 
+  // Con lo de abajo funciona perfectamente
+  // def r(x: Int): hola.ring.T2 = hola.ring.builder(x.asInstanceOf[hola.ring.T1])
 
-  def r(x: Int) = hola.ring.builder(x.asInstanceOf[hola.ring.T1])
+  def r(x: Int): hola.ring.T2 = hola.ring.builder(x.asInstanceOf[hola.ring.T1])
+
+
 
   println(r(4))
 
@@ -88,7 +102,7 @@ object PruebaGroupRings2 extends App {
   val zw2 = Permutation(Set(Cycle(List(1, 2))))
 
 
-  val znring1 = new Zn(12)
+  val znring1 = Zn(12)
   val zngroup1 = PermutationGroup(Set(zw1, zw2))
   val adios = GroupRing(zngroup1, znring1)
 
