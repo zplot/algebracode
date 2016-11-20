@@ -13,7 +13,7 @@ class PermutationGroup private(generators: Set[Permutation], name: String) exten
   type T2 = PermutationGroupElement
 
   def builder(x: T1): T2 = PermutationGroupElement(x)
-  val structureId = "Permutation Group " + name
+  val structureId = "{" + "Permutation Group " + name + "}"
 
   val identity = builder(Permutation.one)
 

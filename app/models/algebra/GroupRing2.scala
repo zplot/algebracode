@@ -1,5 +1,6 @@
 package models.algebra
 
+// GroupRing2 extiende Ring, en cambio GroupRing no extiende nada
 case class GroupRing2(group: FiniteGroup, ring: Ring ) extends Ring {
 
   type T1 = Vector[ring.T2]
@@ -27,6 +28,8 @@ case class GroupRing2(group: FiniteGroup, ring: Ring ) extends Ring {
   val orderList = group.one :: (group.elements - group.one).toList
   // Orden de los elementos del grupo. El 1 es el 1º
   val ord = orderList.toIndexedSeq
+
+  override def toString = "{" + groupRingId + "}"
 
   case class GroupRing2Element(vector: Vector[ring.T2]) extends RingElement {
 

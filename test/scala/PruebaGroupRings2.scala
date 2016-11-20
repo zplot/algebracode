@@ -12,9 +12,6 @@ object PruebaGroupRings2 extends App {
   println("Empezamos2")
 
 
-
-
-
   val cinco = Z.builder(5)
   val cuatro = Z.builder(4)
   println("5 + 4 = " + cinco.add(cuatro))
@@ -30,9 +27,6 @@ object PruebaGroupRings2 extends App {
   val anillo = Zn(6)
 
   val example = GroupRing2(grupito, anillo)
-
-
-
 
   val hola = GroupRing2(grupito, anillo)
   val m1 = Z.builder(6)

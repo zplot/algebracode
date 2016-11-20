@@ -7,7 +7,7 @@ case class Zn(n: Int) extends Ring {
 
   def builder(x: Int) = IntModN(x)
 
-  val structureId: String = "Zn" + n
+  val structureId: String = "{" + "Zn" + n + "}"
   val zero = IntModN(0)
   val one = IntModN(1)
   val finite = true
