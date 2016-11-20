@@ -50,10 +50,8 @@ object PruebaGroupRings2 extends App {
 
   println(r2)
 
-  // Con lo de abajo funciona perfectamente
-  // def r(x: Int): hola.ring.T2 = hola.ring.builder(x.asInstanceOf[hola.ring.T1])
-
-  def r(x: Int): hola.ring.T2 = hola.ring.builder(x.asInstanceOf[hola.ring.T1])
+  implicit def converter(x: Int): hola.ring.T1 = x.asInstanceOf[hola.ring.T1]
+  def r(x: Int): hola.ring.T2 = hola.ring.builder(x)
 
 
 
