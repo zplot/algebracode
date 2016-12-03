@@ -2,6 +2,11 @@ package models.algebra
 import models.algebra.Utils._
 
 
+object FiniteField {
+
+}
+
+
 
 case class FiniteField(p: Int, w: Int) extends Field {
   require(isPrime(p), p + " is not a prime number")
@@ -11,8 +16,8 @@ case class FiniteField(p: Int, w: Int) extends Field {
   val numElements: Int = Utils.power(p, w)
   val baseField: Fp = Fp(p)
   val polyRing: PolynomialsOverFp = PolynomialsOverFp(baseField)
-  val h = polyRing.findIrredPolProb(w)
-  val identity = builder(polyRing.one)
+  val h: polyRing.T2 = polyRing.findIrredPolProb(w)
+  val identity: FiniteFieldElement = builder(polyRing.one)
 
   type T1 = polyRing.T2
   type T2 = FiniteFieldElement
@@ -37,14 +42,14 @@ case class FiniteField(p: Int, w: Int) extends Field {
 
   val structureId: String = "Fq(" + Utils.power(p, w).toString + ")"
   val finite: Boolean = true
-  val zero = builder(polyRing.zero)
-  val one = identity
+  val zero: FiniteFieldElement = builder(polyRing.zero)
+  val one: FiniteFieldElement = identity
 
-  override def toString = structureId
+  override def toString: String = structureId
 
 
   object FiniteFieldElement {
-    def apply(f: T1) = {
+    def apply(f: T1): FiniteFieldElement = {
       val g: T1 = f.mod(h)
       new FiniteFieldElement(g)
     }
@@ -52,23 +57,23 @@ case class FiniteField(p: Int, w: Int) extends Field {
 
   class FiniteFieldElement private(val f: T1) extends FieldElement {
 
-    val fatherFiniteField = FiniteField.this
-    val elementId = f.toString
-    val exponents = f.map.keySet
-    val coefficients = f.map.values.toSet
+    val fatherFiniteField: FiniteField = FiniteField.this
+    val elementId: String = f.toString
+    val exponents: Set[Int] = f.map.keySet
+    val coefficients: Set[polyRing.field.FpElement] = f.map.values.toSet
     val isZero: Boolean = {
       val cond0: Boolean = this == zero
       val cond1: Boolean = coefficients.toList.forall(x => x.isZero)
       cond0 || cond1
     }
 
-    def add(other: T2) = builder((f + other.f).mod(h))
+    def add(other: T2): FiniteFieldElement = builder((f + other.f).mod(h))
 
-    def minus(other: T2) = builder((f - other.f).mod(h))
+    def minus(other: T2): FiniteFieldElement = builder((f - other.f).mod(h))
 
     def negate: T2 = builder((h - f).mod(h))
 
-    def multiply(other: T2) = builder((f * other.f).mod(h))
+    def multiply(other: T2): FiniteFieldElement = builder((f * other.f).mod(h))
 
     def power(p: Int): T2 = p match {
       case 0 => one
@@ -97,3 +102,4 @@ case class FiniteField(p: Int, w: Int) extends Field {
   }
 
 }
+
