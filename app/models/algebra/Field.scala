@@ -18,7 +18,7 @@ trait Field extends UFD {
 
   trait FieldElement extends UFDElement {
 
-    val fatherField = Field.this
+    val fatherField: Field = Field.this
 
     def inverse: T2
     def divide(other: T2): T2 = {

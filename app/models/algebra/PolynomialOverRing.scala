@@ -123,7 +123,7 @@ class PolynomialOverRing private(val ring: Ring) extends Ring {
 
     def isMonic: Boolean = this.lc == ring.one
 
-    override def toString = {
+    override def toString: String = {
       def printPol(a: List[(Int, ring.T2)]): String = a match {
         case Nil => ""
         case x :: xs if x._1 == 0 => x._2 + " + " + printPol(xs)

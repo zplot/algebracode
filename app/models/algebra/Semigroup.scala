@@ -13,7 +13,7 @@ trait Semigroup extends Magma {
 
   trait SemigroupElement extends MagmaElement {
 
-    val fatherSemigroup = Semigroup.this
+    val fatherSemigroup: Semigroup = Semigroup.this
 
   }
 }

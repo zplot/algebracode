@@ -15,7 +15,7 @@ trait AbelianGroup {
 
   trait AbelianGroupElement {
 
-    val fatherAbelianGroup = AbelianGroup.this
+    val fatherAbelianGroup: AbelianGroup = AbelianGroup.this
     val isZero: Boolean
 
     def negate: T2
@@ -23,9 +23,6 @@ trait AbelianGroup {
     def +(other: T2): T2 = this.add(other)
     def minus(other: T2): T2
     def -(other: T2): T2 = this.minus(other)
-
-
-
 
     override def toString: String
   }

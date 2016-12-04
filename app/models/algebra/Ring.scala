@@ -2,8 +2,6 @@ package models.algebra
 
 trait Ring extends AbelianGroup with Semigroup {
 
-
-
   type T1
   type T2 <: RingElement
 
@@ -16,8 +14,7 @@ trait Ring extends AbelianGroup with Semigroup {
 
   trait RingElement extends AbelianGroupElement with SemigroupElement {
 
-    val fatherRing = Ring.this
-
+    val fatherRing: Ring = Ring.this
 
   }
 }
